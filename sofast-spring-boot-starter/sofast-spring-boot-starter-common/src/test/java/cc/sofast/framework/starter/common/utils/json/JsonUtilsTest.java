@@ -12,7 +12,7 @@ class JsonUtilsTest {
 
     @Test
     void test() {
-        ObjectMapper mapper = JsonUtils.getMapper();
+        ObjectMapper mapper = JsonUtils.json();
         assertNotNull(mapper);
     }
 }
