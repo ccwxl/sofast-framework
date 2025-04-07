@@ -1,6 +1,6 @@
-package cc.sofast.farmework.starter.common.pojo;
+package cc.sofast.framework.starter.common.pojo;
 
-import cc.sofast.farmework.starter.common.exception.ErrorCode;
+import cc.sofast.framework.starter.common.exception.ErrorCode;
 import lombok.Data;
 
 import java.io.Serializable;

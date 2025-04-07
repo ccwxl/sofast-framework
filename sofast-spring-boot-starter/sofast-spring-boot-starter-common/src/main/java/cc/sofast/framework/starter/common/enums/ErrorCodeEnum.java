@@ -1,6 +1,6 @@
-package cc.sofast.farmework.starter.common.enums;
+package cc.sofast.framework.starter.common.enums;
 
-import cc.sofast.farmework.starter.common.exception.ErrorCode;
+import cc.sofast.framework.starter.common.exception.ErrorCode;
 
 import java.util.HashMap;
 import java.util.Map;

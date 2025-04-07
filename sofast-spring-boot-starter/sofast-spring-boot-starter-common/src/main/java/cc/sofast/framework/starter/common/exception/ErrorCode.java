@@ -1,4 +1,4 @@
-package cc.sofast.farmework.starter.common.exception;
+package cc.sofast.framework.starter.common.exception;
 
 /**
  * @author wxl
