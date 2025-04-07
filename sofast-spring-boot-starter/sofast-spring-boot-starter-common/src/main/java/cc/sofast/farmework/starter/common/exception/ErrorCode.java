@@ -5,7 +5,7 @@ package cc.sofast.farmework.starter.common.exception;
  */
 public interface ErrorCode {
 
-    Long getCode();
+    String getCode();
 
     String getMessage();
 
