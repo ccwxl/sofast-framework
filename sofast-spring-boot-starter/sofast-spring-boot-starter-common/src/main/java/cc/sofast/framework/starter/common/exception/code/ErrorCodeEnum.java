@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.common.enums;
+package cc.sofast.framework.starter.common.exception.code;
 
 import cc.sofast.framework.starter.common.exception.ErrorCode;
 

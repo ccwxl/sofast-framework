@@ -11,7 +11,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
-import java.util.ServiceLoader;
 
 /**
  * @author wxl
@@ -21,7 +20,7 @@ public class JsonUtils {
 
     private static final JsonMapper.Builder BUILDER = JsonMapper.builder();
 
-    private static final ObjectMapper MAPPER;
+    private static ObjectMapper MAPPER;
 
     private JsonUtils() {
     }
@@ -31,10 +30,6 @@ public class JsonUtils {
         BUILDER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         BUILDER.serializationInclusion(JsonInclude.Include.NON_NULL);
         BUILDER.addModule(new JavaTimeModule());
-        ServiceLoader<JsonUtilsSpi> customers = ServiceLoader.load(JsonUtilsSpi.class);
-        for (JsonUtilsSpi customer : customers) {
-            customer.customer(BUILDER);
-        }
         MAPPER = BUILDER.build();
     }
 
@@ -94,5 +89,9 @@ public class JsonUtils {
 
     public static ObjectMapper json() {
         return MAPPER;
+    }
+
+    public void setObjectMapper(ObjectMapper mapper) {
+        MAPPER = mapper;
     }
 }

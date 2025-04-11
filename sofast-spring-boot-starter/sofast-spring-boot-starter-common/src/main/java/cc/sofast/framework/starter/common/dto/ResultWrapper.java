@@ -1,7 +1,10 @@
-package cc.sofast.framework.starter.common.pojo;
+package cc.sofast.framework.starter.common.dto;
 
 import cc.sofast.framework.starter.common.exception.ErrorCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
 
@@ -9,6 +12,9 @@ import java.io.Serializable;
  * @author wxl
  */
 @Data
+@FieldNameConstants
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResultWrapper<T> implements Serializable {
     public static final String SUCCESS = "Success";
     public static final String FAIL = "Fail";
@@ -51,7 +57,7 @@ public class ResultWrapper<T> implements Serializable {
         return new ResultWrapper<>(FAIL_CODE, false, FAIL, data);
     }
 
-    public static <T> ResultWrapper<T> fail(String  code, String msg, T data) {
+    public static <T> ResultWrapper<T> fail(String code, String msg, T data) {
         return new ResultWrapper<>(code, false, msg, data);
     }
 
