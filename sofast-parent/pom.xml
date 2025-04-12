@@ -21,11 +21,32 @@
         <spring.boot.version>3.4.4</spring.boot.version>
         <lombok.version>1.18.36</lombok.version>
         <jackson.version>2.18.3</jackson.version>
+        <mybatis-plus.version>3.5.11</mybatis-plus.version>
+        <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
+        <swagger-annotations.version>2.2.20</swagger-annotations.version>
         <testcontainers.version>1.20.6</testcontainers.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.yulichang</groupId>
+                <artifactId>mybatis-plus-join-boot-starter</artifactId>
+                <version>${mybatis-plus-join.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-bom</artifactId>

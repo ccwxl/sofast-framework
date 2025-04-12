@@ -7,5 +7,4 @@ import cc.sofast.biz.component.rbac.service.MenuService;
  */
 public class MenuServiceImpl implements MenuService {
 
-
 }
