@@ -46,6 +46,11 @@
             <artifactId>sofast-spring-boot-starter-common</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-mybatis</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

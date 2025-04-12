@@ -14,7 +14,7 @@ import java.util.List;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageResponse<T> {
+public class PageResult<T> {
 
     private int totalCount = 0;
 
