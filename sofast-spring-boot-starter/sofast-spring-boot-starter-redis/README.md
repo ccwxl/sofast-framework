@@ -11,6 +11,8 @@
 - stringRedisTemplate 增强
 - redisson 增强
 - 确保redisson 的codec 与 redisTemplate 的codec一致,提升互操作性
+- spring cache 支持ttl?
+- spring cache 支持自定义扩展如多租户场景
 
 ## 自定义处理
 

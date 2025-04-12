@@ -3,19 +3,21 @@ package cc.sofast.biz.component.rbac;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
+
 
 @Testcontainers
 @SpringBootTest(classes = {
-        RbacAutoConfigurationTest.class
+        RbacTestApp.class
 }, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class RbacAutoConfigurationTest {
 
@@ -37,16 +39,12 @@ class RbacAutoConfigurationTest {
         mysql.stop();
     }
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", mysql::getJdbcUrl);
-        registry.add("spring.datasource.username", mysql::getUsername);
-        registry.add("spring.datasource.password", mysql::getPassword);
-        registry.add("spring.datasource.driver-class-name", mysql::getDriverClassName);
-    }
+    @Autowired
+    private DataSource dataSource;
 
     @Test
-    void test() {
+    void test() throws SQLException {
+        System.out.println(dataSource.getConnection().getMetaData());
         System.out.println("test exec");
     }
 }

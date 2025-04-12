@@ -24,6 +24,7 @@
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
         <swagger-annotations.version>2.2.20</swagger-annotations.version>
+        <redisson.version>3.45.1</redisson.version>
         <testcontainers.version>1.20.6</testcontainers.version>
     </properties>
 
@@ -39,6 +40,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
 
             <dependency>
