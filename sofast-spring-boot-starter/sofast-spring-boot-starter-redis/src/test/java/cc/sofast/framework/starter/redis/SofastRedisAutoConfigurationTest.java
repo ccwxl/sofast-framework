@@ -22,9 +22,7 @@ class SofastRedisAutoConfigurationTest {
 
     @Container
     @ServiceConnection //代替 @DynamicPropertySource
-    static RedisStackContainer redis = new RedisStackContainer(RedisStackContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG))
-            .withEnv("HTTP_PROXY", "http://127.0.0.1:10887")
-            .withEnv("HTTPS_PROXY", "http://127.0.0.1:10887");
+    static RedisStackContainer redis = new RedisStackContainer(RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
 
     @BeforeAll
     static void beforeAll() {
