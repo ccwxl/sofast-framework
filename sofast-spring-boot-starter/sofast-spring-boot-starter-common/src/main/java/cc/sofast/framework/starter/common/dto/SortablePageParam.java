@@ -14,6 +14,6 @@ import java.util.List;
 @ToString(callSuper = true)
 public class SortablePageParam extends PageParam {
 
-    private List<SortingField> sortingFields;
+    private List<SortableField> sortingFields;
 
 }

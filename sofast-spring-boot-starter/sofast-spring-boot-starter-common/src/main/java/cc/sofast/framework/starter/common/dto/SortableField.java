@@ -7,16 +7,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 排序字段 DTO
- * <p>
- * 类名加了 ing 的原因是，避免和 ES SortField 重名。
- *
  * @author Administrator
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SortingField implements Serializable {
+public class SortableField implements Serializable {
 
     /**
      * 顺序 - 升序
