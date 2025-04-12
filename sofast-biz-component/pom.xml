@@ -22,6 +22,8 @@
         <module>sofast-biz-log</module>
         <module>sofast-biz-job</module>
         <module>sofast-biz-auth</module>
+        <!--https://github.com/openfga/openfga-->
+        <module>sofast-biz-rebac</module>
     </modules>
 
 </project>
