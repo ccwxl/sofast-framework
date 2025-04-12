@@ -1,6 +1,6 @@
 package cc.sofast.framework.starter.common;
 
-import cc.sofast.framework.starter.common.utils.SpringUtils;
+import cc.sofast.framework.starter.common.utils.SpringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Import;
 
@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Import;
  * @author wxl
  */
 @AutoConfiguration
-@Import(SpringUtils.class)
+@Import(SpringUtil.class)
 public class CommonAutoConfiguration {
 }

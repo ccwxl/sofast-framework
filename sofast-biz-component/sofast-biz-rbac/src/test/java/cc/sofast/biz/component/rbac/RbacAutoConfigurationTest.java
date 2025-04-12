@@ -25,7 +25,7 @@ class RbacAutoConfigurationTest {
             .withDatabaseName("rbac")
             .withUsername("rbac")
             .withPassword("rbac")
-            .withInitScript("cc/sofast/biz/component/rbac/jdbcstore/tables_mysql.sql");
+            .withInitScript("cc/sofast/biz/component/rbac/entity/jdbcstore/tables_mysql.sql");
 
     @BeforeAll
     static void beforeAll() {

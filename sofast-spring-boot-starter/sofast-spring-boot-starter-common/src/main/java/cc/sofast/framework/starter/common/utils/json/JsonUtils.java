@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
+import java.util.function.Consumer;
 
 /**
  * @author wxl
@@ -18,19 +19,20 @@ import java.lang.reflect.Type;
 @Slf4j
 public class JsonUtils {
 
-    private static final JsonMapper.Builder BUILDER = JsonMapper.builder();
-
-    private static ObjectMapper MAPPER;
+    private static ObjectMapper MAPPER = defaultBuilder().build();
 
     private JsonUtils() {
     }
 
-    static {
-        BUILDER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        BUILDER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        BUILDER.serializationInclusion(JsonInclude.Include.NON_NULL);
-        BUILDER.addModule(new JavaTimeModule());
-        MAPPER = BUILDER.build();
+    /**
+     * 创建一个默认配置的 Builder
+     */
+    public static JsonMapper.Builder defaultBuilder() {
+        return JsonMapper.builder()
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                .addModule(new JavaTimeModule());
     }
 
     public String toJson(Object obj) {
@@ -91,7 +93,22 @@ public class JsonUtils {
         return MAPPER;
     }
 
-    public void setObjectMapper(ObjectMapper mapper) {
-        MAPPER = mapper;
+    /**
+     * 用于允许外部设置自定义 ObjectMapper
+     */
+    public static void setCustomMapper(ObjectMapper customMapper) {
+        if (customMapper != null) {
+            MAPPER = customMapper;
+        }
+    }
+
+    /**
+     * 使用 Lambda 自定义 builder
+     */
+    public static void setCustomMapper(Consumer<JsonMapper.Builder> config) {
+        JsonMapper.Builder builder = defaultBuilder();
+        config.accept(builder);
+        JsonMapper customerMapper = builder.build();
+        setCustomMapper(customerMapper);
     }
 }
