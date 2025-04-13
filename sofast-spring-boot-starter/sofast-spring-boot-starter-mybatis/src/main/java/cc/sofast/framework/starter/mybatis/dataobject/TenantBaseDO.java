@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @FieldNameConstants
-public class TenantBaseBO<T extends Serializable, C extends Model<?>> extends BaseBO<T, C> {
+public class TenantBaseDO<E extends Model<?>, P extends Serializable> extends BaseDO<E, P> {
     /**
      * 租户ID
      */

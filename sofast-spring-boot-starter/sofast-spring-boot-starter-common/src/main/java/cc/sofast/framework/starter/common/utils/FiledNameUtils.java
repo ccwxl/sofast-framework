@@ -21,16 +21,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author wxl
  */
 @Slf4j
-public class FiledNameUtil {
+public class FiledNameUtils {
     private static final Map<SFunction<?>, Field> FUNCTION_CACHE = new ConcurrentHashMap<>();
 
     public static <T> String getFieldName(SFunction<T> function) {
-        Field field = FiledNameUtil.getField(function);
+        Field field = FiledNameUtils.getField(function);
         return field.getName();
     }
 
     public static <T> Field getField(SFunction<T> function) {
-        return FUNCTION_CACHE.computeIfAbsent(function, FiledNameUtil::findField);
+        return FUNCTION_CACHE.computeIfAbsent(function, FiledNameUtils::findField);
     }
 
     public static <T> Field findField(SFunction<T> function) {

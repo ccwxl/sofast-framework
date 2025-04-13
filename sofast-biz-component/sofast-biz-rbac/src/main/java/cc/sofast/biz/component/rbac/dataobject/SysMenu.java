@@ -1,6 +1,6 @@
 package cc.sofast.biz.component.rbac.dataobject;
 
-import cc.sofast.framework.starter.mybatis.dataobject.TenantBaseBO;
+import cc.sofast.framework.starter.mybatis.dataobject.TenantBaseDO;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.experimental.FieldNameConstants;
 @Data
 @FieldNameConstants
 @TableName(value = "${tb_prefix}sys_menu", autoResultMap = true)
-public class SysMenu extends TenantBaseBO<Long, SysMenu> {
+public class SysMenu extends TenantBaseDO<SysMenu, Long> {
 
     private String title;
 }

@@ -16,11 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 public class PageResult<T> {
 
-    private int totalCount = 0;
+    private Long totalCount = 0L;
 
-    private int pageSize = 1;
+    private Long pageSize = 1L;
 
-    private int pageIndex = 1;
+    private Long pageIndex = 1L;
 
     private List<T> records;
 

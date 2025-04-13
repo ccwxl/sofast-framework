@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @FieldNameConstants
-public class BaseBO<T extends Serializable, C extends Model<?>> extends Model<C> implements Serializable {
+public class BaseDO<E extends Model<?>, P extends Serializable> extends Model<E> implements Serializable {
     public static final String NORM_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String MYSQL_TS_FUN = "LPAD(ROUND(UNIX_TIMESTAMP(NOW(6)) * 1000000000), 16, '0')";
     /**
@@ -29,7 +29,7 @@ public class BaseBO<T extends Serializable, C extends Model<?>> extends Model<C>
      */
     @Schema(description = "主键ID")
     @TableId(value = "id")
-    private T id;
+    private P id;
 
     /**
      * 创建时间
