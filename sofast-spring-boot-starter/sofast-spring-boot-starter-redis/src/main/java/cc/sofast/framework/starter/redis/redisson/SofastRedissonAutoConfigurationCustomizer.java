@@ -1,10 +1,9 @@
 package cc.sofast.framework.starter.redis.redisson;
 
 import cc.sofast.framework.starter.redis.codec.RedissonJsonJacksonCodec;
-import cc.sofast.framework.starter.redis.redisson.starter.RedissonAutoConfigurationCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
+import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 
 /**
  * @author wxl

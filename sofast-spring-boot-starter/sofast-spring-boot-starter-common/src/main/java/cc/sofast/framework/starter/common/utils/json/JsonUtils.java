@@ -1,10 +1,14 @@
 package cc.sofast.framework.starter.common.utils.json;
 
+import cc.sofast.framework.starter.common.constant.SofastConstant;
 import cc.sofast.framework.starter.common.jackson.EnumModule;
 import cc.sofast.framework.starter.common.jackson.JacksonModule;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.StreamReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +20,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.function.Consumer;
 
 /**
@@ -33,24 +38,37 @@ public class JsonUtils {
      * 创建一个默认配置的 Builder
      */
     public static JsonMapper.Builder defaultBuilder() {
+
         return JsonMapper.builder()
-                // 序列化时忽略值为空的属性
+                .defaultDateFormat(new SimpleDateFormat(SofastConstant.Jackson.DATE_TIME_FORMAT))
+                // 去掉默认的时间戳格式
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                // 字段排序
+                .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
+                // 当序列化对象时如果字段为空则不进行序列化,不要报错
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                // 反序列化时支持null和空串
-                .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
-                // 反序列化时忽略未知属性
+                // 当反序列化时对象没有此属性石则忽略未知属性,不要报错
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                // 当启用时反序列化时空JSON字符串可以被视为等同于JSON的null
+                .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
                 // 允许单引号
                 .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
-                //输出所有字段
-                .serializationInclusion(JsonInclude.Include.ALWAYS)
-                // 没有默认构造函数或无注解的构造函数参数 情况下，正确地反序列化 Java 对象
+                // 允许key不带引号
+                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+                //但序列化出错时,定位到出错的哪个位置
+                .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
+                // 表示只包括具有非空值的属性参与序列化和反序列化。
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                // 关闭默认的类型信息，默认情况下，Jackson会在序列化时在JSON中包含 fully qualified class name，以便在序列化时还原该对象。
+                .deactivateDefaultTyping()
+                // 设置属性可见性
+                .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+                // 支持构造函数注入
                 .addModule(new ParameterNamesModule())
+                // 支持Java8
                 .addModule(new Jdk8Module())
-                .addModule(new JavaTimeModule())
-                .addModule(new JacksonModule())
-                .addModule(new EnumModule())
-                .findAndAddModules();
+                // 支持时间类型
+                .addModule(new JavaTimeModule());
     }
 
     public String toJson(Object obj) {

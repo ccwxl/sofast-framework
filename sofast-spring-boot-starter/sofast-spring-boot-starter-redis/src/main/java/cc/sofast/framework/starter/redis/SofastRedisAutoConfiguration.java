@@ -3,15 +3,23 @@ package cc.sofast.framework.starter.redis;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.redisson.SofastRedissonAutoConfigurationCustomizer;
-import cc.sofast.framework.starter.redis.redisson.starter.RedissonAutoConfiguration;
-import cc.sofast.framework.starter.redis.redisson.starter.RedissonAutoConfigurationCustomizer;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.redisson.api.RedissonClient;
+import org.redisson.spring.starter.RedissonAutoConfiguration;
+import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
+import org.redisson.spring.starter.RedissonAutoConfigurationV2;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -29,25 +37,31 @@ import java.util.List;
  */
 @EnableCaching
 @ConditionalOnClass(RedisConnectionFactory.class)
-@AutoConfiguration(before = {RedisAutoConfiguration.class, RedissonAutoConfiguration.class})
+@EnableConfigurationProperties({RedisProperties.class})
+@AutoConfiguration(before = {RedisAutoConfiguration.class, RedissonAutoConfigurationV2.class})
 public class SofastRedisAutoConfiguration {
 
+
     @Bean
+    @ConditionalOnMissingBean
     public ObjectMapperWrapper customObjectMapper(List<ObjectMapperCustomizer> customizers) {
 
         return new ObjectMapperWrapper(customizers);
     }
 
     @Configuration
-    public static class RedisTemplateConfiguration {
+    public static class SofastRedisTemplateConfiguration {
 
+        /**
+         * redisConnectionFactory 是 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
+         */
         @Bean
         @ConditionalOnMissingBean
-        public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory factory,
+        public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
                                                  ObjectProvider<ObjectMapperWrapper> objectMapperWrappers,
                                                  ObjectProvider<RedisTemplateCustomizer> customizers) {
             RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
-            redisTemplate.setConnectionFactory(factory);
+            redisTemplate.setConnectionFactory(redisConnectionFactory);
 
             StringRedisSerializer keySerializer = new StringRedisSerializer();
             redisTemplate.setKeySerializer(keySerializer);
@@ -62,6 +76,9 @@ public class SofastRedisAutoConfiguration {
             return redisTemplate;
         }
 
+        /**
+         * redisConnectionFactory 是 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
+         */
         @Bean
         @ConditionalOnMissingBean
         public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory, ObjectProvider<RedisTemplateCustomizer> customizers) {
@@ -72,7 +89,7 @@ public class SofastRedisAutoConfiguration {
     }
 
     @Configuration
-    public static class RedissonConfiguration {
+    public static class SofastRedissonConfiguration {
 
         @Bean
         public RedissonAutoConfigurationCustomizer redissonAutoConfigurationCustomizer(ObjectProvider<ObjectMapperWrapper> objectMapperWrappers) {
@@ -82,7 +99,7 @@ public class SofastRedisAutoConfiguration {
     }
 
     @Configuration
-    public static class RedisCacheConfiguration {
+    public static class SofastRedisCacheConfiguration {
 
 
     }
