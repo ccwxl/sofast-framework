@@ -1,13 +1,18 @@
 package cc.sofast.framework.starter.common.utils.json;
 
+import cc.sofast.framework.starter.common.jackson.EnumModule;
+import cc.sofast.framework.starter.common.jackson.JacksonModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
@@ -29,10 +34,23 @@ public class JsonUtils {
      */
     public static JsonMapper.Builder defaultBuilder() {
         return JsonMapper.builder()
+                // 序列化时忽略值为空的属性
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                // 反序列化时支持null和空串
+                .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
+                // 反序列化时忽略未知属性
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .serializationInclusion(JsonInclude.Include.NON_NULL)
-                .addModule(new JavaTimeModule());
+                // 允许单引号
+                .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
+                //输出所有字段
+                .serializationInclusion(JsonInclude.Include.ALWAYS)
+                // 没有默认构造函数或无注解的构造函数参数 情况下，正确地反序列化 Java 对象
+                .addModule(new ParameterNamesModule())
+                .addModule(new Jdk8Module())
+                .addModule(new JavaTimeModule())
+                .addModule(new JacksonModule())
+                .addModule(new EnumModule())
+                .findAndAddModules();
     }
 
     public String toJson(Object obj) {
