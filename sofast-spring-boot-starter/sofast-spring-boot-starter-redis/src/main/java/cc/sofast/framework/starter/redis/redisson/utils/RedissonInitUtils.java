@@ -5,9 +5,9 @@ import org.redisson.api.RedissonClient;
 /**
  * @author wxl
  */
-public class RedissonUtilsInit {
+public class RedissonInitUtils {
 
-    public RedissonUtilsInit(RedissonClient redissonClient) {
+    public RedissonInitUtils(RedissonClient redissonClient) {
         RedissonBaseUtils.setRedissonClient(redissonClient);
         RedisSubscribeUtils.setRedissonClient(redissonClient);
         RedisClientCacheUtils.setRedissonClient(redissonClient);

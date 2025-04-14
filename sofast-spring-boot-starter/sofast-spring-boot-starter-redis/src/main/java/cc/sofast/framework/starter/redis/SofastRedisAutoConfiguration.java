@@ -3,7 +3,7 @@ package cc.sofast.framework.starter.redis;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.redisson.SofastRedissonCustomizer;
-import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtilsInit;
+import cc.sofast.framework.starter.redis.redisson.utils.RedissonInitUtils;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.api.RedissonClient;
@@ -93,8 +93,8 @@ public class SofastRedisAutoConfiguration {
         }
 
         @Bean
-        public RedissonUtilsInit redissonUtilsInit(RedissonClient redissonClient) {
-            return new RedissonUtilsInit(redissonClient);
+        public RedissonInitUtils redissonUtilsInit(RedissonClient redissonClient) {
+            return new RedissonInitUtils(redissonClient);
         }
     }
 
