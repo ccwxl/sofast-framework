@@ -5,5 +5,7 @@ package cc.sofast.framework.starter.redis.redisson.utils;
  *
  * @author wxl
  */
-public class RedisClientCacheUtil {
+public class RedisClientCacheUtils extends RedissonBaseUtils{
+
+
 }

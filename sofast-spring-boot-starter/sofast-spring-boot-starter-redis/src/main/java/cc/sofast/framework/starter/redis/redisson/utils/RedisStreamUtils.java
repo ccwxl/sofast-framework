@@ -5,5 +5,11 @@ package cc.sofast.framework.starter.redis.redisson.utils;
  *
  * @author wxl
  */
-public class RedisStreamUtil {
+public class RedisStreamUtils extends RedissonBaseUtils {
+
+    private RedisStreamUtils(){
+
+    }
+
+
 }

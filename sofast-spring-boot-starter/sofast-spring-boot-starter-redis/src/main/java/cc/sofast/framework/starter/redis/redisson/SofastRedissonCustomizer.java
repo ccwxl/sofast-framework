@@ -8,10 +8,10 @@ import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 /**
  * @author wxl
  */
-public class SofastRedissonAutoConfigurationCustomizer implements RedissonAutoConfigurationCustomizer {
+public class SofastRedissonCustomizer implements RedissonAutoConfigurationCustomizer {
     private final ObjectMapper objectMapper;
 
-    public SofastRedissonAutoConfigurationCustomizer(ObjectMapper objectMapper) {
+    public SofastRedissonCustomizer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

@@ -2,19 +2,14 @@ package cc.sofast.framework.starter.redis;
 
 import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
-import cc.sofast.framework.starter.redis.redisson.SofastRedissonAutoConfigurationCustomizer;
+import cc.sofast.framework.starter.redis.redisson.SofastRedissonCustomizer;
+import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtilsInit;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.api.RedissonClient;
 import org.redisson.spring.starter.RedissonAutoConfiguration;
-import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 import org.redisson.spring.starter.RedissonAutoConfigurationV2;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -53,7 +48,7 @@ public class SofastRedisAutoConfiguration {
     public static class SofastRedisTemplateConfiguration {
 
         /**
-         * redisConnectionFactory 是 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
+         * redisConnectionFactory 会被替换成 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
          */
         @Bean
         @ConditionalOnMissingBean
@@ -77,7 +72,7 @@ public class SofastRedisAutoConfiguration {
         }
 
         /**
-         * redisConnectionFactory 是 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
+         * redisConnectionFactory 会被替换成 {@link RedissonAutoConfiguration#redissonConnectionFactory(RedissonClient)}
          */
         @Bean
         @ConditionalOnMissingBean
@@ -92,9 +87,14 @@ public class SofastRedisAutoConfiguration {
     public static class SofastRedissonConfiguration {
 
         @Bean
-        public RedissonAutoConfigurationCustomizer redissonAutoConfigurationCustomizer(ObjectProvider<ObjectMapperWrapper> objectMapperWrappers) {
+        public SofastRedissonCustomizer redissonCustomizer(ObjectProvider<ObjectMapperWrapper> objectMapperWrappers) {
             ObjectMapper objectMapper = objectMapperWrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
-            return new SofastRedissonAutoConfigurationCustomizer(objectMapper);
+            return new SofastRedissonCustomizer(objectMapper);
+        }
+
+        @Bean
+        public RedissonUtilsInit redissonUtilsInit(RedissonClient redissonClient) {
+            return new RedissonUtilsInit(redissonClient);
         }
     }
 
