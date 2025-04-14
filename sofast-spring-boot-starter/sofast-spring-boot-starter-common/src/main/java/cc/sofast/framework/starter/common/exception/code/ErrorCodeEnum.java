@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.common.exception.code;
 
+import cc.sofast.framework.starter.common.enums.BaseEnum;
 import cc.sofast.framework.starter.common.exception.ErrorCode;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * @author wxl
  */
-public enum ErrorCodeEnum implements ErrorCode {
+public enum ErrorCodeEnum implements ErrorCode, BaseEnum<String> {
     // 用户端错误
     USER_CLIENT_ERROR("A0001", "用户端错误"),
     // 用户注册错误
@@ -244,5 +245,15 @@ public enum ErrorCodeEnum implements ErrorCode {
 
     public static ErrorCodeEnum fromCode(String code) {
         return CODE_MAP.get(code);
+    }
+
+    @Override
+    public String getValue() {
+        return code;
+    }
+
+    @Override
+    public String getLabel() {
+        return message;
     }
 }
