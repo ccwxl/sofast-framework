@@ -3,6 +3,7 @@ package cc.sofast.framework.starter.redis.redisson;
 import cc.sofast.framework.starter.redis.codec.RedissonJsonJacksonCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.config.Config;
+import org.redisson.config.Protocol;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 
 /**
@@ -17,6 +18,7 @@ public class SofastRedissonCustomizer implements RedissonAutoConfigurationCustom
 
     @Override
     public void customize(Config configuration) {
+        configuration.setProtocol(Protocol.RESP3);
         configuration.setCodec(new RedissonJsonJacksonCodec(objectMapper));
     }
 }

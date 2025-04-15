@@ -21,9 +21,9 @@ public class RedisSubscribeUtils extends RedissonBaseUtils {
      * @param channelKey 通道key
      * @param clazz      接收数据类型
      * @param consumer   自定义处理
+     * @return unique listener id
      */
     public static <T> int subscribe(String channelKey, Class<T> clazz, Consumer<T> consumer) {
-        checkRedissonClient();
         RTopic topic = getRedissonClient().getTopic(channelKey);
         return topic.addListener(clazz, (channel, msg) -> consumer.accept(msg));
     }
@@ -36,7 +36,6 @@ public class RedisSubscribeUtils extends RedissonBaseUtils {
      * @param consumer   自定义处理
      */
     public static <T> Long publish(String channelKey, T msg, Consumer<T> consumer) {
-        checkRedissonClient();
         RTopic topic = getRedissonClient().getTopic(channelKey);
         long receivedClient = topic.publish(msg);
         consumer.accept(msg);
@@ -50,8 +49,18 @@ public class RedisSubscribeUtils extends RedissonBaseUtils {
      * @param msg        发送数据
      */
     public static <T> Long publish(String channelKey, T msg) {
-        checkRedissonClient();
         RTopic topic = getRedissonClient().getTopic(channelKey);
         return topic.publish(msg);
+    }
+
+    /**
+     * 取消订阅
+     *
+     * @param channelKey 通道key
+     * @param listenerId 监听器id
+     */
+    public static void unsubscribe(String channelKey, int listenerId) {
+        RTopic topic = getRedissonClient().getTopic(channelKey);
+        topic.removeListener(listenerId);
     }
 }
