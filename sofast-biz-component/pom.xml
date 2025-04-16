@@ -18,6 +18,7 @@
         <module>sofast-biz-api</module>
         <module>sofast-biz-rbac</module>
         <module>sofast-biz-dict</module>
+        <module>sofast-biz-config</module>
         <module>sofast-biz-file</module>
         <module>sofast-biz-log</module>
         <module>sofast-biz-job</module>

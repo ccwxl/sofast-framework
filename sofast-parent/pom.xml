@@ -25,11 +25,18 @@
         <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
         <swagger-annotations.version>2.2.20</swagger-annotations.version>
         <redisson.version>3.45.1</redisson.version>
+        <xfile-storage.version>2.2.1</xfile-storage.version>
         <testcontainers.version>1.20.6</testcontainers.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.dromara.x-file-storage</groupId>
+                <artifactId>x-file-storage-spring</artifactId>
+                <version>${xfile-storage.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
