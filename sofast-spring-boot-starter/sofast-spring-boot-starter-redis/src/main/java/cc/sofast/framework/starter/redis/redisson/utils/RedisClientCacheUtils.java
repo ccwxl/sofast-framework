@@ -48,7 +48,7 @@ public class RedisClientCacheUtils extends RedissonBaseUtils {
     /**
      * 获取或加载缓存（带 ClientSide 缓存）
      */
-    public static <T> T getOrLoad(String cacheName, String key, Function<String, T> loader) {
+    public static <T> T getOrInitCache(String cacheName, String key, Function<String, T> loader) {
         RClientSideCaching cache = initCache(cacheName);
         RBucket<T> bucket = cache.getBucket(key);
         T value = bucket.get();
@@ -85,7 +85,16 @@ public class RedisClientCacheUtils extends RedissonBaseUtils {
     /**
      * 获取缓存
      */
-    private static Object getByKeyClient(RClientSideCaching caching, String key) {
-        return caching.getBucket(key).get();
+    public static <T> T getByClientCache(RClientSideCaching caching, String key) {
+        RBucket<T> bucket = caching.getBucket(key);
+        return bucket.get();
+    }
+
+    /**
+     * 更新缓存
+     */
+    public static <T> void updateByClientCache(RClientSideCaching caching, String key, T value) {
+        RBucket<T> bucket = caching.getBucket(key);
+        bucket.set(value);
     }
 }

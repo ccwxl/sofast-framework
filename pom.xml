@@ -48,6 +48,7 @@
         <module>sofast-dependencies</module>
         <module>sofast-spring-boot-starter</module>
         <module>sofast-biz-component</module>
+        <module>sofast-example</module>
     </modules>
 
     <properties>

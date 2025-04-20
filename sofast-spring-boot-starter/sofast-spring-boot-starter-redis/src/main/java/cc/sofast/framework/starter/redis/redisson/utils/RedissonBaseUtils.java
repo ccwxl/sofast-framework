@@ -110,7 +110,44 @@ public class RedissonBaseUtils {
         return rMap.getAll(rMap.keySet());
     }
 
+    /**
+     * hash 数据类型
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param <T>     value
+     * @return value
+     */
+    public static <T> T getHash(String key, String hashKey) {
+        checkRedissonClient();
+        RMap<Object, T> map = redissonClient.getMap(key);
+        return map.get(hashKey);
+    }
 
+    /**
+     * hash 数据类型
+     *
+     * @param key key
+     * @param <T> value
+     */
+    public static <T> void updateHash(String key, Map<String, T> map) {
+        checkRedissonClient();
+        RMap<String, T> rMap = redissonClient.getMap(key);
+        rMap.putAll(map);
+    }
 
-
+    /**
+     * hash 数据类型
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param value   value
+     * @param <T>     value
+     * @return value
+     */
+    public static <T> T updateHash(String key, String hashKey, T value) {
+        checkRedissonClient();
+        RMap<String, T> rMap = redissonClient.getMap(key);
+        return rMap.put(hashKey, value);
+    }
 }
