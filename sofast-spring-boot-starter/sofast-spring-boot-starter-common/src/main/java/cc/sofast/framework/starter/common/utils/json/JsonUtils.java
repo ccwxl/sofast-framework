@@ -2,7 +2,6 @@ package cc.sofast.framework.starter.common.utils.json;
 
 import cc.sofast.framework.starter.common.constant.SofastConstant;
 import cc.sofast.framework.starter.common.jackson.EnumModule;
-import cc.sofast.framework.starter.common.jackson.JacksonModule;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -67,6 +66,8 @@ public class JsonUtils {
                 .addModule(new ParameterNamesModule())
                 // 支持Java8
                 .addModule(new Jdk8Module())
+                // 自定义的枚举
+                .addModule(new EnumModule())
                 // 支持时间类型
                 .addModule(new JavaTimeModule());
     }

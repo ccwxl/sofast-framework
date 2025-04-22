@@ -8,7 +8,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,11 +74,24 @@ public interface BaseEnum<T> extends Serializable {
     static <E extends BaseEnum<?>> Optional<E> of(Class<E> type, Object value) {
         if (type.isEnum()) {
             for (E enumConstant : type.getEnumConstants()) {
-                Predicate<E> predicate =
-                        e -> e.getValue() == value
-                                || e.getValue().equals(value)
-                                || String.valueOf(e.getValue()).equalsIgnoreCase(String.valueOf(value));
-                if (predicate.test(enumConstant)) {
+                if (enumConstant instanceof Enum<?> ee) {
+                    //枚举定义的名
+                    String name = ee.name();
+                    if (name.equalsIgnoreCase(String.valueOf(value))) {
+                        return Optional.of(enumConstant);
+                    }
+                }
+                if (enumConstant.getValue().equals(value)
+                        || enumConstant.getValue() == value
+                        || String.valueOf(enumConstant.getValue()).equalsIgnoreCase(String.valueOf(value))) {
+                    //枚举value
+                    return Optional.of(enumConstant);
+                }
+
+                if (enumConstant.getLabel().equals(value)
+                        || enumConstant.getLabel() == value
+                        || String.valueOf(enumConstant.getLabel()).equalsIgnoreCase(String.valueOf(value))) {
+                    //枚举label
                     return Optional.of(enumConstant);
                 }
             }
