@@ -89,6 +89,18 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -113,7 +125,7 @@
                 <configuration>
                     <skip>${jib.skip}</skip>
                     <container>
-                        <mainClass>cn.mhauto.cloud.platform.tms.TMSApplication</mainClass>
+                        <mainClass>cc.sofast.practice.ExampleApp</mainClass>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         <entrypoint>
                             <arg>/bin/sh</arg>
