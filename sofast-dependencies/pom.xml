@@ -24,6 +24,30 @@
                 <artifactId>sofast-spring-boot-starter-common</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-spring-boot-starter-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-spring-boot-starter-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-spring-boot-starter-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-biz-rbac</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

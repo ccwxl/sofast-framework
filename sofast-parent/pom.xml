@@ -28,6 +28,7 @@
         <xfile-storage.version>2.2.1</xfile-storage.version>
         <testcontainers.version>1.20.6</testcontainers.version>
         <hutool.version>5.8.37</hutool.version>
+        <jib.skip>true</jib.skip>
     </properties>
 
     <dependencyManagement>
