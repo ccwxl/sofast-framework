@@ -16,6 +16,7 @@
 
     <modules>
         <module>sofast-biz-api</module>
+        <module>sofast-biz-common</module>
         <module>sofast-biz-rbac</module>
         <module>sofast-biz-dict</module>
         <module>sofast-biz-config</module>
@@ -25,6 +26,7 @@
         <module>sofast-biz-auth</module>
         <!--https://github.com/openfga/openfga-->
         <module>sofast-biz-rebac</module>
+        <module>sofast-biz-codegen</module>
     </modules>
 
 </project>

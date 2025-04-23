@@ -54,6 +54,12 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-biz-log</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!--test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
