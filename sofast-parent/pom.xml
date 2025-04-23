@@ -28,38 +28,61 @@
         <xfile-storage.version>2.2.1</xfile-storage.version>
         <testcontainers.version>1.20.6</testcontainers.version>
         <hutool.version>5.8.37</hutool.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <guava.version>33.4.8-jre</guava.version>
+        <commons-io.version>2.19.0</commons-io.version>
+        <commons-codec.verion>1.18.0</commons-codec.verion>
         <jib.skip>true</jib.skip>
         <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- apache commons start-->
             <dependency>
-                <groupId>org.dromara.x-file-storage</groupId>
-                <artifactId>x-file-storage-spring</artifactId>
-                <version>${xfile-storage.version}</version>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-bom</artifactId>
-                <version>${hutool.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.verion}</version>
             </dependency>
+            <!-- apache commons end-->
 
+            <!--knife4j start-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-core</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>${swagger-annotations.version}</version>
             </dependency>
+            <!--knife4j end -->
 
+            <!--mybatis start-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.yulichang</groupId>
+                <artifactId>mybatis-plus-join-boot-starter</artifactId>
+                <version>${mybatis-plus-join.version}</version>
+            </dependency>
+            <!--mybatis end-->
 
+            <!--redis start-->
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
@@ -71,19 +94,40 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
             </dependency>
+            <!--redis end-->
 
+            <!--file start-->
             <dependency>
-                <groupId>com.github.yulichang</groupId>
-                <artifactId>mybatis-plus-join-boot-starter</artifactId>
-                <version>${mybatis-plus-join.version}</version>
+                <groupId>org.dromara.x-file-storage</groupId>
+                <artifactId>x-file-storage-spring</artifactId>
+                <version>${xfile-storage.version}</version>
             </dependency>
+            <!--file end-->
 
+            <!--hutool start-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--hutool end-->
+
+            <!--guava start-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!--guava end-->
+
+            <!--netty start-->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-bom</artifactId>
@@ -91,6 +135,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--netty end-->
+
+            <!--jackson start-->
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
@@ -98,6 +145,9 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <!--jackson end-->
+
+            <!--spring start-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
@@ -119,6 +169,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring end-->
+
+            <!--test start-->
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
@@ -126,6 +179,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--test end-->
         </dependencies>
     </dependencyManagement>
 

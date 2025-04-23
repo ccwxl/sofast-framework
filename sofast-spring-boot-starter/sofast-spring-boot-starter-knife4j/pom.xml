@@ -14,4 +14,11 @@
     <artifactId>sofast-spring-boot-starter-knife4j</artifactId>
     <packaging>jar</packaging>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>
