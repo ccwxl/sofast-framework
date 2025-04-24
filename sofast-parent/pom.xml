@@ -23,7 +23,7 @@
         <jackson.version>2.18.3</jackson.version>
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
-        <swagger-annotations.version>2.2.20</swagger-annotations.version>
+        <swagger-annotations.version>2.2.19</swagger-annotations.version>
         <redisson.version>3.45.1</redisson.version>
         <xfile-storage.version>2.2.1</xfile-storage.version>
         <testcontainers.version>1.20.6</testcontainers.version>

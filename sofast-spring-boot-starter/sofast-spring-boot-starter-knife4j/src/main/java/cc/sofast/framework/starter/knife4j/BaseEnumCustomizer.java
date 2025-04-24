@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.knife4j.customizer;
+package cc.sofast.framework.starter.knife4j;
 
 import cc.sofast.framework.starter.common.enums.BaseEnum;
 import com.fasterxml.jackson.databind.type.SimpleType;
