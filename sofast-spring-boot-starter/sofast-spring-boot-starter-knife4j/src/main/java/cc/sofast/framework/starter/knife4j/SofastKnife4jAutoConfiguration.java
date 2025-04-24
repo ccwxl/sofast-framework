@@ -39,7 +39,8 @@ public class SofastKnife4jAutoConfiguration {
                 // 取个名字，方便被引用
                 .name(HttpHeaders.AUTHORIZATION)
                 .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer ")
+                .scheme("bearer")
+                .bearerFormat("JWT")
                 .in(SecurityScheme.In.HEADER);
 
         SecurityRequirement securityRequirement = new SecurityRequirement()
