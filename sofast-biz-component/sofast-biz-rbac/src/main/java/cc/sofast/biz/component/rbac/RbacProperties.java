@@ -1,6 +1,6 @@
 package cc.sofast.biz.component.rbac;
 
-import cc.sofast.biz.component.common.WebInfo;
+import cc.sofast.biz.component.common.ComponentWebInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,5 @@ public class RbacProperties {
     public static final String WEB_PREFIX = PREFIX + ".web";
 
     @NestedConfigurationProperty
-    private WebInfo web;
+    private ComponentWebInfo web;
 }

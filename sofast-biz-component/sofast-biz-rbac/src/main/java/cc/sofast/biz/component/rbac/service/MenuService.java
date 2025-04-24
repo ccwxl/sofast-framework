@@ -1,5 +1,6 @@
 package cc.sofast.biz.component.rbac.service;
 
+import cc.sofast.biz.component.rbac.controller.request.SysMenuAddRequest;
 import cc.sofast.biz.component.rbac.dataobject.SysMenu;
 import cc.sofast.framework.starter.mybatis.service.SofastService;
 
@@ -14,5 +15,5 @@ public interface MenuService extends SofastService<SysMenu> {
      * @param sysMenu 菜单
      * @return 是否添加成功
      */
-    boolean addMenu(SysMenu sysMenu);
+    boolean addMenu(SysMenuAddRequest sysMenu);
 }

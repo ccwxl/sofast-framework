@@ -2,6 +2,7 @@ package cc.sofast.biz.component.rbac.controller;
 
 import cc.sofast.biz.component.common.HasPermission;
 import cc.sofast.biz.component.rbac.RbacProperties;
+import cc.sofast.biz.component.rbac.controller.request.SysMenuAddRequest;
 import cc.sofast.biz.component.rbac.dataobject.SysMenu;
 import cc.sofast.biz.component.rbac.service.MenuService;
 import cc.sofast.framework.starter.common.dto.Result;
@@ -37,7 +38,7 @@ public class MenuController {
     @PostMapping
     @Operation(summary = "添加菜单")
     @HasPermission
-    public Result<Boolean> addMenu(@RequestBody SysMenu sysMenu) {
+    public Result<Boolean> addMenu(@RequestBody SysMenuAddRequest sysMenu) {
         boolean ok = menuService.addMenu(sysMenu);
         log.info("添加菜单:{}", ok);
         return Result.ok(ok);

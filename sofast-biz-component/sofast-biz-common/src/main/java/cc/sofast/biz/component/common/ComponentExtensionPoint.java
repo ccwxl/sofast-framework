@@ -1,4 +1,4 @@
-package cc.sofast.biz.component.rbac;
+package cc.sofast.biz.component.common;
 
 /**
  * @author wxl

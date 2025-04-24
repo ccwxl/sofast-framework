@@ -1,6 +1,7 @@
 package cc.sofast.biz.component.rbac.service.impl;
 
-import cc.sofast.biz.component.rbac.MenuExtension;
+import cc.sofast.biz.component.rbac.extension.MenuExtension;
+import cc.sofast.biz.component.rbac.controller.request.SysMenuAddRequest;
 import cc.sofast.biz.component.rbac.dataobject.SysMenu;
 import cc.sofast.biz.component.rbac.mapper.SysMenuMapper;
 import cc.sofast.biz.component.rbac.service.MenuService;
@@ -31,7 +32,7 @@ public class MenuServiceImpl extends SofastServiceImpl<SysMenuMapper, SysMenu>
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean addMenu(SysMenu sysMenu) {
+    public boolean addMenu(SysMenuAddRequest sysMenu) {
         extension.forEach(s -> s.addBefore(sysMenu));
         sysMenuMapper.insert(sysMenu);
         extension.forEach(s -> s.addAfter(sysMenu));

@@ -13,4 +13,17 @@
     <artifactId>sofast-spring-boot-starter-security</artifactId>
     <packaging>jar</packaging>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+            <version>1.40.0</version>
+        </dependency>
+    </dependencies>
 </project>

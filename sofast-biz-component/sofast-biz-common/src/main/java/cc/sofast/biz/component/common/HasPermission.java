@@ -5,5 +5,4 @@ package cc.sofast.biz.component.common;
  */
 public @interface HasPermission {
 
-
 }
