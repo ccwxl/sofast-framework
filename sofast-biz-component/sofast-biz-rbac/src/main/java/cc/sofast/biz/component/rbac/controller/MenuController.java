@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @AllArgsConstructor
-@RequestMapping("/menu/")
+@RequestMapping("${sofast.sofast.rbac.web.base-path:}/v1")
 @Tag(name = "(biz)菜单接口", description = "(biz)菜单接口")
-//@ConditionalOnProperty(prefix = RbacProperties.WEB_PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = RbacProperties.WEB_PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class MenuController {
 
     private final MenuService menuService;

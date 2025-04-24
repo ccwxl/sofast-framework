@@ -35,3 +35,8 @@ knife4j:
   setting:
     language: zh_cn
     enable-dynamic-parameter: true
+
+sofast:
+  rbac:
+    web:
+      enabled: true
