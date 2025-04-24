@@ -1,4 +1,4 @@
-package cc.sofast.practice.controller;
+package cc.sofast.practice.module.apidoc.request;
 
 import cc.sofast.framework.starter.common.enums.BaseEnum;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum SexEnum implements BaseEnum<Long> {
+public enum CourseType implements BaseEnum<Long> {
     MATH(1, "数学"),
     ENGLISH(2, "英语"),
     CHINESE(3, "语文"),

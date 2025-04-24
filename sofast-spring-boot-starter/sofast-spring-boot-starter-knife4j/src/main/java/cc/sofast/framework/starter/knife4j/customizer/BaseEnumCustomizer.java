@@ -19,8 +19,8 @@ import java.util.Objects;
  * {@code @Schema(description} = "性别")<br />
  * private GenderEnum gender;
  * <p>
- * 输出文档描述：
- * 性别(0=未知 1=男 2=女)
+ * 输出文档描述：统一使用名称描述
+ * 性别(UNKNOWN=未知 MAN=男 WOMAN=女)
  *
  * @author wxl
  */

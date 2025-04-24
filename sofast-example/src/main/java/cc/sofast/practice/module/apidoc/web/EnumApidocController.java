@@ -1,0 +1,50 @@
+package cc.sofast.practice.module.apidoc.web;
+
+import cc.sofast.biz.component.log.mapper.LogMapper;
+import cc.sofast.biz.component.rbac.mapper.SysMenuMapper;
+import cc.sofast.practice.module.apidoc.request.CourseInfo;
+import cc.sofast.practice.module.apidoc.request.CourseType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * @author wxl
+ */
+@RestController
+@RequestMapping("/course")
+@RequiredArgsConstructor
+@Tag(name = "枚举接口", description = "枚举接口")
+public class EnumApidocController {
+
+    private final SysMenuMapper sysMenuMapper;
+
+    private final LogMapper logMapper;
+
+    @GetMapping("/enum/param")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "枚举参数")
+    public String hello(@Schema(description = "性别") @RequestParam CourseType course) {
+        return "hello";
+    }
+
+    @GetMapping("/enum/obj/param")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "对象枚举参数")
+    public String hello2(@ParameterObject CourseInfo course) {
+        return "hello";
+    }
+
+    @PostMapping("/enum/json")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "枚举json")
+    public String hello3(@RequestBody CourseInfo course) {
+
+        return "hello";
+    }
+}
