@@ -19,12 +19,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
@@ -51,26 +49,23 @@
             <artifactId>sofast-spring-boot-starter-redis</artifactId>
             <version>${revision}</version>
         </dependency>
-
         <dependency>
             <groupId>cc.sofast</groupId>
             <artifactId>sofast-spring-boot-starter-knife4j</artifactId>
             <version>${revision}</version>
         </dependency>
 
+        <!--biz component-->
         <dependency>
             <groupId>cc.sofast</groupId>
             <artifactId>sofast-biz-common</artifactId>
             <version>${revision}</version>
         </dependency>
-
-        <!--biz component-->
         <dependency>
             <groupId>cc.sofast</groupId>
             <artifactId>sofast-biz-rbac</artifactId>
             <version>${revision}</version>
         </dependency>
-
         <dependency>
             <groupId>cc.sofast</groupId>
             <artifactId>sofast-biz-log</artifactId>
@@ -83,19 +78,16 @@
             <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>com.redis</groupId>
             <artifactId>testcontainers-redis</artifactId>
