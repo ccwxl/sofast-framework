@@ -8,4 +8,11 @@ import cc.sofast.framework.starter.mybatis.service.SofastService;
  */
 public interface MenuService extends SofastService<SysMenu> {
 
+    /**
+     * 添加菜单
+     *
+     * @param sysMenu 菜单
+     * @return 是否添加成功
+     */
+    boolean addMenu(SysMenu sysMenu);
 }

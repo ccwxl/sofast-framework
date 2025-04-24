@@ -52,6 +52,18 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-knife4j</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-biz-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!--biz component-->
         <dependency>
             <groupId>cc.sofast</groupId>
@@ -107,6 +119,34 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <target>${maven.compiler.target}</target>
+                    <source>${maven.compiler.source}</source>
+                    <encoding>UTF-8</encoding>
+                    <parameters>true</parameters>
+                    <enablePreview>true</enablePreview>
+                    <useIncrementalCompilation>true</useIncrementalCompilation>
+                    <compilerArgs>
+                        <arg>-Xpkginfo:always</arg>
+                        <arg>-Xlint:deprecation</arg>
+                        <arg>-Xlint:preview</arg>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

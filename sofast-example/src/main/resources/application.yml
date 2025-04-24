@@ -27,6 +27,8 @@ springdoc:
       packages-to-scan:
         - cc.sofast.biz.component
         - cc.sofast.practice
+  cache:
+    disabled: true
 
 knife4j:
   enable: true
