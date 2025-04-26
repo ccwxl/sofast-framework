@@ -3,6 +3,7 @@ package cc.sofast.framework.starter.web;
 import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import cc.sofast.framework.starter.web.jackson.JacksonBuilderCustomizer;
 import cc.sofast.framework.starter.web.listener.LaunchEventListener;
+import cc.sofast.framework.starter.web.mvc.DefaultWebMvcConfigurer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

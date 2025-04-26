@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.web;
+package cc.sofast.framework.starter.web.mvc;
 
 import cc.sofast.framework.starter.web.converter.StringToDateConverter;
 import cc.sofast.framework.starter.web.converter.StringToEnumConverterFactory;
@@ -14,6 +14,7 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.support.WebBindingInitializer;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
@@ -29,6 +30,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DefaultWebMvcConfigurer implements WebMvcConfigurer, WebBindingInitializer {
     private final ObjectMapper objectMapper;
+
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new SofastHandlerExceptionResolver());
+    }
 
     /**
      * [GET]请求, 将所有参数的空格trim
