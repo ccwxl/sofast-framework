@@ -2,6 +2,7 @@ package cc.sofast.practice.module.apidoc.web;
 
 import cc.sofast.biz.component.log.mapper.LogMapper;
 import cc.sofast.biz.component.rbac.mapper.SysMenuMapper;
+import cc.sofast.framework.starter.common.dto.Result;
 import cc.sofast.practice.module.apidoc.request.CourseInfo;
 import cc.sofast.practice.module.apidoc.request.CourseType;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wxl
@@ -46,5 +50,31 @@ public class EnumApidocController {
     public String hello3(@RequestBody CourseInfo course) {
 
         return "hello";
+    }
+
+    @PostMapping("/res/json")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "resJson")
+    public Result<CourseInfo> res() {
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setCourse(CourseType.MATH);
+        courseInfo.setScore(100);
+        courseInfo.setStudent("wxl");
+        courseInfo.setTs(System.currentTimeMillis());
+        courseInfo.setData2(List.of("1", "2", "3"));
+        courseInfo.setMaps(Map.of("1", "2", "3", "4"));
+//        courseInfo.setCourses(List.of(CourseType.MATH, CourseType.ENGLISH));
+        courseInfo.setDates(new java.util.Date());
+        courseInfo.setLocalDates(java.time.LocalDate.now());
+        courseInfo.setLocalDateTime(java.time.LocalDateTime.now());
+        return Result.ok(courseInfo);
+    }
+
+    @PostMapping("/req/json")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "reqJson")
+    public Result<CourseInfo> req(@RequestBody CourseInfo course) {
+
+        return Result.ok(course);
     }
 }

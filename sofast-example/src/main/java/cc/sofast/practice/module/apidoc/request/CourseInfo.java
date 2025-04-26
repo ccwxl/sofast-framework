@@ -5,6 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author wxl
  */
@@ -22,4 +28,18 @@ public class CourseInfo {
 
     @Schema(description = "课程类别")
     private CourseType course;
+
+    private Long ts;
+
+    private List<String> data2;
+
+    private Map<String, Object> maps;
+
+//    private List<CourseType> courses;
+
+    private Date dates;
+
+    private LocalDate localDates;
+
+    private LocalDateTime localDateTime;
 }

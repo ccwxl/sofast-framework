@@ -12,10 +12,12 @@ import cc.sofast.framework.starter.common.constant.SofastConstant;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 自定义序列化规则

@@ -24,7 +24,6 @@ public enum CourseType implements BaseEnum<Long> {
      */
     final String label;
 
-
     @Override
     public Long getValue() {
         return (long) code;
