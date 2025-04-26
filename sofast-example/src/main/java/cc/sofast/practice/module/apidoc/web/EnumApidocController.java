@@ -77,4 +77,12 @@ public class EnumApidocController {
 
         return Result.ok(course);
     }
+
+    @PostMapping("/req/time")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "time")
+    public Result<CourseInfo> time(@ParameterObject CourseInfo course) {
+
+        return Result.ok(course);
+    }
 }
