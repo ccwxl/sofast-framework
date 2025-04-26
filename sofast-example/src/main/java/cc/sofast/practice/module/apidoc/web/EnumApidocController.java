@@ -2,9 +2,12 @@ package cc.sofast.practice.module.apidoc.web;
 
 import cc.sofast.biz.component.log.mapper.LogMapper;
 import cc.sofast.biz.component.rbac.mapper.SysMenuMapper;
+import cc.sofast.framework.starter.common.dto.PageParam;
 import cc.sofast.framework.starter.common.dto.Result;
+import cc.sofast.framework.starter.common.dto.TimeRangeParam;
 import cc.sofast.practice.module.apidoc.request.CourseInfo;
 import cc.sofast.practice.module.apidoc.request.CourseType;
+import cc.sofast.practice.module.apidoc.request.QueryObj;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -14,6 +17,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,40 +25,40 @@ import java.util.Map;
  * @author wxl
  */
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/apidoc")
 @RequiredArgsConstructor
-@Tag(name = "枚举接口", description = "枚举接口")
+@Tag(name = "参数解析实例", description = "参数解析实例")
 public class EnumApidocController {
 
     private final SysMenuMapper sysMenuMapper;
 
     private final LogMapper logMapper;
 
-    @GetMapping("/enum/param")
+    @GetMapping("/singe/enum/parser")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "枚举参数")
-    public String hello(@Schema(description = "性别") @RequestParam CourseType course) {
-        return "hello";
+    @Operation(summary = "单个枚举参数解析")
+    public Result<CourseType> hello(@Schema(description = "课程") @RequestParam CourseType course) {
+        return Result.ok(course);
     }
 
-    @GetMapping("/enum/obj/param")
+    @GetMapping("/enum/obj/parser")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "对象枚举参数")
-    public String hello2(@ParameterObject CourseInfo course) {
-        return "hello";
+    @Operation(summary = "对象枚举参数解析")
+    public Result<CourseInfo> hello2(@ParameterObject CourseInfo course) {
+        return Result.ok(course);
     }
 
-    @PostMapping("/enum/json")
+    @PostMapping("/post/enum/json")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "枚举json")
-    public String hello3(@RequestBody CourseInfo course) {
+    @Operation(summary = "post请求枚举解析")
+    public Result<CourseInfo> hello3(@RequestBody CourseInfo course) {
 
-        return "hello";
+        return Result.ok(course);
     }
 
-    @PostMapping("/res/json")
+    @PostMapping("/return/json")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "resJson")
+    @Operation(summary = "返回json")
     public Result<CourseInfo> res() {
         CourseInfo courseInfo = new CourseInfo();
         courseInfo.setCourse(CourseType.MATH);
@@ -70,19 +74,49 @@ public class EnumApidocController {
         return Result.ok(courseInfo);
     }
 
-    @PostMapping("/req/json")
+    @PostMapping("/request/json")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "reqJson")
+    @Operation(summary = "提交json")
     public Result<CourseInfo> req(@RequestBody CourseInfo course) {
 
         return Result.ok(course);
     }
 
-    @PostMapping("/req/time")
+    @PostMapping("/get/time/parser")
     @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
-    @Operation(summary = "time")
+    @Operation(summary = "get请求时间参数")
     public Result<CourseInfo> time(@ParameterObject CourseInfo course) {
 
         return Result.ok(course);
+    }
+
+    @PostMapping("/time/range/parser")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "时间范围请求")
+    public Result<TimeRangeParam> getTimeRange(@Schema(type = "string") @RequestParam TimeRangeParam timeRange) {
+
+        return Result.ok(timeRange);
+    }
+
+    @GetMapping("/page/parser")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "分页请求")
+    public Result<Map<String, Object>> getPage(@Schema(type = "string") @RequestParam TimeRangeParam timeRange,
+                                               @ParameterObject PageParam pageParam) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("pageParam", pageParam);
+        param.put("query", timeRange);
+        return Result.ok(param);
+    }
+
+    @GetMapping("/page/obj/parser")
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "分页对象请求")
+    public Result<Map<String, Object>> getPageObj(@ParameterObject PageParam pageParam,
+                                                  @Schema @ParameterObject QueryObj query) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("pageParam", pageParam);
+        param.put("query", query);
+        return Result.ok(param);
     }
 }

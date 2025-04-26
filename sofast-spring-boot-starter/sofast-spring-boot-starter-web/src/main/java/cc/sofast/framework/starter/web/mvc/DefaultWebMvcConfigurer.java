@@ -3,6 +3,7 @@ package cc.sofast.framework.starter.web.mvc;
 import cc.sofast.framework.starter.web.converter.StringToDateConverter;
 import cc.sofast.framework.starter.web.converter.StringToEnumConverterFactory;
 import cc.sofast.framework.starter.web.converter.StringToLocalDateTimeConverter;
+import cc.sofast.framework.starter.web.converter.TimeRangeParamConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,7 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer, WebBindingInit
         registry.addConverterFactory(new StringToEnumConverterFactory());
         registry.addConverter(new StringToDateConverter());
         registry.addConverter(new StringToLocalDateTimeConverter());
+        registry.addConverter(new TimeRangeParamConverter());
     }
 
 
