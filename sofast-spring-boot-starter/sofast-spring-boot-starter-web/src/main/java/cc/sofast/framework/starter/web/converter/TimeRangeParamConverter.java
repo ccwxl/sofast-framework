@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.web.convert;
+package cc.sofast.framework.starter.web.converter;
 
 import cc.sofast.framework.starter.common.dto.TimeRangeParam;
 import cc.sofast.framework.starter.common.utils.ArrayUtils;

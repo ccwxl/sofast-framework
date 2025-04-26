@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.web.convert;
+package cc.sofast.framework.starter.web.converter;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;

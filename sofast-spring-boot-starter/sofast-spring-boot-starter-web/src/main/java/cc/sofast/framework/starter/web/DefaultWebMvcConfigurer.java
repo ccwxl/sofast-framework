@@ -1,8 +1,8 @@
 package cc.sofast.framework.starter.web;
 
-import cc.sofast.framework.starter.web.convert.StringToDateConverter;
-import cc.sofast.framework.starter.web.convert.StringToEnumConverterFactory;
-import cc.sofast.framework.starter.web.convert.StringToLocalDateTimeConverter;
+import cc.sofast.framework.starter.web.converter.StringToDateConverter;
+import cc.sofast.framework.starter.web.converter.StringToEnumConverterFactory;
+import cc.sofast.framework.starter.web.converter.StringToLocalDateTimeConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,11 +47,8 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer, WebBindingInit
         registry.removeConvertible(String.class, Enum.class);
         // 使用这个增强一下,但是需要配合枚举实现BaseEnum接口
         registry.addConverterFactory(new StringToEnumConverterFactory());
-
-
         registry.addConverter(new StringToDateConverter());
         registry.addConverter(new StringToLocalDateTimeConverter());
-
     }
 
 

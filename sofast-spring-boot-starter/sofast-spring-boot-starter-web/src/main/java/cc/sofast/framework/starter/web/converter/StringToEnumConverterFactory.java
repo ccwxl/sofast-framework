@@ -1,13 +1,10 @@
-package cc.sofast.framework.starter.web.convert;
+package cc.sofast.framework.starter.web.converter;
 
 import cc.sofast.framework.starter.common.enums.BaseEnum;
-import cc.sofast.framework.starter.common.exception.ServiceException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 /**
  * @author wxl
