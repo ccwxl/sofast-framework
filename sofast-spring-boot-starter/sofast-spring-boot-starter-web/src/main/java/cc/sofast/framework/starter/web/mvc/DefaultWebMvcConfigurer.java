@@ -50,7 +50,7 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer, WebBindingInit
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        //移除掉默认的string到Enum的转换器,因为默认的支持大写到Enum的转换
+        //移除掉默认的string到Enum的转换器,因为默认的只支持大写到Enum的转换,自定义支持小写到Enum的转换
         registry.removeConvertible(String.class, Enum.class);
         // 使用这个增强一下,但是需要配合枚举实现BaseEnum接口
         registry.addConverterFactory(new StringToEnumConverterFactory());

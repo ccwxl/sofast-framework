@@ -36,9 +36,9 @@ public class StringToEnumConverterFactory implements ConverterFactory<String, En
                 Class<? extends BaseEnum> s = (Class<? extends BaseEnum>) enumType;
                 return BaseEnum.of(s, source)
                         .map(anEnum -> (T) anEnum)
-                        .orElseGet(() -> (T) Enum.valueOf(this.enumType, source.trim()));
+                        .orElseGet(() -> (T) Enum.valueOf(this.enumType, source.trim().toUpperCase()));
             }
-            return (T) Enum.valueOf(this.enumType, source.trim());
+            return (T) Enum.valueOf(this.enumType, source.trim().toUpperCase());
         }
     }
 
