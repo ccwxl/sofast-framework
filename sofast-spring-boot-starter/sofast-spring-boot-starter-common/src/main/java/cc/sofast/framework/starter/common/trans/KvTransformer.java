@@ -16,17 +16,17 @@ public class KvTransformer<T extends Serializable> implements Transformer<T, Tra
     }
 
     @Override
-    public String transform(T originalValue, Trans annotation) {
-        if (originalValue == null) {
+    public String transform(T refVal, Trans annotation) {
+        if (refVal == null) {
             return null;
         }
         for (KvTransStore kvTransStore : kvTransStore) {
-            Object value = kvTransStore.get(originalValue.toString());
+            Object value = kvTransStore.get(refVal.toString());
             if (value != null) {
                 return value.toString();
             }
         }
-        return originalValue.toString();
+        return refVal.toString();
     }
 
     public void addKvTransStore(KvTransStore kvTransStore) {

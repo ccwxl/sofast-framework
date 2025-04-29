@@ -14,14 +14,14 @@ public interface Transformer<T, A extends Annotation> {
     /**
      * 翻译
      *
-     * @param originalValue 转换之前的原始值
-     * @param annotation    自定义注解
+     * @param refVal     转换之前的原始值(使用哪个字段进行翻译)
+     * @param annotation 自定义注解
      * @return 翻译后的值
      */
-    default String transform(T originalValue, A annotation) {
-        if (originalValue == null) {
+    default String transform(T refVal, A annotation) {
+        if (refVal == null) {
             return null;
         }
-        return originalValue.toString();
+        return refVal.toString();
     }
 }

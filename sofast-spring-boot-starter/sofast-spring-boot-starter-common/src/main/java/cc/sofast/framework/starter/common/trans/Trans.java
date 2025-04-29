@@ -15,10 +15,9 @@ public @interface Trans {
      */
     String value() default "";
 
-
     /**
      * 指定转换器
      */
-    Class<? extends Transformer> transformer() default Transformer.class;
+    Class<? extends Transformer> transformer() default KvTransformer.class;
 
 }

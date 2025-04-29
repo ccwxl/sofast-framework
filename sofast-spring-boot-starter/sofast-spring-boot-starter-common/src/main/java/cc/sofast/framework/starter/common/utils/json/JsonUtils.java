@@ -72,7 +72,7 @@ public class JsonUtils {
                 .addModule(new JavaTimeModule());
     }
 
-    public String toJson(Object obj) {
+    public static String toJson(Object obj) {
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
