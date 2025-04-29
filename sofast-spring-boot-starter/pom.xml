@@ -17,16 +17,10 @@
         <module>sofast-spring-boot-starter-common</module>
         <module>sofast-spring-boot-starter-mybatis</module>
         <module>sofast-spring-boot-starter-tenant</module>
-        <module>sofast-spring-boot-starter-excel</module>
         <module>sofast-spring-boot-starter-security</module>
         <module>sofast-spring-boot-starter-redis</module>
-        <module>sofast-spring-boot-starter-job</module>
-        <module>sofast-spring-boot-starter-i18n</module>
         <module>sofast-spring-boot-starter-knife4j</module>
-        <module>sofast-spring-boot-starter-extension</module>
         <module>sofast-spring-boot-starter-web</module>
         <module>sofast-spring-boot-starter-websocket</module>
-        <module>sofast-spring-boot-starter-test</module>
-        <module>sofast-spring-cloud-starter-feign</module>
     </modules>
 </project>
