@@ -3,10 +3,6 @@ package cc.sofast.framework.starter.common.trans;
 import cc.sofast.framework.starter.common.dto.TimeRangeParam;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Queue;
-
 class TransUtilsTest {
 
     @Test
@@ -18,7 +14,8 @@ class TransUtilsTest {
 //        TimeRangeParam[] obj = new TimeRangeParam[]{new TimeRangeParam()
 //        };
         //
-        Queue<TimeRangeParam> obj =new ArrayDeque<>();
+//        Queue<TimeRangeParam> obj =new ArrayDeque<>();
+        TimeRangeParam obj = new TimeRangeParam();
         TransUtils.trans(obj);
     }
 }

@@ -1,35 +1,45 @@
 package cc.sofast.framework.starter.common.trans;
 
-import cc.sofast.framework.starter.common.trans.core.ListSerializerTranslator;
-import cc.sofast.framework.starter.common.trans.core.SerializerTranslator;
+import cc.sofast.framework.starter.common.trans.translator.BeanSerializerTranslator;
+import cc.sofast.framework.starter.common.trans.translator.IndexListSerializerTranslator;
+import cc.sofast.framework.starter.common.trans.translator.MapSerializerTranslator;
+import cc.sofast.framework.starter.common.trans.translator.SerializerTranslator;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.type.*;
 
 /**
  * @author wxl
  */
 public class TransUtils {
 
+    private static final TypeFactory FACTORY = TypeFactory.defaultInstance();
 
+    //TODO cache class ---> SerializerTranslator
+
+    @SuppressWarnings("unchecked")
     public static void trans(Object obj) {
         Class<?> clazz = obj.getClass();
-        TypeFactory factory = TypeFactory.defaultInstance();
-        JavaType javaType = factory.constructType(clazz);
-        System.out.println(javaType);
-        //CollectionType
-        SerializerTranslator<Object> se = getSerializerTranslator(javaType);
+        JavaType javaType = FACTORY.constructType(clazz);
+        @SuppressWarnings("rawtypes") SerializerTranslator se = getSerializerTranslator(javaType);
         se.serialize(obj);
-        //ArrayType
-        //MapType
-        //SimpleType
-
     }
 
+    @SuppressWarnings("rawtypes")
     private static SerializerTranslator getSerializerTranslator(JavaType javaType) {
-        if (javaType instanceof CollectionType) {
+        if (javaType instanceof SimpleType) {
+            return new BeanSerializerTranslator();
+        }
+        if (javaType instanceof CollectionLikeType) {
+            //java.util.RandomAccess
+            return new IndexListSerializerTranslator();
+        }
+        if (javaType instanceof MapLikeType) {
 
-            return new ListSerializerTranslator();
+            return new MapSerializerTranslator();
+        }
+        if (javaType instanceof ArrayType) {
+            //java.util.RandomAccess
+            return new IndexListSerializerTranslator();
         }
         return null;
     }

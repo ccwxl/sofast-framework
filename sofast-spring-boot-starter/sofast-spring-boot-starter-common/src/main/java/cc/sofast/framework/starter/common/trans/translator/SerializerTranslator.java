@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.common.trans.core;
+package cc.sofast.framework.starter.common.trans.translator;
 
 /**
  * @author wxl

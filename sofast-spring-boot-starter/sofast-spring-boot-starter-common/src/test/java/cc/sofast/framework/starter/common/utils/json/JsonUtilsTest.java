@@ -15,9 +15,9 @@ class JsonUtilsTest {
     void test() {
 //        List<Object> a = new ArrayList<>();
 //        a.add(new TimeRangeParam());
-
-        Map<String, Object> a = new HashMap<>();
-        a.put("a", new TimeRangeParam());
-        JsonUtils.toJson(a);
+        TimeRangeParam rangeParam = new TimeRangeParam();
+//        Map<String, Object> a = new HashMap<>();
+//        a.put("a", new TimeRangeParam());
+        JsonUtils.toJson(rangeParam);
     }
 }
