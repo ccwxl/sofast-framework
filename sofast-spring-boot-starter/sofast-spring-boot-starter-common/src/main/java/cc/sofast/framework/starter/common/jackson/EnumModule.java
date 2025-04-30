@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 继承了BaseEnum接口的枚举值，将会统一按照以下格式序列化
@@ -80,6 +82,12 @@ public class EnumModule extends SimpleModule {
         public void serialize(BaseEnum data, JsonGenerator jsonGenerator, SerializerProvider provider)
                 throws IOException {
             jsonGenerator.writeObject(data.getValue());
+            if (jsonGenerator.currentValue() instanceof Collection<?>) {
+                return;
+            }
+            if (jsonGenerator.currentValue() instanceof Map<?, ?>) {
+                return;
+            }
             jsonGenerator.writeFieldName(jsonGenerator.getOutputContext().getCurrentName() + "Label");
             jsonGenerator.writeString(data.getLabel());
         }

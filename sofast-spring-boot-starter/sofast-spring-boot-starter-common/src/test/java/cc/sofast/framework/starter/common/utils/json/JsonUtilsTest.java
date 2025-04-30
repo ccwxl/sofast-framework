@@ -1,12 +1,10 @@
 package cc.sofast.framework.starter.common.utils.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cc.sofast.framework.starter.common.dto.TimeRangeParam;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wxl
@@ -15,9 +13,11 @@ class JsonUtilsTest {
 
     @Test
     void test() {
-        List<String> a = new ArrayList<>();
-        a.add("1");
+//        List<Object> a = new ArrayList<>();
+//        a.add(new TimeRangeParam());
 
+        Map<String, Object> a = new HashMap<>();
+        a.put("a", new TimeRangeParam());
         JsonUtils.toJson(a);
     }
 }

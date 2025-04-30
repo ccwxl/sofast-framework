@@ -35,7 +35,13 @@ public class CourseInfo {
 
     private Map<String, Object> maps;
 
-//    private List<CourseType> courses;
+    private List<CourseType> courses;
+
+    private List<CourseInfo> courseInfos;
+
+    private Map<String, CourseType> courseMaps;
+
+    private Map<CourseType, String> courseInfoMaps;
 
     private Date dates;
 

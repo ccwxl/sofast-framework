@@ -67,10 +67,14 @@ public class EnumApidocController {
         courseInfo.setTs(System.currentTimeMillis());
         courseInfo.setData2(List.of("1", "2", "3"));
         courseInfo.setMaps(Map.of("1", "2", "3", "4"));
-//        courseInfo.setCourses(List.of(CourseType.MATH, CourseType.ENGLISH));
+        courseInfo.setCourses(List.of(CourseType.MATH, CourseType.ENGLISH));
         courseInfo.setDates(new java.util.Date());
         courseInfo.setLocalDates(java.time.LocalDate.now());
         courseInfo.setLocalDateTime(java.time.LocalDateTime.now());
+
+//        courseInfo.setCourseInfos(List.of(courseInfo));
+        courseInfo.setCourseMaps(Map.of("1", CourseType.MATH, "2", CourseType.ENGLISH));
+        courseInfo.setCourseInfoMaps(Map.of(CourseType.MATH, "1"));
         return Result.ok(courseInfo);
     }
 
