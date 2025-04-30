@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-@Trans(transformer = EnumTransformer.class)
+@Trans(transformer = EnumTranslator.class)
 public @interface TransEnum {
     /**
      * 来源字段
@@ -19,7 +19,7 @@ public @interface TransEnum {
     String value() default "";
 
     /**
-     * 枚举class，必须实现了Dict接口
+     * 枚举class，必须实现了BaseEnum接口
      */
     @SuppressWarnings("rawtypes")
     Class<? extends BaseEnum<?>> typ();

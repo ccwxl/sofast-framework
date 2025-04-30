@@ -1,7 +1,7 @@
 package cc.sofast.framework.starter.common.trans.enums;
 
 import cc.sofast.framework.starter.common.enums.BaseEnum;
-import cc.sofast.framework.starter.common.trans.Transformer;
+import cc.sofast.framework.starter.common.trans.Translator;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * @author wxl
  */
-public class EnumTransformer<T extends Serializable> implements Transformer<T, TransEnum> {
+public class EnumTranslator<T extends Serializable> implements Translator<T, TransEnum> {
 
     @Override
     public String transform(T refVal, TransEnum annotation) {

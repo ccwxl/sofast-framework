@@ -6,4 +6,8 @@ package cc.sofast.framework.starter.common.trans;
 public class TransUtils {
 
 
+    public static void trans(Object obj) {
+
+    }
+
 }

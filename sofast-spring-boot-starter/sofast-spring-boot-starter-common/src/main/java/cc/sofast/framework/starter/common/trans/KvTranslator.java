@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author wxl
  */
-public class KvTransformer<T extends Serializable> implements Transformer<T, Trans> {
+public class KvTranslator<T extends Serializable> implements Translator<T, Trans> {
 
     private final List<KvTransStore> kvTransStore = new ArrayList<>();
 
-    public KvTransformer() {
+    public KvTranslator() {
         kvTransStore.add(new InMemoryKvTransStore());
     }
 

@@ -18,6 +18,6 @@ public @interface Trans {
     /**
      * 指定转换器
      */
-    Class<? extends Transformer> transformer() default KvTransformer.class;
+    Class<? extends Translator> transformer() default KvTranslator.class;
 
 }
