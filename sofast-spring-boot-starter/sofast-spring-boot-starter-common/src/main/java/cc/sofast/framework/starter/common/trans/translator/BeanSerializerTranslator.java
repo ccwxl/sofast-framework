@@ -9,8 +9,16 @@ public class BeanSerializerTranslator extends SerializerTranslator<Object> {
     //TODO class ---> ref 字段cache
     //TODO 有可能循环嵌套,避免深度遍历导致出现问题
 
+    private TranslatorCache translatorCache = new TranslatorCache();
+
     @Override
     public void serialize(Object value) {
+        TranslatorClass translatorClass = translatorCache.getTranslatorClass(value);
+        if (translatorClass == null) {
+            // 获取不到转换类，表示object为null或者空集合
+            return;
+        }
+
 
     }
 }
