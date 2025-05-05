@@ -2,7 +2,6 @@ package cc.sofast.framework.starter.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
@@ -22,6 +21,8 @@ public class PageResult<T> extends Result<List<T>> {
     private Long pageSize = 1L;
 
     private Long pageIndex = 1L;
+
+    private boolean pageResult = true;
 
     public PageResult() {
         super(SUCCESS_CODE, true, SUCCESS, null);
