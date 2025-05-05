@@ -49,7 +49,7 @@ public class TransController {
     }
 
     @GetMapping("/page")
-    @Operation(summary = "分页")
+    @Operation(summary = "分页示例")
     public PageResult<TransResponse> page() {
         List<TransResponse> responses = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
