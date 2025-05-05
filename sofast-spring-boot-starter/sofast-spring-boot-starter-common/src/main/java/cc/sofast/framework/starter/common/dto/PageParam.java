@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 /**
+ * 分页请求参数封装
+ *
  * @author wxl
  */
 @Data

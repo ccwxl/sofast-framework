@@ -8,13 +8,14 @@ import lombok.experimental.FieldNameConstants;
 import java.util.List;
 
 /**
+ * 分页结果类
+ *
  * @author wxl
  */
 @Data
 @FieldNameConstants
 @AllArgsConstructor
-@NoArgsConstructor
-public class PageResult<T> {
+public class PageResult<T> extends Result<List<T>> {
 
     private Long totalCount = 0L;
 
@@ -22,6 +23,17 @@ public class PageResult<T> {
 
     private Long pageIndex = 1L;
 
-    private List<T> records;
+    public PageResult() {
+        super(SUCCESS_CODE, true, SUCCESS, null);
+    }
 
+    public PageResult(List<T> data) {
+        super(SUCCESS_CODE, true, SUCCESS, data);
+        long size = 0L;
+        if (data != null) {
+            size = data.size();
+        }
+        this.totalCount = size;
+        this.pageSize = size;
+    }
 }
