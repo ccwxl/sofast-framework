@@ -16,8 +16,9 @@ public class TranslatorClass {
      * 需要转换的字段集合
      */
     private List<TranslatorField<?>> translatorFields = new ArrayList<>();
+
     /**
-     * 需要嵌套转换的字段及其对应的转换类
+     * 需要嵌套转换的字段及其对应的转换类,只处理第一层嵌套,多层嵌套不进行处理
      */
     private Map<Field, Class<?>> nestTransformFields = new HashMap<>();
 }

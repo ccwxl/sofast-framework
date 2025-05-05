@@ -1,5 +1,8 @@
 package cc.sofast.framework.starter.common.enums;
 
+/**
+ * @author wxl
+ */
 public enum ColorEnum implements BaseEnum<Integer> {
     YELLOW(1, "黄"),
     RED(2, "红"),
