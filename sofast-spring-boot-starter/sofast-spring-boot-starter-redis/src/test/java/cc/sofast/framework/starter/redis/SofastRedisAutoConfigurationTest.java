@@ -1,15 +1,19 @@
 package cc.sofast.framework.starter.redis;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redis.testcontainers.RedisContainer;
 import com.redis.testcontainers.RedisStackContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.redisson.api.RBucket;
-import org.redisson.api.RClientSideCaching;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.redisson.api.options.ClientSideCachingOptions;
+import org.redisson.api.search.index.FieldIndex;
+import org.redisson.api.search.index.IndexInfo;
+import org.redisson.api.search.index.IndexOptions;
+import org.redisson.api.search.index.IndexType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -17,6 +21,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Testcontainers
 @SpringBootTest(classes = {
@@ -26,7 +36,7 @@ class SofastRedisAutoConfigurationTest {
 
     @Container
     @ServiceConnection //代替 @DynamicPropertySource
-    static RedisStackContainer redis = new RedisStackContainer(RedisContainer.DEFAULT_IMAGE_NAME.withTag(RedisContainer.DEFAULT_TAG));
+    static RedisStackContainer redis = new RedisStackContainer(DockerImageName.parse("docker.1ms.run/redis/redis-stack"));
 
     @BeforeAll
     static void beforeAll() {
@@ -50,8 +60,10 @@ class SofastRedisAutoConfigurationTest {
     @Autowired
     public RedissonClient redissonClient;
 
+    public ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
-    public void test() {
+    public void base_Test() {
         Assertions.assertNotNull(redisTemplate);
         Assertions.assertNotNull(redisTemplateObject);
         Assertions.assertNotNull(stringRedisTemplate);
@@ -73,7 +85,7 @@ class SofastRedisAutoConfigurationTest {
     }
 
     @Test
-    public void test2() throws InterruptedException {
+    public void client_cache_Test() throws InterruptedException {
         RClientSideCaching clientSideCaching = redissonClient.getClientSideCaching(ClientSideCachingOptions.defaults());
         clientSideCaching.getBucket("key").set("value");
 
@@ -87,5 +99,41 @@ class SofastRedisAutoConfigurationTest {
         Assertions.assertEquals("value2", clientSideCaching.getBucket("key").get());
 
         Assertions.assertEquals("value2", clientSideCaching.getBucket("key").get());
+    }
+
+    @Test
+    public void redis_search_Test() throws JsonProcessingException {
+        String key = "dev:120111";
+        Map<String, Object> deviceData = new HashMap<>();
+        deviceData.put("deviceId", "120111");
+        deviceData.put("time", System.currentTimeMillis());
+        deviceData.put("temperature", 36.5);
+        deviceData.put("humidity", 66);
+        deviceData.put("location", "济南");
+        redisTemplateObject.opsForHash().putAll(key, deviceData);
+
+        RMap<Object, Object> map = redissonClient.getMap(key);
+        Object location = map.get("location");
+        Assertions.assertEquals("济南", location);
+        map.put("location", "北京");
+
+        Object bjLocation = redisTemplateObject.opsForHash().get(key, "location");
+        Assertions.assertEquals("北京", bjLocation);
+
+        RSearch search = redissonClient.getSearch();
+        String devIdx = "dev_idx";
+        search.createIndex(devIdx, IndexOptions.defaults()
+                        .on(IndexType.HASH)
+                        .prefix(List.of("dev:")),
+                FieldIndex.text("location"),
+                FieldIndex.numeric("humidity"),
+                FieldIndex.numeric("time")
+        );
+
+        List<String> indexes = search.getIndexes();
+        for (String idx : indexes) {
+            IndexInfo info = search.info(idx);
+            System.out.println(objectMapper.writeValueAsString(info));
+        }
     }
 }
