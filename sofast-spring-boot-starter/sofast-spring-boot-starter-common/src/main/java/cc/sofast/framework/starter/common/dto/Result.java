@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wxl

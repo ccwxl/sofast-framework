@@ -37,4 +37,14 @@ public class PageResult<T> extends Result<List<T>> {
         this.totalCount = size;
         this.pageSize = size;
     }
+
+    public static <T> PageResult<T> empty() {
+
+        return new PageResult<>();
+    }
+
+    public static <T> PageResult<T> list(List<T> list) {
+
+        return new PageResult<>(list);
+    }
 }

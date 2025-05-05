@@ -55,6 +55,13 @@ public class TransController {
         for (int i = 0; i < 10; i++) {
             responses.add(new TransResponse("id" + i, "name" + i, null, "courseStr" + i, null));
         }
-        return PageUtil.ok(responses);
+        return PageResult.list(responses);
+    }
+
+    @GetMapping("/page2")
+    @Operation(summary = "分页示例2")
+    public PageResult<TransResponse> page2() {
+
+        return PageResult.empty();
     }
 }

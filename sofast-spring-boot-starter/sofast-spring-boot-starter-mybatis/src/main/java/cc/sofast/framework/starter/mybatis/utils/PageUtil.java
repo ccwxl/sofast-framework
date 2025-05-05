@@ -18,43 +18,6 @@ import java.util.stream.Collectors;
  * @author wxl
  */
 public class PageUtil {
-    /**
-     * 将mybatis-plus分页结果转换为通用分页结果
-     *
-     * @param list mybatis-plus分页结果
-     * @return PageResult<T>
-     */
-    public static <T> PageResult<T> buildPageResult(List<T> list) {
-        if (CollectionUtils.isEmpty(list)) {
-            return new PageResult<>();
-        }
-        PageResult<T> pageResult = new PageResult<>();
-        pageResult.setPageSize((long) list.size());
-        pageResult.setPageIndex(1L);
-        pageResult.setTotalCount((long) list.size());
-        pageResult.setData(list);
-        return pageResult;
-    }
-
-    /**
-     * 构建分页结果
-     *
-     * @return PageResult<T>
-     */
-    public static <T> PageResult<T> ok() {
-
-        return new PageResult<>();
-    }
-
-    /**
-     * 构建分页结果
-     *
-     * @return PageResult<T>
-     */
-    public static <T> PageResult<T> ok(List<T> list) {
-
-        return new PageResult<>(list);
-    }
 
     /**
      * 将mybatis-plus分页结果转换为通用分页结果

@@ -1,9 +1,6 @@
 package cc.sofast.framework.starter.mybatis.mapper;
 
-import cc.sofast.framework.starter.common.dto.PageParam;
-import cc.sofast.framework.starter.common.dto.PageResult;
-import cc.sofast.framework.starter.common.dto.SortableField;
-import cc.sofast.framework.starter.common.dto.SortablePageParam;
+import cc.sofast.framework.starter.common.dto.*;
 import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
 import cc.sofast.framework.starter.mybatis.utils.PageUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -64,7 +61,7 @@ public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable
     default PageResult<E> selectPage(PageParam pageParam, Collection<SortableField> sortingFields, @Param("ew") Wrapper<E> queryWrapper) {
         if (PageParam.PAGE_SIZE_NONE.equals(pageParam.getPageSize())) {
             List<E> list = selectList(queryWrapper);
-            return PageUtil.buildPageResult(list);
+            return PageResult.list(list);
         }
         IPage<E> mpPage = PageUtil.buildPage(pageParam, sortingFields);
         selectPage(mpPage, queryWrapper);
@@ -82,7 +79,7 @@ public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable
     default <DTO> PageResult<DTO> selectJoinPage(PageParam pageParam, Class<DTO> clazz, MPJLambdaWrapper<E> lambdaWrapper) {
         if (PageParam.PAGE_SIZE_NONE.equals(pageParam.getPageSize())) {
             List<DTO> list = selectJoinList(clazz, lambdaWrapper);
-            return PageUtil.buildPageResult(list);
+            return PageResult.list(list);
         }
 
         // MyBatis Plus Join 查询
