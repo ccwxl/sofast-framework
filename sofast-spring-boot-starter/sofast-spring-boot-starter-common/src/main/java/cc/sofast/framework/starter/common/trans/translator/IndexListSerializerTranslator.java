@@ -11,7 +11,7 @@ import java.util.List;
 public class IndexListSerializerTranslator extends SerializerTranslator<List<?>> {
 
     @Override
-    public void serialize(List<?> value) {
+    public void serialize(List<?> value, TransContext transContext) {
 
     }
 }

@@ -10,7 +10,7 @@ import java.util.Collection;
 public class CollectionSerializerTranslator extends SerializerTranslator<Collection<?>> {
 
     @Override
-    public void serialize(Collection<?> value) {
+    public void serialize(Collection<?> value, TransContext transContext) {
         //batch trans
 
     }
