@@ -1,5 +1,8 @@
 package cc.sofast.framework.starter.common.trans.translator;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 /**
  * @author wxl
  */
@@ -18,6 +21,8 @@ public class BeanSerializerTranslator extends SerializerTranslator<Object> {
             // 获取不到转换类，表示object为null或者空集合
             return;
         }
+        //处理字段
+        translatorClass.translate(value);
 
 
     }

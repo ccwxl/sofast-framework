@@ -11,6 +11,7 @@ public class CollectionSerializerTranslator extends SerializerTranslator<Collect
 
     @Override
     public void serialize(Collection<?> value) {
+        //batch trans
 
     }
 }

@@ -20,4 +20,7 @@ public class TranslatorField<T> {
      */
     private ThreadLocal<Map<T, String>> transformResultCache = ThreadLocal.withInitial(ConcurrentHashMap::new);
 
+    public void translate(Object value) {
+
+    }
 }

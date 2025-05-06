@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.common.trans.translator;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -8,6 +9,7 @@ import java.util.Map;
 public class MapSerializerTranslator extends SerializerTranslator<Map<?, ?>> {
     @Override
     public void serialize(Map<?, ?> value) {
-
+        //只对values做处理
+        Collection<?> values = value.values();
     }
 }
