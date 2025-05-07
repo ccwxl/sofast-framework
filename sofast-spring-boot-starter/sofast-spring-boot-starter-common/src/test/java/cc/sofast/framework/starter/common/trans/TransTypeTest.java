@@ -16,10 +16,6 @@ class TransTypeTest {
     void transBean() {
         InMemoryKvTransStore kvTransStore = new InMemoryKvTransStore();
         kvTransStore.put("1", "sofast");
-        KvTranslator kvTranslator = new KvTranslator(kvTransStore);
-
-        EnumTranslator enumTranslator = new EnumTranslator();
-
         DictTranslatorService dictTranslatorService = (group, key) -> {
             if (group.equals("sex")) {
                 if (key.equals("1")) {
@@ -31,7 +27,10 @@ class TransTypeTest {
             }
             return "default";
         };
+
         DictTranslator dictTranslator = new DictTranslator(dictTranslatorService);
+        KvTranslator kvTranslator = new KvTranslator(kvTransStore);
+        EnumTranslator enumTranslator = new EnumTranslator();
 
         TranslatorFactory.registerTranslator(kvTranslator);
         TranslatorFactory.registerTranslator(enumTranslator);
