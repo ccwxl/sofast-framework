@@ -14,7 +14,7 @@ public class DBTranslator<T extends Serializable> implements Translator<T, Trans
 
     @Override
     public String transform(T refVal, TransDB annotation) {
-        String filedName = annotation.value();
+        String filedName = annotation.ref();
         String filedValue = refVal.toString();
         Class<? extends BaseMapper<?>> mapper = annotation.mapper();
         String queryFileName = annotation.to();
