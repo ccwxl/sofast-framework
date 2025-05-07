@@ -28,6 +28,9 @@ public class TranslatorClass {
      */
     private Map<Field, Class<?>> nestTransformFields = new HashMap<>();
 
+    /**
+     * 构造函数
+     */
     public TranslatorClass(Class<?> aClass) {
         this.clazz = aClass;
         ReflectionUtils.doWithFields(aClass, field -> {
@@ -64,6 +67,7 @@ public class TranslatorClass {
             if (se == null) {
                 continue;
             }
+            ReflectionUtils.makeAccessible(key);
             Object fieldValue = ReflectionUtils.getField(key, value);
             se.serialize(fieldValue, transContext);
         }

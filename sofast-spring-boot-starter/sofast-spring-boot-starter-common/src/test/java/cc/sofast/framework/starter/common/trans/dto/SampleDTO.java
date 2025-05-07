@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Trans
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransUserDTO {
+public class SampleDTO {
 
     //simple
     private Long id;
