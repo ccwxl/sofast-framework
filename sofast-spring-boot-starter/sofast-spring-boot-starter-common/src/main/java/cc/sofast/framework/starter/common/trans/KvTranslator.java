@@ -11,8 +11,8 @@ public class KvTranslator<T extends Serializable> implements Translator<T, Trans
 
     private final List<KvTransStore> kvTransStore = new ArrayList<>();
 
-    public KvTranslator() {
-        kvTransStore.add(new InMemoryKvTransStore());
+    public KvTranslator(KvTransStore kvTransStore) {
+        this.kvTransStore.add(kvTransStore);
     }
 
     @Override

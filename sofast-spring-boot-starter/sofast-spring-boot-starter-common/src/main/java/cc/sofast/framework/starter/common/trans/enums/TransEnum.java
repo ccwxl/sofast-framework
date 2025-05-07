@@ -14,17 +14,12 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Trans(translator = EnumTranslator.class)
 public @interface TransEnum {
-    /**
-     * 来源字段
-     */
-    @AliasFor("refFiled")
-    String value() default "";
 
     /**
      * 来源字段
      */
-    @AliasFor("value")
-    String refFiled() default "";
+    @AliasFor(annotation = Trans.class)
+    String ref() default "";
 
     /**
      * 枚举class，必须实现了BaseEnum接口

@@ -11,18 +11,17 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
 public @interface Trans {
-
     /**
      * 来源字段
      */
-    @AliasFor("refFiled")
+    @AliasFor("ref")
     String value() default "";
 
     /**
      * 来源字段
      */
     @AliasFor("value")
-    String refFiled() default "";
+    String ref() default "";
 
     /**
      * 指定转换器

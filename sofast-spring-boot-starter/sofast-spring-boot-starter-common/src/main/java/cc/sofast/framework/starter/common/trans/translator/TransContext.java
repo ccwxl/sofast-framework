@@ -21,7 +21,7 @@ public class TransContext {
      */
     public boolean enter(Integer aClass) {
         AtomicInteger count = classRecursiveCountMap.get(aClass);
-        return count != null && count.incrementAndGet() > MAX_RECURSIVE_DEPTH;
+        return count != null && count.get() > MAX_RECURSIVE_DEPTH;
     }
 
     /**

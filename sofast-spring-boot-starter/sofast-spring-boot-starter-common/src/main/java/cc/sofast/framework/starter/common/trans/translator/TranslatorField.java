@@ -2,7 +2,7 @@ package cc.sofast.framework.starter.common.trans.translator;
 
 import cc.sofast.framework.starter.common.trans.Trans;
 import cc.sofast.framework.starter.common.trans.Translator;
-import cc.sofast.framework.starter.common.utils.SpringUtils;
+import cc.sofast.framework.starter.common.trans.TranslatorFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.Assert;
@@ -21,13 +21,15 @@ public class TranslatorField<T> {
     private Annotation transformAnnotation;
 
     public TranslatorField(Field field) {
+        ReflectionUtils.makeAccessible(field);
         this.field = field;
         Trans mergedAnnotation = AnnotatedElementUtils.getMergedAnnotation(field, Trans.class);
         Assert.notNull(mergedAnnotation, "字段" + field.getName() + "上必须标注@Trans注解或其衍生注解");
-        String originFieldName = mergedAnnotation.value();
+        String originFieldName = mergedAnnotation.ref();
         this.originField = ReflectionUtils.findField(field.getDeclaringClass(), originFieldName);
+        ReflectionUtils.makeAccessible(originField);
         Class<? extends Translator> translatorClass = mergedAnnotation.translator();
-        this.transformer = SpringUtils.getBean(translatorClass);
+        this.transformer = TranslatorFactory.getTranslator(translatorClass);
         // 获取自定义注解类型（Transformer上有两个泛型，第一个是转换前的值类型，第二个是是自定义注解类型）
         ResolvableType resolvableType = ResolvableType.forClass(Translator.class, translatorClass);
         Class<? extends Annotation> customTransformAnnotationType = (Class<? extends Annotation>) resolvableType.getGeneric(1).resolve();

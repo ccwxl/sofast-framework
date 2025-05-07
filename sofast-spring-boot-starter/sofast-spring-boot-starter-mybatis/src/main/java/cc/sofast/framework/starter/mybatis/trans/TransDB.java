@@ -18,14 +18,8 @@ public @interface TransDB {
     /**
      * 来源字段
      */
-    @AliasFor("refFiled")
-    String value() default "";
-
-    /**
-     * 来源字段
-     */
-    @AliasFor("value")
-    String refFiled() default "";
+    @AliasFor(annotation = Trans.class)
+    String ref() default "";
 
     /**
      * 必须实现自BaseMapper接口
