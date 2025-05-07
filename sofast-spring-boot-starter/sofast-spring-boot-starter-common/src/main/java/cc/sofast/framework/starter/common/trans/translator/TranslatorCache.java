@@ -10,17 +10,17 @@ public final class TranslatorCache {
     /**
      * 转换类的缓存，提高性能
      */
-    private static final Map<Class<?>, TranslatorClass> TRANSFORM_CLASS_CACHE = new ConcurrentHashMap<>(512);
+    private static final Map<Class<?>, TranslatorClass> TRANSLATOR_CLASS = new ConcurrentHashMap<>(512);
 
 
     public TranslatorClass getTranslatorClass(Object obj) {
         if (obj == null) {
             return null;
         }
-        return getTransformClassFromClass(obj.getClass());
+        return getTranslatorClassFromClass(obj.getClass());
     }
 
-    public static TranslatorClass getTransformClassFromClass(Class<?> clazz) {
-        return TRANSFORM_CLASS_CACHE.computeIfAbsent(clazz, TranslatorClass::new);
+    public static TranslatorClass getTranslatorClassFromClass(Class<?> clazz) {
+        return TRANSLATOR_CLASS.computeIfAbsent(clazz, TranslatorClass::new);
     }
 }

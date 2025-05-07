@@ -12,7 +12,7 @@ import java.util.Optional;
 public class EnumTranslator<T extends Serializable> implements Translator<T, TransEnum> {
 
     @Override
-    public String transform(T refVal, TransEnum annotation) {
+    public String translator(T refVal, TransEnum annotation) {
         if (refVal == null) {
             return null;
         }

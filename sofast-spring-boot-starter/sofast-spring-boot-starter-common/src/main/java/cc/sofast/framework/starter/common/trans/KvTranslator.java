@@ -16,7 +16,7 @@ public class KvTranslator<T extends Serializable> implements Translator<T, Trans
     }
 
     @Override
-    public String transform(T refVal, Trans annotation) {
+    public String translator(T refVal, Trans annotation) {
         if (refVal == null) {
             return null;
         }

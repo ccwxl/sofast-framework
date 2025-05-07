@@ -13,11 +13,11 @@ import java.io.Serializable;
 public class DBTranslator<T extends Serializable> implements Translator<T, TransDB> {
 
     @Override
-    public String transform(T refVal, TransDB annotation) {
+    public String translator(T refVal, TransDB annotation) {
         String filedName = annotation.ref();
         String filedValue = refVal.toString();
         Class<? extends BaseMapper<?>> mapper = annotation.mapper();
         String queryFileName = annotation.to();
-        return Translator.super.transform(refVal, annotation);
+        return Translator.super.translator(refVal, annotation);
     }
 }

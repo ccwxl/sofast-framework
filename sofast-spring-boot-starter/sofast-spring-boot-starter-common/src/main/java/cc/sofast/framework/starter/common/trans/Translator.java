@@ -20,7 +20,7 @@ public interface Translator<T, A extends Annotation> {
      * @param annotation 自定义注解
      * @return 翻译后的值
      */
-    default String transform(T refVal, A annotation) {
+    default String translator(T refVal, A annotation) {
         if (refVal == null) {
             return null;
         }
@@ -34,7 +34,7 @@ public interface Translator<T, A extends Annotation> {
      * @param annotation 自定义注解
      * @return 翻译后的值 (key:refVal,value:转换前的值)
      */
-    default Map<String, Object> transform(List<T> refVal, A annotation) {
+    default Map<String, Object> translator(List<T> refVal, A annotation) {
 
         return Map.of();
     }

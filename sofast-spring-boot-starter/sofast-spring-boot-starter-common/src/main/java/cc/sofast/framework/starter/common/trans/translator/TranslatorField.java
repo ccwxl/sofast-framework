@@ -17,8 +17,8 @@ import java.lang.reflect.Field;
 public class TranslatorField<T> {
     private Field field;
     private Field originField;
-    private Translator<T, Annotation> transformer;
-    private Annotation transformAnnotation;
+    private Translator<T, Annotation> translator;
+    private Annotation translatorAnnotation;
 
     public TranslatorField(Field field) {
         ReflectionUtils.makeAccessible(field);
@@ -29,17 +29,16 @@ public class TranslatorField<T> {
         this.originField = ReflectionUtils.findField(field.getDeclaringClass(), originFieldName);
         ReflectionUtils.makeAccessible(originField);
         Class<? extends Translator> translatorClass = mergedAnnotation.translator();
-        this.transformer = TranslatorFactory.getTranslator(translatorClass);
-        // 获取自定义注解类型（Transformer上有两个泛型，第一个是转换前的值类型，第二个是是自定义注解类型）
+        this.translator = TranslatorFactory.getTranslator(translatorClass);
         ResolvableType resolvableType = ResolvableType.forClass(Translator.class, translatorClass);
-        Class<? extends Annotation> customTransformAnnotationType = (Class<? extends Annotation>) resolvableType.getGeneric(1).resolve();
-        Assert.notNull(customTransformAnnotationType, "实现Transform接口时必须指定泛型：" + transformer.getClass().getSimpleName());
-        this.transformAnnotation = field.getAnnotation(customTransformAnnotationType);
+        Class<? extends Annotation> customAnnotationType = (Class<? extends Annotation>) resolvableType.getGeneric(1).resolve();
+        Assert.notNull(customAnnotationType, "实现 Translator 接口时必须指定泛型：" + translator.getClass().getSimpleName());
+        this.translatorAnnotation = field.getAnnotation(customAnnotationType);
     }
 
     public void translate(Object value) {
         T originalValue = (T) ReflectionUtils.getField(originField, value);
-        String transform = transformer.transform(originalValue, transformAnnotation);
-        ReflectionUtils.setField(field, value, transform);
+        String transValue = translator.translator(originalValue, translatorAnnotation);
+        ReflectionUtils.setField(field, value, transValue);
     }
 }

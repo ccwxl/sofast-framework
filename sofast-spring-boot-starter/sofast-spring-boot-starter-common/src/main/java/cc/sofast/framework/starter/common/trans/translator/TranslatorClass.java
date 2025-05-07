@@ -26,7 +26,7 @@ public class TranslatorClass {
     /**
      * 需要嵌套转换的字段及其对应的转换类
      */
-    private Map<Field, Class<?>> nestTransformFields = new HashMap<>();
+    private Map<Field, Class<?>> nestTranslatorFields = new HashMap<>();
 
     /**
      * 构造函数
@@ -35,11 +35,11 @@ public class TranslatorClass {
         this.clazz = aClass;
         ReflectionUtils.doWithFields(aClass, field -> {
             if (field.getType() == String.class && AnnotatedElementUtils.isAnnotated(field, Trans.class)) {
-                // 需要转换的字段，字段上的注解链上需要有@Transform，且字段类型必须为String
+                // 需要转换的字段，字段上的注解链上需要有@Trans，且字段类型必须为String
                 translatorFields.add(new TranslatorField<>(field));
             } else if (field.getType() != String.class && field.isAnnotationPresent(Trans.class)) {
-                // 需要嵌套转换的字段，类型不为String，且字段上直接标注了@Transform
-                nestTransformFields.put(field, getClassFromField(field));
+                // 需要嵌套转换的字段，类型不为String，且字段上直接标注了@Trans
+                nestTranslatorFields.put(field, getClassFromField(field));
             }
         });
     }
@@ -59,7 +59,7 @@ public class TranslatorClass {
         for (TranslatorField<?> translatorField : translatorFields) {
             translatorField.translate(value);
         }
-        for (Map.Entry<Field, Class<?>> entry : nestTransformFields.entrySet()) {
+        for (Map.Entry<Field, Class<?>> entry : nestTranslatorFields.entrySet()) {
             Field key = entry.getKey();
             Class<?> clazz = entry.getValue();
             @SuppressWarnings("rawtypes")

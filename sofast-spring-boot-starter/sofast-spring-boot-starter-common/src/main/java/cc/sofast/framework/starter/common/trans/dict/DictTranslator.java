@@ -16,7 +16,7 @@ public class DictTranslator<T extends Serializable> implements Translator<T, Tra
     }
 
     @Override
-    public String transform(T refVal, TransDict annotation) {
+    public String translator(T refVal, TransDict annotation) {
 
         return dictTranslator.getDict(annotation.group(), refVal.toString());
     }
