@@ -1,6 +1,8 @@
 package cc.sofast.framework.starter.common.trans.translator;
 
+import cc.sofast.framework.starter.common.trans.Trans;
 import lombok.Data;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -25,6 +27,24 @@ public class TranslatorClass {
      * 需要嵌套转换的字段及其对应的转换类
      */
     private Map<Field, Class<?>> nestTransformFields = new HashMap<>();
+
+    public TranslatorClass(Class<?> aClass) {
+        this.clazz = aClass;
+        ReflectionUtils.doWithFields(aClass, field -> {
+            if (field.getType() == String.class && AnnotatedElementUtils.isAnnotated(field, Trans.class)) {
+                // 需要转换的字段，字段上的注解链上需要有@Transform，且字段类型必须为String
+                translatorFields.add(new TranslatorField<>(field));
+            } else if (field.getType() != String.class && field.isAnnotationPresent(Trans.class)) {
+                // 需要嵌套转换的字段，类型不为String，且字段上直接标注了@Transform
+                nestTransformFields.put(field, getClassFromField(field));
+            }
+        });
+    }
+
+    private Class<?> getClassFromField(Field field) {
+
+        return field.getType();
+    }
 
     @SuppressWarnings("unchecked")
     public void translate(Object value, TransContext transContext) {

@@ -3,6 +3,7 @@ package cc.sofast.framework.starter.mybatis.trans;
 import cc.sofast.framework.starter.common.trans.Trans;
 import cc.sofast.framework.starter.common.trans.enums.EnumTranslator;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -12,12 +13,19 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-@Trans(transformer = EnumTranslator.class)
+@Trans(translator = EnumTranslator.class)
 public @interface TransDB {
     /**
      * 来源字段
      */
+    @AliasFor("refFiled")
     String value() default "";
+
+    /**
+     * 来源字段
+     */
+    @AliasFor("value")
+    String refFiled() default "";
 
     /**
      * 必须实现自BaseMapper接口
