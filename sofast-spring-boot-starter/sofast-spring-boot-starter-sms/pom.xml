@@ -11,15 +11,10 @@
         <relativePath>../../sofast-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>sofast-spring-boot-starter-websocket</artifactId>
+    <artifactId>sofast-spring-boot-starter-sms</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

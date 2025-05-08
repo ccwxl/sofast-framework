@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.websocket.core.interceptor;
+package cc.sofast.framework.starter.websocket.handler;
 
 /**
  * @author wxl

@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.websocket.core;
+package cc.sofast.framework.starter.websocket.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
