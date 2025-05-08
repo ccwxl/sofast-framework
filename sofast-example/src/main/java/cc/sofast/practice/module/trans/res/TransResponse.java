@@ -27,7 +27,7 @@ public class TransResponse {
     private CourseType courseType;
 
     private String courseStr;
-    @TransEnum(typ = CourseType.class, value = Fields.courseStr)
+    @TransEnum(typ = CourseType.class, ref = Fields.courseStr)
     private String courseStrName;
 
 
