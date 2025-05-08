@@ -23,5 +23,6 @@
         <module>sofast-spring-boot-starter-web</module>
         <module>sofast-spring-boot-starter-sms</module>
         <module>sofast-spring-boot-starter-websocket</module>
+        <module>sofast-spring-boot-starter-all</module>
     </modules>
 </project>

@@ -27,6 +27,7 @@
         <!--https://github.com/openfga/openfga-->
         <module>sofast-biz-rebac</module>
         <module>sofast-biz-codegen</module>
+        <module>sofast-biz-all</module>
     </modules>
 
 </project>
