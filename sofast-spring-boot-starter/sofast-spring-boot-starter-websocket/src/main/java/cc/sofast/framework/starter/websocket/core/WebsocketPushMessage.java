@@ -12,7 +12,7 @@ import java.util.Map;
  * @author wxl
  */
 @Data
-public class WebsocketMessage implements Serializable {
+public class WebsocketPushMessage implements Serializable {
 
     /**
      * 消息类型
