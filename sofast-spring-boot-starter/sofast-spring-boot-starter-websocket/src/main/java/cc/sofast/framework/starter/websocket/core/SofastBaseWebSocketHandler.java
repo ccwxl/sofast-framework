@@ -1,7 +1,39 @@
 package cc.sofast.framework.starter.websocket.core;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.AbstractWebSocketHandler;
+
 /**
+ * websocket handler 封装
+ *
  * @author wxl
  */
-public class SofastBaseWebSocketHandler {
+@Slf4j
+public abstract class SofastBaseWebSocketHandler extends AbstractWebSocketHandler {
+
+    /**
+     * 连接建立成功
+     *
+     * @param session WebSocketSession
+     * @throws Exception Exception
+     */
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        //websocket 连接创建成功后, 将session 放入缓存中
+
+    }
+
+    /**
+     * 连接关闭
+     *
+     * @param session WebSocketSession
+     * @param status  CloseStatus
+     * @throws Exception Exception
+     */
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        //websocket 连接关闭后, 将session 移除缓存中
+    }
 }
