@@ -48,7 +48,6 @@
         <module>sofast-dependencies</module>
         <module>sofast-spring-boot-starter</module>
         <module>sofast-biz-component</module>
-        <module>sofast-example</module>
     </modules>
 
     <properties>
@@ -92,6 +91,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>3.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.4.5</version>
                 </plugin>
             </plugins>
         </pluginManagement>
