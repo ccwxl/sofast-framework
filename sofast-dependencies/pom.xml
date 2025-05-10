@@ -51,11 +51,4 @@
         </dependencies>
     </dependencyManagement>
 
-    <!--依赖所有组件-->
-    <dependencies>
-        <dependency>
-            <groupId>cc.sofast</groupId>
-            <artifactId>sofast-spring-boot-starter-common</artifactId>
-        </dependency>
-    </dependencies>
 </project>
