@@ -1,9 +1,12 @@
 package cc.sofast.framework.starter.websocket.core;
 
+import cc.sofast.framework.starter.security.context.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
+
+import java.util.Map;
 
 /**
  * websocket handler 封装
@@ -22,6 +25,8 @@ public abstract class SofastBaseWebSocketHandler extends AbstractWebSocketHandle
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         //websocket 连接创建成功后, 将session 放入缓存中
+        Map<String, Object> attributes = session.getAttributes();
+        Object o = attributes.get(WebSocketConstants.LOGIN_USER_KEY);
 
     }
 

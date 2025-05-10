@@ -1,0 +1,2 @@
+cc.sofast.framework.starter.security.SecurityAutoConfiguration
+cc.sofast.framework.starter.security.config.SofastDefaultSecurityFilterChainConfig

@@ -27,6 +27,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-security</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
