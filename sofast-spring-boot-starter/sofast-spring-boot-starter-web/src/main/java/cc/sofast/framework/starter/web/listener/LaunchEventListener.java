@@ -37,32 +37,38 @@ public class LaunchEventListener {
             contextPath = "/doc.html";
         }
 
+        String externalHost = getExternalHost();
+
+        log.info(buildStartupMessage(env, protocol, port, contextPath, externalHost));
+    }
+
+    private String getExternalHost() {
         String externalHost = "localhost";
         try {
             externalHost = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             log.warn("获取外部(局域网/公网)IP失败");
         }
+        return externalHost;
+    }
 
-        log.info(
-                CharSequenceUtil.format(
-                        "\n"
-                                + "----------------------------------------------------------"
-                                + "\n\tApplication '{}' is running! Access ApiDoc URLs:"
-                                + "\n\t ApiDoc Local: \t\t{}://127.0.0.1:{}{}"
-                                + "\n\t ApiDoc External: \t{}://{}:{}{}"
-                                + "\n----------------------------------------------------------"
-                                + "\n",
-                        env.getProperty("spring.application.name"),
-                        protocol,
-                        port,
-                        contextPath,
-                        protocol,
-                        externalHost,
-                        port,
-                        contextPath
-                )
+    private String buildStartupMessage(Environment env, String protocol, int port, String contextPath, String externalHost) {
+        String swaggerPath = "/swagger-ui/index.html";
+        return CharSequenceUtil.format(
+                """
+                        \n----------------------------------------------------------\
+                        \n\tApplication '{}' is running! Access ApiDoc URLs:\
+                        \n\t ApiDoc Local: \t\t\t{}://127.0.0.1:{}{}\
+                        \n\t ApiDoc External: \t\t{}://{}:{}{}\
+                        \n\t SwaggerUI Local: \t\t{}://127.0.0.1:{}{}\
+                        \n\t SwaggerUI External: \t{}://{}:{}{}\
+                        \n----------------------------------------------------------\
+                        """,
+                env.getProperty("spring.application.name"),
+                protocol, port, contextPath,
+                protocol, externalHost, port, contextPath,
+                protocol, port, swaggerPath,
+                protocol, externalHost, port, swaggerPath
         );
     }
 }
-
