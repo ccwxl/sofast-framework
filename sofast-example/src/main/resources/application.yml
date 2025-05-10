@@ -38,3 +38,8 @@ sofast:
   rbac:
     web:
       enabled: true
+
+logging:
+  structured:
+    format:
+      console: cc.sofast.practice.config.MyStructuredLoggingFormatter
