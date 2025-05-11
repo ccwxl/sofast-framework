@@ -1,13 +1,13 @@
 package cc.sofast.framework.starter.security;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author wxl
  */
 @AutoConfiguration
+@EnableConfigurationProperties(SofastSecurityProperties.class)
 public class SecurityAutoConfiguration {
 
 }
