@@ -36,7 +36,7 @@ class SofastRedisAutoConfigurationTest {
 
     @Container
     @ServiceConnection //代替 @DynamicPropertySource
-    static RedisStackContainer redis = new RedisStackContainer(DockerImageName.parse("docker.1ms.run/redis/redis-stack"));
+    static RedisStackContainer redis = new RedisStackContainer(DockerImageName.parse("redis:8.0.1"));
 
     @BeforeAll
     static void beforeAll() {
