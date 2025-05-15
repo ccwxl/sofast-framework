@@ -26,6 +26,7 @@
         <swagger-annotations.version>2.2.19</swagger-annotations.version>
         <redisson.version>3.45.1</redisson.version>
         <xfile-storage.version>2.2.1</xfile-storage.version>
+        <tika.version>3.1.0</tika.version>
         <testcontainers.version>1.20.6</testcontainers.version>
         <hutool.version>5.8.37</hutool.version>
         <knife4j.version>4.5.0</knife4j.version>
@@ -106,6 +107,12 @@
                 <groupId>org.dromara.x-file-storage</groupId>
                 <artifactId>x-file-storage-spring</artifactId>
                 <version>${xfile-storage.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
             </dependency>
             <!--file end-->
 

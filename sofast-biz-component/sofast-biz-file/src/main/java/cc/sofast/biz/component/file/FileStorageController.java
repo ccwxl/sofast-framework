@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
+import org.dromara.x.file.storage.core.constant.Constant;
 import org.dromara.x.file.storage.spring.SpringFileStorageProperties;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,8 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "${sofast.file.api.base-path}/file")
 @ConditionalOnProperty(prefix = "sofast.file.api", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class FileStorageController {
-
     private final FileStorageService fileStorageService;
+
 
     private final FileProperties fileProperties;
 
@@ -55,7 +56,7 @@ public class FileStorageController {
     @PostMapping("/upload")
     public Result<FileInfo> upload(@Schema(hidden = true) HttpServletRequest request,
                                    @RequestParam(required = false) String platform,
-                                   @RequestParam(required = false) String acl,
+                                   @RequestParam(required = false, defaultValue = "public") FileAccessLevel acl,
                                    MultipartFile file) {
         if (StringUtils.isBlank(platform)) {
             platform = fileStorageProperties.getDefaultPlatform();
@@ -67,26 +68,20 @@ public class FileStorageController {
         if (fileProperties.denied(name, MediaType.parseMediaType(requestContentType))) {
             return Result.fail("不允许上传此文件类型");
         }
-        String suffix = FileUtil.getSuffix(name);
-        //acl 文件类型
 
         //上传文件
         FileInfo fileInfo = fileStorageService
                 .of(file)
                 .setPlatform(platform)
-                .thumbnail(isImage(suffix))
+                .thumbnail(SofastFileUtils.isImage(file))
+                .setAcl(acl.getCode())
                 .upload();
         return Result.ok(fileInfo);
     }
 
-    private boolean isImage(String suffix) {
-
-        return false;
-    }
-
-
     /**
      * 文件列表
+     * TODO 只能看到公共的和自己上传的
      *
      * @param pageParam 分页参数
      * @return PageResult<FileDetail>
@@ -97,5 +92,10 @@ public class FileStorageController {
         Page<FileDetail> page = fileDetailService.page(PageUtil.buildPage(pageParam));
         return PageUtil.toPageResult(page);
     }
+
+    /**
+     * download
+     * 下载自己上传的和公共的
+     */
 
 }
