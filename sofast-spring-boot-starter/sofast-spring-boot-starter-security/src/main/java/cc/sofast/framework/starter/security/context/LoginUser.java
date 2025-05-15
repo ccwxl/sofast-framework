@@ -50,23 +50,4 @@ public class LoginUser {
      */
     private Map<String, Object> info = new HashMap<>();
 
-    /**
-     * 设置额外的用户信息
-     *
-     * @param key   键
-     * @param value 值
-     */
-    public void putInfo(String key, String value) {
-        info.put(key, value);
-    }
-
-    /**
-     * 获取额外的用户信息
-     *
-     * @param key 键
-     * @return 值
-     */
-    public Object getInfo(String key) {
-        return info.get(key);
-    }
 }

@@ -102,7 +102,7 @@ public class JsonUtils {
         }
     }
 
-    public <T> T toObj(String json, Class<T> clazz) {
+    public static <T> T toObj(String json, Class<T> clazz) {
         try {
             return MAPPER.readValue(json, clazz);
         } catch (JsonProcessingException e) {
@@ -111,7 +111,7 @@ public class JsonUtils {
         }
     }
 
-    public <T> T toObj(String json, TypeReference<T> typeReference) {
+    public static <T> T toObj(String json, TypeReference<T> typeReference) {
         try {
             return MAPPER.readValue(json, typeReference);
         } catch (JsonProcessingException e) {
@@ -120,7 +120,7 @@ public class JsonUtils {
         }
     }
 
-    public <T> T toObj(String json, Type type) {
+    public static <T> T toObj(String json, Type type) {
         try {
             return MAPPER.readValue(json, MAPPER.constructType(type));
         } catch (JsonProcessingException e) {
