@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "(biz-file) 文件接口", description = "(biz-file) 文件接口")
 @RequestMapping(value = "${sofast.file.api.base-path}/file")
 @ConditionalOnProperty(prefix = "sofast.file.api", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class FileStorageController {
+public class FileController {
     private final FileStorageService fileStorageService;
 
 
@@ -69,7 +69,7 @@ public class FileStorageController {
         FileInfo fileInfo = fileStorageService
                 .of(file)
                 .setPlatform(platform)
-                .thumbnail(SofastFileUtils.isImage(file))
+                .thumbnail(FileUploadUtils.isImage(file))
                 .setAcl(params.getAcl())
                 .upload();
         return Result.ok(fileInfo);

@@ -1,7 +1,6 @@
 package cc.sofast.biz.component.file;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Slf4j
 @Disabled
-class SofastFileUtilsTest {
+class FileUploadUtilsTest {
     Path path = Path.of("C:\\Users\\Administrator\\Pictures\\Camera Roll\\20240610104932.jpg");
 
     @Test
@@ -26,7 +25,7 @@ class SofastFileUtilsTest {
         byte[] bytes = FileUtil.readBytes(imageFile);
         String mimeType1 = FileUtil.getMimeType(path);
         MockMultipartFile file = new MockMultipartFile("my.jpg", bytes);
-        String mimeType = SofastFileUtils.getMimeType(file);
+        String mimeType = FileUploadUtils.getMimeType(file);
         log.info("mimeType1: {}", mimeType1);
         log.info("mineType: {}", mimeType);
         assertNotNull(mimeType);
@@ -37,7 +36,7 @@ class SofastFileUtilsTest {
         File imageFile = new File(path.toString());
         byte[] bytes = FileUtil.readBytes(imageFile);
         MockMultipartFile file = new MockMultipartFile("my.jpg", bytes);
-        boolean image = SofastFileUtils.isImage(file);
+        boolean image = FileUploadUtils.isImage(file);
         assertTrue(image);
     }
 }

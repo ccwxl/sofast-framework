@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  *
  * @author wxl
  */
-public class SofastFileUtils {
+public class FileUploadUtils {
 
     private static final Pattern IMAGE_PATTERN = Pattern.compile("image/.*");
 
