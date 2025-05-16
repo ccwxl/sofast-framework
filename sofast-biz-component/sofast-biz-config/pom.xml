@@ -13,5 +13,27 @@
     <artifactId>sofast-biz-config</artifactId>
     <packaging>jar</packaging>
 
-    
+    <dependencies>
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-biz-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-mybatis</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
 </project>

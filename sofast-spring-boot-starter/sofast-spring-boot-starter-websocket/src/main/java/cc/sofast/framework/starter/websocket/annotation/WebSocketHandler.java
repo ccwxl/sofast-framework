@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface SpringWebSocketHandler {
+public @interface WebSocketHandler {
 
     /**
      * The path of the WebSocket handler.
