@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author wxl
@@ -23,7 +22,7 @@ import java.util.Date;
 @FieldNameConstants
 @TableName(value = "${tb_prefix}file_detail", autoResultMap = true)
 @Schema($schema = "文件详情")
-public class FileDetail extends TenantBaseDO<FileDetail, String> {
+public class FileDO extends TenantBaseDO<FileDO, String> {
 
     /**
      * 文件id

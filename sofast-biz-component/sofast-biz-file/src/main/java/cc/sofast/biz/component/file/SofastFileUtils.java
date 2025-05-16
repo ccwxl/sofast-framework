@@ -9,7 +9,6 @@ import org.dromara.x.file.storage.core.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -60,17 +59,7 @@ public class SofastFileUtils {
      *
      * @return FileInfo
      */
-    public static FileInfo uploadFile(File file) {
-
-        return null;
-    }
-
-    /**
-     * 上传文件
-     *
-     * @return FileInfo
-     */
-    public static FileInfo uploadFile(MultipartFile file) {
+    public static FileInfo uploadFile(FileUploadParams params, MultipartFile file) {
 
         return null;
     }

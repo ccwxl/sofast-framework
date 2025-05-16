@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author wxl
  */
 @Mapper
-public interface FileDetailMapper extends MPJBaseMapper<FileDetail> {
+public interface FileMapper extends MPJBaseMapper<FileDO> {
 
 }

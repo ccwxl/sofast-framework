@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * @author wxl
  */
-public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail> implements FileRecorder {
+public class FileService extends ServiceImpl<FileMapper, FileDO> implements FileRecorder {
 
 
     /**
@@ -29,7 +29,7 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
     @SneakyThrows
     @Override
     public boolean save(FileInfo info) {
-        FileDetail detail = toFileDetail(info);
+        FileDO detail = toFileDetail(info);
         detail.setId(info.getFilename());
         boolean b = save(detail);
         if (b) {
@@ -45,10 +45,10 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
     @SneakyThrows
     @Override
     public void update(FileInfo info) {
-        FileDetail detail = toFileDetail(info);
-        QueryWrapper<FileDetail> qw = new QueryWrapper<FileDetail>()
-                .eq(detail.getUrl() != null, FileDetail.Fields.url, detail.getUrl())
-                .eq(detail.getId() != null, FileDetail.Fields.id, detail.getId());
+        FileDO detail = toFileDetail(info);
+        QueryWrapper<FileDO> qw = new QueryWrapper<FileDO>()
+                .eq(detail.getUrl() != null, FileDO.Fields.url, detail.getUrl())
+                .eq(detail.getId() != null, FileDO.Fields.id, detail.getId());
         update(detail, qw);
     }
 
@@ -58,7 +58,7 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
     @SneakyThrows
     @Override
     public FileInfo getByUrl(String url) {
-        return toFileInfo(getOne(new QueryWrapper<FileDetail>().eq(FileDetail.Fields.url, url)));
+        return toFileInfo(getOne(new QueryWrapper<FileDO>().eq(FileDO.Fields.url, url)));
     }
 
     /**
@@ -66,7 +66,7 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
      */
     @Override
     public boolean delete(String url) {
-        remove(new QueryWrapper<FileDetail>().eq(FileDetail.Fields.url, url));
+        remove(new QueryWrapper<FileDO>().eq(FileDO.Fields.url, url));
         return true;
     }
 
@@ -83,9 +83,9 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
     /**
      * 将 FileInfo 转为 FileDetail
      */
-    public FileDetail toFileDetail(FileInfo info) {
-        FileDetail detail = BeanUtil.copyProperties(
-                info, FileDetail.class, "metadata", "userMetadata", "thMetadata", "thUserMetadata", "attr", "hashInfo");
+    public FileDO toFileDetail(FileInfo info) {
+        FileDO detail = BeanUtil.copyProperties(
+                info, FileDO.class, "metadata", "userMetadata", "thMetadata", "thUserMetadata", "attr", "hashInfo");
         // 这里手动获 元数据 并转成 json 字符串，方便存储在数据库中
         detail.setMetadata(valueToJson(info.getMetadata()));
         detail.setUserMetadata(valueToJson(info.getUserMetadata()));
@@ -103,7 +103,7 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
     /**
      * 将 FileDetail 转为 FileInfo
      */
-    public FileInfo toFileInfo(FileDetail detail) {
+    public FileInfo toFileInfo(FileDO detail) {
         FileInfo info = BeanUtil.copyProperties(
                 detail, FileInfo.class, "metadata", "userMetadata", "thMetadata", "thUserMetadata", "attr", "hashInfo");
 
@@ -165,10 +165,10 @@ public class FileDetailService extends ServiceImpl<FileDetailMapper, FileDetail>
      * 根据文件 ID 获取文件信息
      */
     public FileInfo getFileInfoById(String id) {
-        FileDetail fileDetail = getById(id);
-        if (fileDetail == null) {
+        FileDO fileDO = getById(id);
+        if (fileDO == null) {
             return null;
         }
-        return toFileInfo(fileDetail);
+        return toFileInfo(fileDO);
     }
 }
