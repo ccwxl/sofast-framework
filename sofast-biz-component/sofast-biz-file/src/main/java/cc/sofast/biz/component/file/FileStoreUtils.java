@@ -84,6 +84,7 @@ public class FileStoreUtils {
      * @return FileInfo
      */
     public static FileInfo uploadFile(FileUploadParams params, MultipartFile file) {
+
         return uploadFileInner(params, file.getName(), FileStoreUtils.isImage(file), file);
     }
 
