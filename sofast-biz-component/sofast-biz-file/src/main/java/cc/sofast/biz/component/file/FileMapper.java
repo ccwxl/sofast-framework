@@ -1,12 +1,11 @@
 package cc.sofast.biz.component.file;
 
-import com.github.yulichang.base.MPJBaseMapper;
+import cc.sofast.framework.starter.mybatis.mapper.SofastBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author wxl
  */
-@Mapper
-public interface FileMapper extends MPJBaseMapper<FileDO> {
+public interface FileMapper extends SofastBaseMapper<FileDO, String> {
 
 }

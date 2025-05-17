@@ -45,7 +45,25 @@
 
             <dependency>
                 <groupId>cc.sofast</groupId>
+                <artifactId>sofast-spring-boot-starter-knife4j</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-spring-boot-starter-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
                 <artifactId>sofast-biz-rbac</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.sofast</groupId>
+                <artifactId>sofast-biz-file</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

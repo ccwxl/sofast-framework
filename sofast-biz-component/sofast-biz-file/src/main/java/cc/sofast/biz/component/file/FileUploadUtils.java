@@ -1,16 +1,13 @@
 package cc.sofast.biz.component.file;
 
-import org.apache.tika.metadata.HttpHeaders;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.metadata.TikaCoreProperties;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
+import com.alibaba.ttl.TransmittableThreadLocal;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tika.Tika;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.InputStream;
-import java.util.HashMap;
+import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,8 +17,8 @@ import java.util.regex.Pattern;
  * @author wxl
  */
 public class FileUploadUtils {
-
     private static final Pattern IMAGE_PATTERN = Pattern.compile("image/.*");
+    private static final ThreadLocal<Tika> TIKA = TransmittableThreadLocal.withInitial(Tika::new);
 
     /**
      * 获取类型
@@ -30,16 +27,11 @@ public class FileUploadUtils {
      * @return String
      */
     public static String getMimeType(MultipartFile file) {
-        AutoDetectParser parser = new AutoDetectParser();
-        parser.setParsers(new HashMap<>());
-        Metadata metadata = new Metadata();
-        metadata.add(TikaCoreProperties.RESOURCE_NAME_KEY, file.getName());
         try (InputStream stream = file.getInputStream()) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
+            return TIKA.get().detect(stream);
         } catch (Exception e) {
             throw new RuntimeException();
         }
-        return metadata.get(HttpHeaders.CONTENT_TYPE);
     }
 
     /**
@@ -62,5 +54,26 @@ public class FileUploadUtils {
     public static FileInfo uploadFile(FileUploadParams params, MultipartFile file) {
 
         return null;
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param id           文件ID
+     * @param outputStream 输出流
+     */
+    public static void downloadFile(String id, OutputStream outputStream) {
+
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param id       文件ID
+     * @param name     文件名
+     * @param response 响应流
+     */
+    public static void downloadFile(String id, String name, HttpServletResponse response) {
+
     }
 }

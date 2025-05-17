@@ -4,6 +4,7 @@ import cc.sofast.framework.starter.common.dto.PageParam;
 import cc.sofast.framework.starter.common.dto.PageResult;
 import cc.sofast.framework.starter.common.dto.Result;
 import cc.sofast.framework.starter.mybatis.utils.PageUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,17 +33,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "(biz-file) 文件接口", description = "(biz-file) 文件接口")
-@RequestMapping(value = "${sofast.file.api.base-path}/file")
+@RequestMapping(value = "${sofast.file.api.base-path:}/file")
 @ConditionalOnProperty(prefix = "sofast.file.api", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class FileController {
     private final FileStorageService fileStorageService;
-
 
     private final FileProperties fileProperties;
 
     private final FileService fileService;
 
     private final SpringFileStorageProperties fileStorageProperties;
+
+    private final FileMapper fileMapper;
 
     /**
      * 上传文件
@@ -52,8 +54,8 @@ public class FileController {
      */
     @Operation(summary = "上传文件")
     @PostMapping("/upload")
-    public Result<FileInfo> upload(FileUploadParams params,
-                                   MultipartFile file) {
+    public Result<FileInfo> fileUpload(@ParameterObject FileUploadParams params,
+                                       MultipartFile file) {
         String platform = null;
         if (StringUtils.isBlank(params.getPlatform())) {
             platform = fileStorageProperties.getDefaultPlatform();
@@ -65,12 +67,13 @@ public class FileController {
             return Result.fail("不允许上传此文件类型");
         }
 
+        boolean supportAcl = fileStorageService.isSupportAcl(platform);
         //上传文件
         FileInfo fileInfo = fileStorageService
                 .of(file)
                 .setPlatform(platform)
                 .thumbnail(FileUploadUtils.isImage(file))
-                .setAcl(params.getAcl())
+                .setAcl(supportAcl, params.getAcl())
                 .upload();
         return Result.ok(fileInfo);
     }
@@ -85,18 +88,18 @@ public class FileController {
     @Operation(summary = "文件列表")
     @GetMapping("/page")
     public PageResult<FileDO> page(@ParameterObject PageParam pageParam) {
-        Page<FileDO> page = fileService.page(PageUtil.buildPage(pageParam));
+        Page<FileDO> page = fileMapper.selectPage(PageUtil.buildPage(pageParam), Wrappers.emptyWrapper());
         return PageUtil.toPageResult(page);
     }
 
     /**
      * download
-     * 下载自己上传的和公共的
+     * TODO 下载自己上传的和公共的
      */
 
     /**
      * download 图片类带缓存.
-     * 下载自己上传和公共的
+     * TODO 下载自己上传和公共的
      */
 
 
