@@ -1,11 +1,16 @@
 package cc.sofast.biz.component.file;
 
+import cc.sofast.framework.starter.common.exception.ServiceException;
+import cc.sofast.framework.starter.common.utils.SpringUtils;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
 import org.dromara.x.file.storage.core.FileInfo;
+import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.regex.Matcher;
@@ -52,6 +57,33 @@ public class FileUploadUtils {
      * @return FileInfo
      */
     public static FileInfo uploadFile(FileUploadParams params, MultipartFile file) {
+        //验证文件类型
+        String name = file.getName();
+        FileProperties fileProperties = SpringUtils.getBean(FileProperties.class);
+        if (fileProperties.denied(name)) {
+            throw new ServiceException("不允许上传此类型的文件");
+        }
+        FileStorageService fileStorageService = SpringUtils.getBean(FileStorageService.class);
+        String platform = params.getPlatform();
+        if (StringUtils.isBlank(params.getPlatform())) {
+            platform = fileStorageService.getProperties().getDefaultPlatform();
+        }
+        boolean supportAcl = fileStorageService.isSupportAcl(params.getPlatform());
+        //上传文件
+        return fileStorageService
+                .of(file)
+                .setPlatform(platform)
+                .thumbnail(FileUploadUtils.isImage(file))
+                .setAcl(supportAcl, params.getAcl())
+                .upload();
+    }
+
+    /**
+     * 上传文件
+     *
+     * @return FileInfo
+     */
+    public static FileInfo uploadFile(FileUploadParams params, File file) {
 
         return null;
     }

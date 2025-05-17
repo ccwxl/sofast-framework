@@ -173,4 +173,16 @@ public class FileDO extends TenantBaseDO<FileDO, String> {
      */
     @TableField(value = "create_time")
     private LocalDateTime createTime;
+
+    /**
+     * 业务类型
+     */
+    @TableField(value = "biz_type")
+    private String bizType;
+
+    /**
+     * 业务key
+     */
+    @TableField(value = "biz_key")
+    private String bizKey;
 }

@@ -4,13 +4,11 @@ import cc.sofast.framework.starter.common.dto.PageParam;
 import cc.sofast.framework.starter.common.dto.PageResult;
 import cc.sofast.framework.starter.common.dto.Result;
 import cc.sofast.framework.starter.mybatis.utils.PageUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.dromara.x.file.storage.spring.SpringFileStorageProperties;
@@ -40,11 +38,9 @@ public class FileController {
 
     private final FileProperties fileProperties;
 
-    private final FileService fileService;
-
     private final SpringFileStorageProperties fileStorageProperties;
 
-    private final FileMapper fileMapper;
+    private final FileService fileService;
 
     /**
      * 上传文件
@@ -56,39 +52,22 @@ public class FileController {
     @PostMapping("/upload")
     public Result<FileInfo> fileUpload(@ParameterObject FileUploadParams params,
                                        MultipartFile file) {
-        String platform = null;
-        if (StringUtils.isBlank(params.getPlatform())) {
-            platform = fileStorageProperties.getDefaultPlatform();
-        }
-
-        //验证文件类型
-        String name = file.getName();
-        if (fileProperties.denied(name)) {
-            return Result.fail("不允许上传此文件类型");
-        }
-
-        boolean supportAcl = fileStorageService.isSupportAcl(platform);
-        //上传文件
-        FileInfo fileInfo = fileStorageService
-                .of(file)
-                .setPlatform(platform)
-                .thumbnail(FileUploadUtils.isImage(file))
-                .setAcl(supportAcl, params.getAcl())
-                .upload();
+        //hook before
+        FileInfo fileInfo = FileUploadUtils.uploadFile(params, file);
+        //hook after
         return Result.ok(fileInfo);
     }
 
     /**
      * 文件列表
-     * TODO 只能看到公共的和自己上传的
      *
      * @param pageParam 分页参数
      * @return PageResult<FileDetail>
      */
     @Operation(summary = "文件列表")
     @GetMapping("/page")
-    public PageResult<FileDO> page(@ParameterObject PageParam pageParam) {
-        Page<FileDO> page = fileMapper.selectPage(PageUtil.buildPage(pageParam), Wrappers.emptyWrapper());
+    public PageResult<FileDO> page(@ParameterObject PageParam pageParam, @ParameterObject FileUploadParams queryParams) {
+        Page<FileDO> page = fileService.selectPage(PageUtil.buildPage(pageParam), queryParams);
         return PageUtil.toPageResult(page);
     }
 
