@@ -28,6 +28,9 @@ public class FileProperties {
     private Set<String> denyMediaType;
 
     public boolean denied(String name) {
+        if (name == null) {
+            return true;
+        }
         String suffix = (name.contains(".") ? name.substring(name.lastIndexOf(".") + 1) : "").toLowerCase(Locale.ROOT);
         boolean defaultDeny = false;
         if (CollectionUtil.isNotEmpty(denyFiles)) {

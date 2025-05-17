@@ -182,6 +182,6 @@ public class SofastFileRecorder implements FileRecorder {
      */
     public FileInfo uploadFile(FileUploadParams params, MultipartFile file) {
 
-        return FileUploadUtils.uploadFile(params, file);
+        return FileStoreUtils.uploadFile(params, file);
     }
 }

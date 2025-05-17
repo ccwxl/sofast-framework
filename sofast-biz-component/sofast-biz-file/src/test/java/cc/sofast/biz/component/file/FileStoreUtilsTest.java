@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Slf4j
 @Disabled
-class FileUploadUtilsTest {
+class FileStoreUtilsTest {
     Path path = Path.of("C:\\Users\\Administrator\\Pictures\\Camera Roll\\20240610104932.jpg");
 
     @Test
@@ -25,7 +25,7 @@ class FileUploadUtilsTest {
         byte[] bytes = FileUtil.readBytes(imageFile);
         String mimeType1 = FileUtil.getMimeType(path);
         MockMultipartFile file = new MockMultipartFile("my.jpg", bytes);
-        String mimeType = FileUploadUtils.getMimeType(file);
+        String mimeType = FileStoreUtils.getMimeType(file);
         log.info("mimeType1: {}", mimeType1);
         log.info("mineType: {}", mimeType);
         assertNotNull(mimeType);
@@ -36,7 +36,7 @@ class FileUploadUtilsTest {
         File imageFile = new File(path.toString());
         byte[] bytes = FileUtil.readBytes(imageFile);
         MockMultipartFile file = new MockMultipartFile("my.jpg", bytes);
-        boolean image = FileUploadUtils.isImage(file);
+        boolean image = FileStoreUtils.isImage(file);
         assertTrue(image);
     }
 }
