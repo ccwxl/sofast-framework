@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -54,7 +55,6 @@ import java.util.function.Consumer;
 @ConditionalOnProperty(prefix = "sofast.file.api", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class FileController {
     private final FileStorageService fileStorageService;
-
     private final FileService fileService;
 
     /**

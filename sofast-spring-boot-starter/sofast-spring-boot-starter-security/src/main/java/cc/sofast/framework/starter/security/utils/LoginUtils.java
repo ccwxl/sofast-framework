@@ -5,5 +5,4 @@ package cc.sofast.framework.starter.security.utils;
  */
 public class LoginUtils {
 
-
 }

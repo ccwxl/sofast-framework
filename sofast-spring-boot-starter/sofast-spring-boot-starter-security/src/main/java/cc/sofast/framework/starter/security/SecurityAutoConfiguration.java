@@ -1,7 +1,20 @@
 package cc.sofast.framework.starter.security;
 
+import cc.sofast.framework.starter.security.context.TransmittableThreadLocalSecurityContextHolderStrategy;
+import cc.sofast.framework.starter.security.filter.TokenAuthenticationFilter;
+import cc.sofast.framework.starter.security.handler.AuthenticationFailedHandler;
+import cc.sofast.framework.starter.security.handler.AuthorizationFailedHandler;
+import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
+import cc.sofast.framework.starter.web.exception.GlobalCommonException;
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * @author wxl
@@ -10,4 +23,50 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(SofastSecurityProperties.class)
 public class SecurityAutoConfiguration {
 
+    @Bean
+    public AuthenticationFailedHandler authenticationFailedHandler(GlobalCommonException exceptionResolver) {
+
+        return new AuthenticationFailedHandler(exceptionResolver);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(GlobalCommonException exceptionResolver) {
+
+        return new AuthorizationFailedHandler(exceptionResolver);
+    }
+
+    @Bean
+    public TokenAuthenticationFilter jwtTokenFilter(DynamicPermitAllRequestMatcher requestMatcher,
+                                                    GlobalCommonException exceptionResolver) {
+
+        return new TokenAuthenticationFilter(exceptionResolver, requestMatcher);
+    }
+
+    @Bean
+    public DynamicPermitAllRequestMatcher permitAllRequestMatcher(
+            SofastSecurityProperties securityProperties, RequestMappingHandlerMapping requestMapping) {
+
+        return new DynamicPermitAllRequestMatcher(securityProperties, requestMapping);
+    }
+
+    /**
+     * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法，
+     * 设置使用 {@link TransmittableThreadLocalSecurityContextHolderStrategy} 作为 Security 的上下文策略
+     */
+    @Bean
+    public MethodInvokingFactoryBean securityContextHolderMethodInvokingFactoryBean() {
+        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
+        methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
+        methodInvokingFactoryBean.setTargetMethod("setStrategyName");
+        methodInvokingFactoryBean.setArguments(TransmittableThreadLocalSecurityContextHolderStrategy.class.getName());
+        return methodInvokingFactoryBean;
+    }
+
+    /**
+     * Spring Security 加密器
+     **/
+    @Bean
+    public PasswordEncoder passwordEncoder(SofastSecurityProperties securityProperties) {
+        return new BCryptPasswordEncoder(securityProperties.getPasswordEncoderLength());
+    }
 }

@@ -21,6 +21,17 @@
         </dependency>
 
         <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-web</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>

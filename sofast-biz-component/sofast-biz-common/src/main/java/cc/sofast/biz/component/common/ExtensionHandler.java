@@ -14,11 +14,11 @@ public class ExtensionHandler {
      * 执行扩展点
      *
      * @param extensionClass 扩展点类
-     * @param func           执行函数
+     * @param consumer           执行函数
      * @param <T>            扩展点类型
      */
-    public static <T> void exec(Class<T> extensionClass, Consumer<T> func) {
+    public static <T> void exec(Class<T> extensionClass, Consumer<T> consumer) {
         Map<String, T> beans = SpringUtils.getBeansOfType(extensionClass);
-        beans.forEach((_, v) -> func.accept(v));
+        beans.forEach((_, v) -> consumer.accept(v));
     }
 }
