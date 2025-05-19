@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -73,7 +74,7 @@ public class ObjectMapperWrapper {
                 // 表示只包括具有非空值的属性参与序列化和反序列化。
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
                 // 关闭默认的类型信息，默认情况下，Jackson会在序列化时在JSON中包含 fully qualified class name，以便在序列化时还原该对象。
-                .deactivateDefaultTyping()
+                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL)
                 // 设置属性可见性
                 .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
                 // 支持构造函数注入
