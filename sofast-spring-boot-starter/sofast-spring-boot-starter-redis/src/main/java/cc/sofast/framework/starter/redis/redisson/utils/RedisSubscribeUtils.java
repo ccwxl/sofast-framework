@@ -9,7 +9,7 @@ import java.util.function.Consumer;
  *
  * @author wxl
  */
-public class RedisSubscribeUtils extends RedissonBaseUtils {
+public class RedisSubscribeUtils extends RedissonUtils {
 
     private RedisSubscribeUtils() {
 

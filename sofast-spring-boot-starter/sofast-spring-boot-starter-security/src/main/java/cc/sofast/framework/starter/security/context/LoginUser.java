@@ -1,6 +1,7 @@
 package cc.sofast.framework.starter.security.context;
 
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @author wxl
  */
 @Data
+@FieldNameConstants
 public class LoginUser {
 
     public static final String INFO_KEY_NICKNAME = "nickname";

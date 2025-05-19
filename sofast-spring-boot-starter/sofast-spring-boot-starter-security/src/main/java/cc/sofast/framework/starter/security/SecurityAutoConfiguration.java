@@ -5,6 +5,8 @@ import cc.sofast.framework.starter.security.filter.TokenAuthenticationFilter;
 import cc.sofast.framework.starter.security.handler.AuthenticationFailedHandler;
 import cc.sofast.framework.starter.security.handler.AuthorizationFailedHandler;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
+import cc.sofast.framework.starter.security.token.TokenService;
+import cc.sofast.framework.starter.security.token.impl.RedisTokenService;
 import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -37,9 +39,16 @@ public class SecurityAutoConfiguration {
 
     @Bean
     public TokenAuthenticationFilter jwtTokenFilter(DynamicPermitAllRequestMatcher requestMatcher,
-                                                    GlobalCommonException exceptionResolver) {
+                                                    GlobalCommonException exceptionResolver,
+                                                    TokenService tokenService) {
 
-        return new TokenAuthenticationFilter(exceptionResolver, requestMatcher);
+        return new TokenAuthenticationFilter(exceptionResolver, requestMatcher, tokenService);
+    }
+
+    @Bean
+    public TokenService tokenService() {
+
+        return new RedisTokenService();
     }
 
     @Bean

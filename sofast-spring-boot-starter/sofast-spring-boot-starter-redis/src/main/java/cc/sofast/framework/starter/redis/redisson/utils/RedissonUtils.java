@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author wxl
  */
-public class RedissonBaseUtils {
+public class RedissonUtils {
 
     private static RedissonClient redissonClient;
 
@@ -21,7 +21,7 @@ public class RedissonBaseUtils {
     }
 
     public static void setRedissonClient(RedissonClient redissonClient) {
-        RedissonBaseUtils.redissonClient = redissonClient;
+        RedissonUtils.redissonClient = redissonClient;
     }
 
     public static RedissonClient getRedissonClient() {
@@ -107,7 +107,7 @@ public class RedissonBaseUtils {
     public static <T> Map<String, T> getHash(String key) {
         checkRedissonClient();
         RMap<String, T> rMap = redissonClient.getMap(key);
-        return rMap.getAll(rMap.keySet());
+        return rMap.readAllMap();
     }
 
     /**

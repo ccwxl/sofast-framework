@@ -27,7 +27,7 @@ import java.util.function.Function;
  *
  * @author wxl
  */
-public class RedisClientCacheUtils extends RedissonBaseUtils {
+public class RedisClientCacheUtils extends RedissonUtils {
 
     /**
      * 本地缓存

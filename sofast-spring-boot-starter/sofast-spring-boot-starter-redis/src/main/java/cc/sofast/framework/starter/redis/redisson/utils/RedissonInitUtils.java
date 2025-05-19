@@ -8,7 +8,7 @@ import org.redisson.api.RedissonClient;
 public class RedissonInitUtils {
 
     public RedissonInitUtils(RedissonClient redissonClient) {
-        RedissonBaseUtils.setRedissonClient(redissonClient);
+        RedissonUtils.setRedissonClient(redissonClient);
         RedisSubscribeUtils.setRedissonClient(redissonClient);
         RedisClientCacheUtils.setRedissonClient(redissonClient);
     }

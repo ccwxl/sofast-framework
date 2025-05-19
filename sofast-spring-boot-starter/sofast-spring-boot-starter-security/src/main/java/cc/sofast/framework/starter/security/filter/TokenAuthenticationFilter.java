@@ -2,6 +2,7 @@ package cc.sofast.framework.starter.security.filter;
 
 import cc.sofast.framework.starter.security.context.LoginUser;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
+import cc.sofast.framework.starter.security.token.TokenService;
 import cc.sofast.framework.starter.security.utils.SecurityUtils;
 import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import jakarta.servlet.FilterChain;
@@ -9,13 +10,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
@@ -29,11 +25,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final DynamicPermitAllRequestMatcher dynamicPermitAllRequestMatcher;
 
+    private final TokenService tokenService;
+
     public TokenAuthenticationFilter(
             GlobalCommonException globalCommonException,
-            DynamicPermitAllRequestMatcher dynamicPermitAllRequestMatcher) {
+            DynamicPermitAllRequestMatcher dynamicPermitAllRequestMatcher, TokenService tokenService) {
         this.globalCommonException = globalCommonException;
         this.dynamicPermitAllRequestMatcher = dynamicPermitAllRequestMatcher;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -60,7 +59,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private LoginUser authentication(String token) {
-
+        //解析jwt令牌
+        LoginUser loginUser = tokenService.getLoginUser(token);
 
         return null;
     }

@@ -136,4 +136,14 @@ class SofastRedisAutoConfigurationTest {
             System.out.println(objectMapper.writeValueAsString(info));
         }
     }
+
+
+    @Test
+    public void redis_hash_Test(){
+        RMap<Object, Object> map = redissonClient.getMap("aakey");
+        map.put("a", List.of("a","b","c"));
+
+        Object o = redissonClient.getMap("aakey").get("a");
+        Assertions.assertEquals("[a, b, c]", o.toString());
+    }
 }
