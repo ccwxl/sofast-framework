@@ -1,14 +1,9 @@
 package cc.sofast.framework.starter.security.config;
 
-import cc.sofast.framework.starter.security.SofastSecurityProperties;
 import cc.sofast.framework.starter.security.filter.TokenAuthenticationFilter;
 import cc.sofast.framework.starter.security.handler.AuthenticationFailedHandler;
-import cc.sofast.framework.starter.security.handler.AuthorizationFailedHandler;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
-import cc.sofast.framework.starter.web.exception.GlobalCommonException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,13 +11,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
 
@@ -42,6 +33,7 @@ public class SofastDefaultSecurityFilterChainConfig {
     @Order(1)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, TokenAuthenticationFilter tokenFilter,
                                                           AuthenticationFailedHandler authenticationFailedHandler,
+                                                          DynamicPermitAllRequestMatcher permitAllRequestMatcher,
                                                           AccessDeniedHandler accessDeniedHandler,
                                                           List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers) throws Exception {
         http.cors(AbstractHttpConfigurer::disable)
@@ -56,6 +48,7 @@ public class SofastDefaultSecurityFilterChainConfig {
                 .exceptionHandling(c -> c.authenticationEntryPoint(authenticationFailedHandler)
                         .accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .requestMatchers(permitAllRequestMatcher).permitAll()
                         .anyRequest().authenticated()
                 )
                 .authorizeHttpRequests(c -> authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(c)));

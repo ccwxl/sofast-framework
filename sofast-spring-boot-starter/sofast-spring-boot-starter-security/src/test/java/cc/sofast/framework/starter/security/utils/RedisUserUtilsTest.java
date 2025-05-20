@@ -4,7 +4,8 @@ import cc.sofast.framework.starter.common.utils.SpringUtils;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.security.SecurityTestApp;
 import cc.sofast.framework.starter.security.context.LoginUser;
-import cc.sofast.framework.starter.security.token.UserInfoDetailService;
+import cc.sofast.framework.starter.security.token.SecurityUserInfo;
+import cc.sofast.framework.starter.security.token.SecurityUserInfoDetailService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redis.testcontainers.RedisStackContainer;
@@ -53,40 +54,23 @@ class RedisUserUtilsTest {
 
     @Test
     void getLoginUser() {
-        UserInfoDetailService userInfoDetailService = new UserInfoDetailService() {
-            @Override
-            public List<String> getPermissions(Long userid) {
-                return List.of("1", "2", "3");
-            }
+        SecurityUserInfoDetailService userInfoDetailService = new SecurityUserInfoDetailService() {
 
             @Override
-            public List<String> getRoles(Long userid) {
-                return List.of("4", "5", "6");
-            }
+            public SecurityUserInfo getUserInfo(Long userid) {
 
-            @Override
-            public List<Long> getOrgs(Long userid) {
-                return List.of(7L, 8L, 9L);
-            }
-
-            @Override
-            public Map<String, Object> getUserInfo(Long userid) {
-
-                return Map.of("a", "b");
+                return null;
             }
         };
 
         mockStatic(SpringUtils.class);
-        when(SpringUtils.getBean(UserInfoDetailService.class)).thenReturn(userInfoDetailService);
+        when(SpringUtils.getBean(SecurityUserInfoDetailService.class)).thenReturn(userInfoDetailService);
 
-        LoginUser loginUser = RedisUserUtils.getLoginUser(1L);
+        SecurityUserInfo loginUser = RedisUserUtils.getLoginUser(1L);
         Assertions.assertNotNull(loginUser);
 
-        LoginUser loginUser2 = RedisUserUtils.getLoginUser(1L);
+        SecurityUserInfo loginUser2 = RedisUserUtils.getLoginUser(1L);
         Assertions.assertNotNull(loginUser2);
-
-        Object orgStr = redisTemplate.opsForValue().get(String.format(RedisUserUtils.ORG_KEY, 1));
-        log.info("orgStr: {}", orgStr);
     }
 
     @Test

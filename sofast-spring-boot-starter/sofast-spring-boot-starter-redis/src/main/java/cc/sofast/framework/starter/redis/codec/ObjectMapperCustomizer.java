@@ -1,11 +1,11 @@
 package cc.sofast.framework.starter.redis.codec;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author wxl
  */
 @FunctionalInterface
 public interface ObjectMapperCustomizer {
-    void customize(JsonMapper.Builder builder);
+    void customize(ObjectMapper objectMapper);
 }

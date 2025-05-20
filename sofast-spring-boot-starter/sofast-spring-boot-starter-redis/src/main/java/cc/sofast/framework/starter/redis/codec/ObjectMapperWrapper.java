@@ -2,20 +2,23 @@ package cc.sofast.framework.starter.redis.codec;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.StreamReadFeature;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.Getter;
 import lombok.Setter;
+import org.redisson.codec.JsonJacksonCodec;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -33,14 +36,65 @@ public class ObjectMapperWrapper {
     private final ObjectMapper objectMapper;
 
     public ObjectMapperWrapper(List<ObjectMapperCustomizer> customizers) {
+        this();
         for (ObjectMapperCustomizer customizer : customizers) {
-            customizer.customize(builder);
+            customizer.customize(objectMapper);
         }
-        this.objectMapper = builder.build();
     }
 
     public ObjectMapperWrapper() {
         this.objectMapper = builder.build();
+        init(this.objectMapper);
+        initTypeInclusion(this.objectMapper);
+    }
+
+    protected void init(ObjectMapper objectMapper) {
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setVisibility(objectMapper.getSerializationConfig()
+                .getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        objectMapper.enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        objectMapper.enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
+        objectMapper.addMixIn(Throwable.class, JsonJacksonCodec.ThrowableMixIn.class);
+    }
+
+    protected void initTypeInclusion(ObjectMapper mapObjectMapper) {
+        TypeResolverBuilder<?> mapTyper = new ObjectMapper.DefaultTypeResolverBuilder(ObjectMapper.DefaultTyping.NON_FINAL) {
+            public boolean useForType(JavaType t) {
+                switch (_appliesFor) {
+                    case NON_CONCRETE_AND_ARRAYS:
+                        while (t.isArrayType()) {
+                            t = t.getContentType();
+                        }
+                        // fall through
+                    case OBJECT_AND_NON_CONCRETE:
+                        return t.getRawClass() == Object.class || !t.isConcrete();
+                    case NON_FINAL:
+                        while (t.isArrayType()) {
+                            t = t.getContentType();
+                        }
+                        // to fix problem with wrong long to int conversion
+                        if (t.getRawClass() == Long.class) {
+                            return true;
+                        }
+                        if (t.getRawClass() == XMLGregorianCalendar.class) {
+                            return false;
+                        }
+                        return !t.isFinal(); // includes Object.class
+                    default:
+                        // case JAVA_LANG_OBJECT:
+                        return t.getRawClass() == Object.class;
+                }
+            }
+        };
+        mapTyper.init(JsonTypeInfo.Id.CLASS, null);
+        mapTyper.inclusion(JsonTypeInfo.As.PROPERTY);
+        mapObjectMapper.setDefaultTyping(mapTyper);
     }
 
     /**
@@ -73,8 +127,8 @@ public class ObjectMapperWrapper {
                 .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
                 // 表示只包括具有非空值的属性参与序列化和反序列化。
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
-                // 关闭默认的类型信息，默认情况下，Jackson会在序列化时在JSON中包含 fully qualified class name，以便在序列化时还原该对象。
-                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL)
+                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+//                .deactivateDefaultTyping()
                 // 设置属性可见性
                 .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
                 // 支持构造函数注入

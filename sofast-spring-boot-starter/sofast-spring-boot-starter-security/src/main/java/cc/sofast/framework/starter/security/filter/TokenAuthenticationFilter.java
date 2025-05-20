@@ -62,6 +62,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         //解析jwt令牌
         LoginUser loginUser = tokenService.getLoginUser(token);
 
-        return null;
+        return loginUser;
     }
 }
