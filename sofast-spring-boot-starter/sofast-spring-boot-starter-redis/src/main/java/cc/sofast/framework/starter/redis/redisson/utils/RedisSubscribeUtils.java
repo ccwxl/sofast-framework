@@ -24,7 +24,7 @@ public class RedisSubscribeUtils extends RedissonUtils {
      * @return unique listener id
      */
     public static <T> int subscribe(String channelKey, Class<T> clazz, Consumer<T> consumer) {
-        RTopic topic = getRedissonClient().getTopic(channelKey);
+        RTopic topic = getRedissonClient().getTopic(channelKey, getCacheCodec(clazz));
         return topic.addListener(clazz, (channel, msg) -> consumer.accept(msg));
     }
 

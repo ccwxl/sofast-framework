@@ -1,6 +1,8 @@
 package cc.sofast.framework.starter.redis.redisson.utils;
 
+import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.codec.RedissonJsonJacksonCodec;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.api.*;
 import org.redisson.client.codec.Codec;
 
@@ -20,7 +22,14 @@ public class RedissonUtils {
     private static final Map<Class<?>, Codec> CACHE_CODEC_MAP = new ConcurrentHashMap<>();
 
     public static Codec getCacheCodec(Class<?> clazz) {
-        return CACHE_CODEC_MAP.computeIfAbsent(clazz, RedissonJsonJacksonCodec::new);
+        return CACHE_CODEC_MAP.computeIfAbsent(clazz, v -> {
+            Codec codec = redissonClient.getConfig().getCodec();
+            if (codec instanceof RedissonJsonJacksonCodec codecs) {
+                ObjectMapper objectMapper = codecs.getObjectMapper();
+                return new RedissonJsonJacksonCodec(v, objectMapper);
+            }
+            return new RedissonJsonJacksonCodec(v, ObjectMapperWrapper.defaultBuilder().build());
+        });
     }
 
     public static void checkRedissonClient() {

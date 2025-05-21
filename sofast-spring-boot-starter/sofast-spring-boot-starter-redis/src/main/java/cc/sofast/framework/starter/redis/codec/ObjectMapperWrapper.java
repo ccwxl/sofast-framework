@@ -29,16 +29,16 @@ public class ObjectMapperWrapper {
 
     private static JsonMapper.Builder builder = defaultBuilder();
 
-    private static final ObjectMapper OBJECT_MAPPER = builder.build();
+    private ObjectMapper objectMapper;
 
     public ObjectMapperWrapper(List<ObjectMapperCustomizer> customizers) {
-        this();
         for (ObjectMapperCustomizer customizer : customizers) {
-            customizer.customize(OBJECT_MAPPER);
+            customizer.customize(builder);
         }
     }
 
     public ObjectMapperWrapper() {
+        this.objectMapper = builder.build();
     }
 
     /**
@@ -91,7 +91,4 @@ public class ObjectMapperWrapper {
         ObjectMapperWrapper.builder = builder;
     }
 
-    public static ObjectMapper getObjectMapper() {
-        return OBJECT_MAPPER;
-    }
 }

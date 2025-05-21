@@ -26,6 +26,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author wxl
@@ -53,7 +54,8 @@ public class SofastRedisAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
-                                                 ObjectProvider<RedisTemplateCustomizer> customizers) {
+                                                 ObjectProvider<RedisTemplateCustomizer> customizers,
+                                                 ObjectProvider<ObjectMapperWrapper> wrappers) {
             RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
             redisTemplate.setConnectionFactory(redisConnectionFactory);
 
@@ -61,7 +63,7 @@ public class SofastRedisAutoConfiguration {
             redisTemplate.setKeySerializer(keySerializer);
             redisTemplate.setHashKeySerializer(keySerializer);
 
-            ObjectMapper objectMapper = ObjectMapperWrapper.getObjectMapper();
+            ObjectMapper objectMapper = wrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
             SofastGenericJackson2JsonRedisSerializer valueSerializer = new SofastGenericJackson2JsonRedisSerializer(objectMapper);
             redisTemplate.setValueSerializer(valueSerializer);
             redisTemplate.setHashValueSerializer(valueSerializer);
@@ -86,8 +88,8 @@ public class SofastRedisAutoConfiguration {
     public static class SofastRedissonConfiguration {
 
         @Bean
-        public SofastRedissonCustomizer redissonCustomizer() {
-            ObjectMapper objectMapper = ObjectMapperWrapper.getObjectMapper();
+        public SofastRedissonCustomizer redissonCustomizer(ObjectProvider<ObjectMapperWrapper> wrappers) {
+            ObjectMapper objectMapper = wrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
             return new SofastRedissonCustomizer(objectMapper);
         }
 

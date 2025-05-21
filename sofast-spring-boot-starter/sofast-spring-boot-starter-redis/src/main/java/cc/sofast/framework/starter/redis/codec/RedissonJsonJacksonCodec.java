@@ -22,8 +22,8 @@ public class RedissonJsonJacksonCodec extends TypedJsonJacksonCodec {
         super(Object.class, objectMapper);
     }
 
-    public RedissonJsonJacksonCodec(Class<?> valueClass) {
-        super(valueClass, ObjectMapperWrapper.getObjectMapper());
+    public RedissonJsonJacksonCodec(Class<?> valueClass, ObjectMapper objectMapper) {
+        super(valueClass, objectMapper);
     }
 
     @Override
