@@ -15,9 +15,13 @@ public class SofastGenericJackson2JsonRedisSerializer extends GenericJackson2Jso
 
     @Override
     public Object deserialize(byte[] source) throws SerializationException {
-        Class<?> clazz = RedisDeserializeHelper.get();
-        if (clazz != null) {
-            return deserialize(source, clazz);
+        try {
+            Class<?> clazz = RedisDeserializeHelper.get();
+            if (clazz != null) {
+                return deserialize(source, clazz);
+            }
+        } catch (Exception e) {
+            return super.deserialize(source);
         }
         return super.deserialize(source);
     }
