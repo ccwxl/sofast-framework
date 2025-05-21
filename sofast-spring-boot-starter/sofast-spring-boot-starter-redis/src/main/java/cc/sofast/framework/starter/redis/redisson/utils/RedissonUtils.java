@@ -1,9 +1,12 @@
 package cc.sofast.framework.starter.redis.redisson.utils;
 
+import cc.sofast.framework.starter.redis.codec.RedissonJsonJacksonCodec;
 import org.redisson.api.*;
+import org.redisson.client.codec.Codec;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 需要等待项目初始化完后才能使用{@link RedissonInitUtils#RedissonInitUtils(RedissonClient)}
@@ -13,6 +16,12 @@ import java.util.Map;
 public class RedissonUtils {
 
     private static RedissonClient redissonClient;
+
+    private static final Map<Class<?>, Codec> CACHE_CODEC_MAP = new ConcurrentHashMap<>();
+
+    public static Codec getCacheCodec(Class<?> clazz) {
+        return CACHE_CODEC_MAP.computeIfAbsent(clazz, RedissonJsonJacksonCodec::new);
+    }
 
     public static void checkRedissonClient() {
         if (redissonClient == null) {
@@ -27,6 +36,12 @@ public class RedissonUtils {
     public static RedissonClient getRedissonClient() {
         checkRedissonClient();
         return redissonClient;
+    }
+
+    public static <T> T getByKey(String key, Class<T> clazz) {
+        checkRedissonClient();
+        RBucket<T> bucket = redissonClient.getBucket(key, getCacheCodec(clazz));
+        return bucket.get();
     }
 
     public static <T> T getByKey(String key) {

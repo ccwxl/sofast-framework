@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.StreamReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -150,5 +151,26 @@ public class JsonUtils {
         config.accept(builder);
         JsonMapper customerMapper = builder.build();
         setCustomMapper(customerMapper);
+    }
+
+    /**
+     * convertValue 方法
+     */
+    public static <T> T convertValue(Object value, TypeReference<T> typeReference) {
+        return MAPPER.convertValue(value, typeReference);
+    }
+
+    /**
+     * convertValue 方法
+     */
+    public static <T> T convertValue(Object value, Class<T> typeReference) {
+        return MAPPER.convertValue(value, typeReference);
+    }
+
+    /**
+     * convertValue 方法
+     */
+    public static <T> T convertValue(Object value, JavaType typeReference) {
+        return MAPPER.convertValue(value, typeReference);
     }
 }

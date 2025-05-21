@@ -2,6 +2,7 @@ package cc.sofast.framework.starter.redis;
 
 import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
+import cc.sofast.framework.starter.redis.codec.SofastGenericJackson2JsonRedisSerializer;
 import cc.sofast.framework.starter.redis.redisson.SofastRedissonCustomizer;
 import cc.sofast.framework.starter.redis.redisson.utils.RedissonInitUtils;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
@@ -22,7 +23,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.List;
@@ -53,7 +53,6 @@ public class SofastRedisAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
-                                                 ObjectProvider<ObjectMapperWrapper> objectMapperWrappers,
                                                  ObjectProvider<RedisTemplateCustomizer> customizers) {
             RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
             redisTemplate.setConnectionFactory(redisConnectionFactory);
@@ -62,8 +61,8 @@ public class SofastRedisAutoConfiguration {
             redisTemplate.setKeySerializer(keySerializer);
             redisTemplate.setHashKeySerializer(keySerializer);
 
-            ObjectMapper objectMapper = objectMapperWrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
-            GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+            ObjectMapper objectMapper = ObjectMapperWrapper.getObjectMapper();
+            SofastGenericJackson2JsonRedisSerializer valueSerializer = new SofastGenericJackson2JsonRedisSerializer(objectMapper);
             redisTemplate.setValueSerializer(valueSerializer);
             redisTemplate.setHashValueSerializer(valueSerializer);
 
@@ -87,8 +86,8 @@ public class SofastRedisAutoConfiguration {
     public static class SofastRedissonConfiguration {
 
         @Bean
-        public SofastRedissonCustomizer redissonCustomizer(ObjectProvider<ObjectMapperWrapper> objectMapperWrappers) {
-            ObjectMapper objectMapper = objectMapperWrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
+        public SofastRedissonCustomizer redissonCustomizer() {
+            ObjectMapper objectMapper = ObjectMapperWrapper.getObjectMapper();
             return new SofastRedissonCustomizer(objectMapper);
         }
 

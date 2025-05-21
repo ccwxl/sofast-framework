@@ -15,7 +15,7 @@ public class RedisUserUtils {
 
     public static SecurityUserInfo getLoginUser(Long userId) {
         String key = key(userId);
-        SecurityUserInfo securityUserInfo = RedissonUtils.getByKey(key);
+        SecurityUserInfo securityUserInfo = RedissonUtils.getByKey(key, SecurityUserInfo.class);
         if (securityUserInfo == null) {
             securityUserInfo = detailService.getUserInfo(userId);
             RedissonUtils.setKv(key, securityUserInfo);
