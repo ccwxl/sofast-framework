@@ -15,7 +15,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -31,6 +30,12 @@
                     <artifactId>lettuce-core</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.sofast</groupId>
+            <artifactId>sofast-spring-boot-starter-common</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>

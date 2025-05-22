@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.redis.redisson.utils;
 
+import cc.sofast.framework.starter.common.utils.json.JsonUtils;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.codec.RedissonJsonJacksonCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,13 +10,14 @@ import org.redisson.client.codec.Codec;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 /**
- * 需要等待项目初始化完后才能使用{@link RedissonInitUtils#RedissonInitUtils(RedissonClient)}
+ * 需要等待项目初始化完后才能使用
  *
  * @author wxl
  */
-public class RedissonUtils {
+public class RedisUtils {
 
     private static RedissonClient redissonClient;
 
@@ -39,7 +41,7 @@ public class RedissonUtils {
     }
 
     public static void setRedissonClient(RedissonClient redissonClient) {
-        RedissonUtils.redissonClient = redissonClient;
+        RedisUtils.redissonClient = redissonClient;
     }
 
     public static RedissonClient getRedissonClient() {
@@ -163,6 +165,33 @@ public class RedissonUtils {
     /**
      * hash 数据类型
      *
+     * @param key   key
+     * @param value value
+     */
+    public static void setHash(String key, Object value) {
+        checkRedissonClient();
+        RMap<String, Object> rMap = redissonClient.getMap(key);
+        Map<String, Object> map = JsonUtils.toMap(value);
+        rMap.putAll(map);
+    }
+
+    /**
+     * hash 数据类型
+     *
+     * @param key key
+     * @param <T> value
+     * @return value
+     */
+    public static <T> T getHash(String key, Class<T> clazz) {
+        checkRedissonClient();
+        RMap<Object, Object> map = redissonClient.getMap(key);
+        Map<Object, Object> data = map.readAllMap();
+        return JsonUtils.convertValue(data, clazz);
+    }
+
+    /**
+     * hash 数据类型
+     *
      * @param key     key
      * @param hashKey hashKey
      * @param value   value
@@ -173,5 +202,55 @@ public class RedissonUtils {
         checkRedissonClient();
         RMap<String, T> rMap = redissonClient.getMap(key);
         return rMap.put(hashKey, value);
+    }
+
+
+    /**
+     * 订阅通道消息
+     *
+     * @param channelKey 通道key
+     * @param clazz      接收数据类型
+     * @param consumer   自定义处理
+     * @return unique listener id
+     */
+    public static <T> int subscribe(String channelKey, Class<T> clazz, Consumer<T> consumer) {
+        RTopic topic = getRedissonClient().getTopic(channelKey, getCacheCodec(clazz));
+        return topic.addListener(clazz, (channel, msg) -> consumer.accept(msg));
+    }
+
+    /**
+     * 发布通道消息
+     *
+     * @param channelKey 通道key
+     * @param msg        发送数据
+     * @param consumer   自定义处理
+     */
+    public static <T> Long publish(String channelKey, T msg, Consumer<T> consumer) {
+        RTopic topic = getRedissonClient().getTopic(channelKey);
+        long receivedClient = topic.publish(msg);
+        consumer.accept(msg);
+        return receivedClient;
+    }
+
+    /**
+     * 发布通道消息
+     *
+     * @param channelKey 通道key
+     * @param msg        发送数据
+     */
+    public static <T> Long publish(String channelKey, T msg) {
+        RTopic topic = getRedissonClient().getTopic(channelKey);
+        return topic.publish(msg);
+    }
+
+    /**
+     * 取消订阅
+     *
+     * @param channelKey 通道key
+     * @param listenerId 监听器id
+     */
+    public static void unsubscribe(String channelKey, int listenerId) {
+        RTopic topic = getRedissonClient().getTopic(channelKey);
+        topic.removeListener(listenerId);
     }
 }

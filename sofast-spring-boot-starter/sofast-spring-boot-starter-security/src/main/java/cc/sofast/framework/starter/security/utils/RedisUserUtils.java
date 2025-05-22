@@ -1,7 +1,7 @@
 package cc.sofast.framework.starter.security.utils;
 
 import cc.sofast.framework.starter.common.utils.SpringUtils;
-import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtils;
+import cc.sofast.framework.starter.redis.redisson.utils.RedisUtils;
 import cc.sofast.framework.starter.security.config.SecurityConstant;
 import cc.sofast.framework.starter.security.token.SecurityUserInfo;
 import cc.sofast.framework.starter.security.token.SecurityUserInfoDetailService;
@@ -16,10 +16,10 @@ public class RedisUserUtils {
 
     public static SecurityUserInfo getLoginUser(Long userId) {
         String key = key(userId);
-        SecurityUserInfo securityUserInfo = RedissonUtils.getByKey(key, SecurityUserInfo.class);
+        SecurityUserInfo securityUserInfo = RedisUtils.getByKey(key, SecurityUserInfo.class);
         if (securityUserInfo == null) {
             securityUserInfo = detailService.getUserInfo(userId);
-            RedissonUtils.setKv(key, securityUserInfo);
+            RedisUtils.setKv(key, securityUserInfo);
         }
         return securityUserInfo;
     }
@@ -30,7 +30,7 @@ public class RedisUserUtils {
     }
 
     public static void cleanCache(Long userId) {
-        RKeys keys = RedissonUtils.getRedissonClient().getKeys();
+        RKeys keys = RedisUtils.getRedissonClient().getKeys();
         keys.delete(key(userId));
     }
 

@@ -1,6 +1,6 @@
 package cc.sofast.framework.starter.security.token.impl;
 
-import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtils;
+import cc.sofast.framework.starter.redis.redisson.utils.RedisUtils;
 import cc.sofast.framework.starter.security.SofastSecurityProperties;
 import cc.sofast.framework.starter.security.config.SecurityConstant;
 import cc.sofast.framework.starter.security.token.TokenInfo;
@@ -28,7 +28,7 @@ public class RedisTokenService implements TokenService {
         tokenInfo.setUid(uid);
         tokenInfo.setExt(ext);
         tokenInfo.setExpireTime(generateExpireTime());
-        RedissonUtils.setKv(key(tokenInfo.getToken()), tokenInfo, properties.getTokenExpireTime());
+        RedisUtils.setKv(key(tokenInfo.getToken()), tokenInfo, properties.getTokenExpireTime());
         return tokenInfo;
     }
 
@@ -45,7 +45,7 @@ public class RedisTokenService implements TokenService {
     @Override
     public TokenInfo loadByToken(String token) {
 
-        return RedissonUtils.getByKey(key(token), TokenInfo.class);
+        return RedisUtils.getByKey(key(token), TokenInfo.class);
     }
 
     public String key(String token) {

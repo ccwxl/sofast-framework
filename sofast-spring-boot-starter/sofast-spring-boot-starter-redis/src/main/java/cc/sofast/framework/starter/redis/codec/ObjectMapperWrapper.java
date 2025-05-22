@@ -35,6 +35,7 @@ public class ObjectMapperWrapper {
         for (ObjectMapperCustomizer customizer : customizers) {
             customizer.customize(builder);
         }
+        this.objectMapper = builder.build();
     }
 
     public ObjectMapperWrapper() {
