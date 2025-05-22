@@ -2,7 +2,10 @@ package cc.sofast.framework.starter.security.filter;
 
 import cc.sofast.framework.starter.security.context.LoginUser;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
+import cc.sofast.framework.starter.security.token.SecurityUserInfo;
+import cc.sofast.framework.starter.security.token.TokenInfo;
 import cc.sofast.framework.starter.security.token.TokenService;
+import cc.sofast.framework.starter.security.utils.RedisUserUtils;
 import cc.sofast.framework.starter.security.utils.SecurityUtils;
 import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import jakarta.servlet.FilterChain;
@@ -59,9 +62,20 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private LoginUser authentication(String token) {
-        //解析jwt令牌
-        LoginUser loginUser = tokenService.getLoginUser(token);
-
+        TokenInfo tokenInfo = tokenService.loadByToken(token);
+        if (tokenInfo == null) {
+            //TODO 认证失败
+            return null;
+        }
+        Long uid = tokenInfo.getUid();
+        SecurityUserInfo securityUserInfo = RedisUserUtils.getLoginUser(uid);
+        LoginUser loginUser = new LoginUser();
+        loginUser.setRoles(securityUserInfo.getRoles());
+        loginUser.setPermissions(securityUserInfo.getPermissions());
+        loginUser.setOrgIds(securityUserInfo.getOrgIds());
+        loginUser.setInfo(securityUserInfo.getInfo());
+        loginUser.setAccessToken(token);
+        loginUser.setTokenExpireTime(tokenInfo.getExpireTime());
         return loginUser;
     }
 }

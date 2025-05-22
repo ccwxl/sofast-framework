@@ -1,11 +1,14 @@
 package cc.sofast.framework.starter.security.token;
 
-import cc.sofast.framework.starter.security.context.LoginUser;
+import java.util.Map;
 
 /**
  * @author wxl
  */
 public interface TokenService {
 
-    LoginUser getLoginUser(String token);
+    TokenInfo createToken(Long uid, Map<String, Object> ext);
+
+    TokenInfo loadByToken(String token);
+
 }

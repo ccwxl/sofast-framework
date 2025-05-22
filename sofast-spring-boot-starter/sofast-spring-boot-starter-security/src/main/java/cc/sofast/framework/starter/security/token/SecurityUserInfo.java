@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wxl
@@ -28,5 +30,10 @@ public class SecurityUserInfo {
      * 用户组织
      */
     private List<Long> orgIds;
+
+    /**
+     * 用户信息
+     */
+    private Map<String, Object> info = new HashMap<>();
 
 }

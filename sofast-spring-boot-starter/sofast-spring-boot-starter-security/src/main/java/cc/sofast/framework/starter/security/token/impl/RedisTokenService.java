@@ -1,9 +1,14 @@
 package cc.sofast.framework.starter.security.token.impl;
 
-import cc.sofast.framework.starter.security.context.LoginUser;
-import cc.sofast.framework.starter.security.token.SecurityUserInfo;
+import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtils;
+import cc.sofast.framework.starter.security.config.SecurityConstant;
+import cc.sofast.framework.starter.security.token.TokenInfo;
 import cc.sofast.framework.starter.security.token.TokenService;
-import cc.sofast.framework.starter.security.utils.RedisUserUtils;
+import cn.hutool.core.util.IdUtil;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author wxl
@@ -12,9 +17,34 @@ public class RedisTokenService implements TokenService {
 
 
     @Override
-    public LoginUser getLoginUser(String token) {
-        Long userid = 0L;
-        SecurityUserInfo loginUser = RedisUserUtils.getLoginUser(userid);
-        return null;
+    public TokenInfo createToken(Long uid, Map<String, Object> ext) {
+        TokenInfo tokenInfo = new TokenInfo();
+        tokenInfo.setToken(generateToken());
+        tokenInfo.setUid(uid);
+        tokenInfo.setExt(ext);
+        tokenInfo.setExpireTime(generateExpireTime());
+        RedissonUtils.setKv(key(tokenInfo.getToken()), tokenInfo, Duration.ofHours(24));
+        return tokenInfo;
+    }
+
+    private LocalDateTime generateExpireTime() {
+
+        return LocalDateTime.now().plusHours(24);
+    }
+
+    private String generateToken() {
+
+        return IdUtil.fastSimpleUUID();
+    }
+
+    @Override
+    public TokenInfo loadByToken(String token) {
+
+        return RedissonUtils.getByKey(key(token), TokenInfo.class);
+    }
+
+    public String key(String token) {
+
+        return String.format(SecurityConstant.REDIS_TOKEN_KEY, token);
     }
 }
