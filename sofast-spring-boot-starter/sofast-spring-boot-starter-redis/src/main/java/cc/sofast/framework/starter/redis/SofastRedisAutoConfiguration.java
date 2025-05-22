@@ -4,7 +4,7 @@ import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.codec.SofastGenericJackson2JsonRedisSerializer;
 import cc.sofast.framework.starter.redis.redisson.SofastRedissonCustomizer;
-import cc.sofast.framework.starter.redis.redisson.utils.RedissonInitUtils;
+import cc.sofast.framework.starter.redis.redisson.utils.RedisUtils;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.api.RedissonClient;
@@ -26,7 +26,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Map;
 
 /**
  * @author wxl
@@ -94,8 +94,9 @@ public class SofastRedisAutoConfiguration {
         }
 
         @Bean
-        public RedissonInitUtils redissonUtilsInit(RedissonClient redissonClient) {
-            return new RedissonInitUtils(redissonClient);
+        public Map<String, Object> setRedissonClient(RedissonClient redissonClient) {
+            RedisUtils.setRedissonClient(redissonClient);
+            return Map.of();
         }
     }
 

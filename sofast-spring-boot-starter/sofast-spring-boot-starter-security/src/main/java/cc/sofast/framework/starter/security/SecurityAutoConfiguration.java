@@ -4,10 +4,10 @@ import cc.sofast.framework.starter.security.context.TransmittableThreadLocalSecu
 import cc.sofast.framework.starter.security.filter.TokenAuthenticationFilter;
 import cc.sofast.framework.starter.security.handler.AuthenticationFailedHandler;
 import cc.sofast.framework.starter.security.handler.AuthorizationFailedHandler;
+import cc.sofast.framework.starter.security.handler.SofastSecurityExceptionHandler;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
 import cc.sofast.framework.starter.security.token.TokenService;
 import cc.sofast.framework.starter.security.token.impl.RedisTokenService;
-import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,29 +26,35 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class SecurityAutoConfiguration {
 
     @Bean
-    public AuthenticationFailedHandler authenticationFailedHandler(GlobalCommonException exceptionResolver) {
+    public SofastSecurityExceptionHandler securityExceptionHandler() {
 
-        return new AuthenticationFailedHandler(exceptionResolver);
+        return new SofastSecurityExceptionHandler();
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler(GlobalCommonException exceptionResolver) {
+    public AuthenticationFailedHandler authenticationFailedHandler(SofastSecurityExceptionHandler securityExceptionHandler) {
 
-        return new AuthorizationFailedHandler(exceptionResolver);
+        return new AuthenticationFailedHandler(securityExceptionHandler);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(SofastSecurityExceptionHandler securityExceptionHandler) {
+
+        return new AuthorizationFailedHandler(securityExceptionHandler);
     }
 
     @Bean
     public TokenAuthenticationFilter jwtTokenFilter(DynamicPermitAllRequestMatcher requestMatcher,
-                                                    GlobalCommonException exceptionResolver,
+                                                    SofastSecurityExceptionHandler securityExceptionHandler,
                                                     TokenService tokenService) {
 
-        return new TokenAuthenticationFilter(exceptionResolver, requestMatcher, tokenService);
+        return new TokenAuthenticationFilter(securityExceptionHandler, requestMatcher, tokenService);
     }
 
     @Bean
-    public TokenService tokenService() {
+    public TokenService tokenService(SofastSecurityProperties securityProperties) {
 
-        return new RedisTokenService();
+        return new RedisTokenService(securityProperties);
     }
 
     @Bean

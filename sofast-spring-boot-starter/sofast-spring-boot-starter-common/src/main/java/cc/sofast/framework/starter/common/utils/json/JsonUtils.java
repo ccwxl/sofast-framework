@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -172,5 +173,13 @@ public class JsonUtils {
      */
     public static <T> T convertValue(Object value, JavaType typeReference) {
         return MAPPER.convertValue(value, typeReference);
+    }
+
+    /**
+     * convertValue 方法
+     */
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> toMap(Object value) {
+        return MAPPER.convertValue(value, Map.class);
     }
 }

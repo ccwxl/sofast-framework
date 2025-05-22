@@ -20,7 +20,7 @@ public class LoginUser {
     /**
      * 用户编号
      */
-    private String id;
+    private Long id;
 
     /**
      * 用户权限
