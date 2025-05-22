@@ -12,11 +12,12 @@ import org.redisson.api.RKeys;
  */
 public class RedisUserUtils {
 
+    private static SecurityUserInfoDetailService detailService = SpringUtils.getBean(SecurityUserInfoDetailService.class);
+
     public static SecurityUserInfo getLoginUser(Long userId) {
         String key = key(userId);
         SecurityUserInfo securityUserInfo = RedissonUtils.getByKey(key, SecurityUserInfo.class);
         if (securityUserInfo == null) {
-            SecurityUserInfoDetailService detailService = SpringUtils.getBean(SecurityUserInfoDetailService.class);
             securityUserInfo = detailService.getUserInfo(userId);
             RedissonUtils.setKv(key, securityUserInfo);
         }
@@ -31,5 +32,9 @@ public class RedisUserUtils {
     public static void cleanCache(Long userId) {
         RKeys keys = RedissonUtils.getRedissonClient().getKeys();
         keys.delete(key(userId));
+    }
+
+    public void setDetailService(SecurityUserInfoDetailService detailService) {
+        RedisUserUtils.detailService = detailService;
     }
 }

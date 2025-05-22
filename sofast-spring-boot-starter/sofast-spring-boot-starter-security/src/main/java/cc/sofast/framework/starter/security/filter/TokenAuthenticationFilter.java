@@ -1,13 +1,13 @@
 package cc.sofast.framework.starter.security.filter;
 
 import cc.sofast.framework.starter.security.context.LoginUser;
+import cc.sofast.framework.starter.security.handler.SofastSecurityExceptionHandler;
 import cc.sofast.framework.starter.security.support.DynamicPermitAllRequestMatcher;
 import cc.sofast.framework.starter.security.token.SecurityUserInfo;
 import cc.sofast.framework.starter.security.token.TokenInfo;
 import cc.sofast.framework.starter.security.token.TokenService;
 import cc.sofast.framework.starter.security.utils.RedisUserUtils;
 import cc.sofast.framework.starter.security.utils.SecurityUtils;
-import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,16 +24,16 @@ import java.io.IOException;
 @Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final GlobalCommonException globalCommonException;
+    private final SofastSecurityExceptionHandler securityExceptionHandler;
 
     private final DynamicPermitAllRequestMatcher dynamicPermitAllRequestMatcher;
 
     private final TokenService tokenService;
 
     public TokenAuthenticationFilter(
-            GlobalCommonException globalCommonException,
+            SofastSecurityExceptionHandler securityExceptionHandler,
             DynamicPermitAllRequestMatcher dynamicPermitAllRequestMatcher, TokenService tokenService) {
-        this.globalCommonException = globalCommonException;
+        this.securityExceptionHandler = securityExceptionHandler;
         this.dynamicPermitAllRequestMatcher = dynamicPermitAllRequestMatcher;
         this.tokenService = tokenService;
     }
@@ -56,7 +56,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             log.error("TokenAuthentication failed.", e);
-            globalCommonException.resolveException(request, response, e);
+            securityExceptionHandler.resolveException(request, response, e);
         }
         filterChain.doFilter(request, response);
     }
@@ -64,7 +64,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private LoginUser authentication(String token) {
         TokenInfo tokenInfo = tokenService.loadByToken(token);
         if (tokenInfo == null) {
-            //TODO 认证失败
             return null;
         }
         Long uid = tokenInfo.getUid();

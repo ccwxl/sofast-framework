@@ -154,7 +154,7 @@ public class RedissonUtils {
      * @param key key
      * @param <T> value
      */
-    public static <T> void updateHash(String key, Map<String, T> map) {
+    public static <T> void setHash(String key, Map<String, T> map) {
         checkRedissonClient();
         RMap<String, T> rMap = redissonClient.getMap(key);
         rMap.putAll(map);
@@ -169,7 +169,7 @@ public class RedissonUtils {
      * @param <T>     value
      * @return value
      */
-    public static <T> T updateHash(String key, String hashKey, T value) {
+    public static <T> T setHash(String key, String hashKey, T value) {
         checkRedissonClient();
         RMap<String, T> rMap = redissonClient.getMap(key);
         return rMap.put(hashKey, value);

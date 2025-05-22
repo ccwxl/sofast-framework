@@ -5,6 +5,6 @@ package cc.sofast.framework.starter.security.token;
  */
 public interface SecurityUserInfoDetailService {
 
-    SecurityUserInfo getUserInfo(Long userid);
+    SecurityUserInfo getUserInfo(Long userId);
 
 }

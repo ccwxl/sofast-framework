@@ -10,6 +10,5 @@ public class RedissonInitUtils {
     public RedissonInitUtils(RedissonClient redissonClient) {
         RedissonUtils.setRedissonClient(redissonClient);
         RedisSubscribeUtils.setRedissonClient(redissonClient);
-        RedisClientCacheUtils.setRedissonClient(redissonClient);
     }
 }

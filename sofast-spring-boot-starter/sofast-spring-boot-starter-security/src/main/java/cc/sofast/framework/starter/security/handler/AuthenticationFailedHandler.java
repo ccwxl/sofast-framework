@@ -1,6 +1,5 @@
 package cc.sofast.framework.starter.security.handler;
 
-import cc.sofast.framework.starter.web.exception.GlobalCommonException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,14 +15,14 @@ import java.io.IOException;
  */
 public class AuthenticationFailedHandler implements AuthenticationEntryPoint {
 
-    private final GlobalCommonException globalCommonException;
+    private final SofastSecurityExceptionHandler securityExceptionHandler;
 
-    public AuthenticationFailedHandler(GlobalCommonException globalCommonException) {
-        this.globalCommonException = globalCommonException;
+    public AuthenticationFailedHandler(SofastSecurityExceptionHandler securityExceptionHandler) {
+        this.securityExceptionHandler = securityExceptionHandler;
     }
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        globalCommonException.resolveException(request, response, authException);
+        securityExceptionHandler.resolveException(request, response, authException);
     }
 }

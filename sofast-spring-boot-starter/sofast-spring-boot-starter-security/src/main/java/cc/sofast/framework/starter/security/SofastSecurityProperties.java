@@ -3,6 +3,7 @@ package cc.sofast.framework.starter.security;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,5 +22,10 @@ public class SofastSecurityProperties {
      * PasswordEncoder 加密复杂度，越高开销越大
      */
     private Integer passwordEncoderLength = 4;
+
+    /**
+     * token 过期时间
+     */
+    private Duration tokenExpireTime = Duration.ofDays(1);
 
 }

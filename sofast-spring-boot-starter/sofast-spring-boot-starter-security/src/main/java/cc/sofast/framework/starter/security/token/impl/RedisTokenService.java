@@ -1,12 +1,12 @@
 package cc.sofast.framework.starter.security.token.impl;
 
 import cc.sofast.framework.starter.redis.redisson.utils.RedissonUtils;
+import cc.sofast.framework.starter.security.SofastSecurityProperties;
 import cc.sofast.framework.starter.security.config.SecurityConstant;
 import cc.sofast.framework.starter.security.token.TokenInfo;
 import cc.sofast.framework.starter.security.token.TokenService;
 import cn.hutool.core.util.IdUtil;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -15,6 +15,11 @@ import java.util.Map;
  */
 public class RedisTokenService implements TokenService {
 
+    private final SofastSecurityProperties properties;
+
+    public RedisTokenService(SofastSecurityProperties securityProperties) {
+        this.properties = securityProperties;
+    }
 
     @Override
     public TokenInfo createToken(Long uid, Map<String, Object> ext) {
@@ -23,13 +28,13 @@ public class RedisTokenService implements TokenService {
         tokenInfo.setUid(uid);
         tokenInfo.setExt(ext);
         tokenInfo.setExpireTime(generateExpireTime());
-        RedissonUtils.setKv(key(tokenInfo.getToken()), tokenInfo, Duration.ofHours(24));
+        RedissonUtils.setKv(key(tokenInfo.getToken()), tokenInfo, properties.getTokenExpireTime());
         return tokenInfo;
     }
 
     private LocalDateTime generateExpireTime() {
 
-        return LocalDateTime.now().plusHours(24);
+        return LocalDateTime.now().plus(properties.getTokenExpireTime());
     }
 
     private String generateToken() {
