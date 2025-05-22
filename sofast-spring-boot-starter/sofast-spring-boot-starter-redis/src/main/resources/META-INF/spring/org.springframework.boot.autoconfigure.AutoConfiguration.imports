@@ -1,1 +1,2 @@
 cc.sofast.framework.starter.redis.SofastRedisAutoConfiguration
+cc.sofast.framework.starter.redis.cache.SofastRedisCacheConfiguration
