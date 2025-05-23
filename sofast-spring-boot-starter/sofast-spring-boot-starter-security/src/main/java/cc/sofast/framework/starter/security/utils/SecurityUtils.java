@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.security.utils;
 
+import cc.sofast.framework.starter.common.utils.web.WebUtils;
 import cc.sofast.framework.starter.security.context.LoginUser;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +18,6 @@ import java.util.Collections;
  * @author wxl
  */
 public class SecurityUtils {
-    private static final String REQUEST_ATTRIBUTE_LOGIN_USER_ID = "login_user_id";
     public static final String AUTHORIZATION_BEARER = "Bearer";
 
     public static String getBearerToken(HttpServletRequest request) {
@@ -37,7 +37,7 @@ public class SecurityUtils {
     public static void setLoginUser(LoginUser loginUser, HttpServletRequest request) {
         Authentication authentication = buildAuthentication(loginUser, request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        request.setAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID, loginUser.getId());
+        WebUtils.setLoginUser(loginUser.getId(), request);
     }
 
     private static Authentication buildAuthentication(LoginUser loginUser, HttpServletRequest request) {

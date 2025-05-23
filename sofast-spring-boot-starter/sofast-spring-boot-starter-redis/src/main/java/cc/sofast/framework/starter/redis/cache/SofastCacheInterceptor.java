@@ -34,11 +34,11 @@ public class SofastCacheInterceptor extends CacheInterceptor {
             Type genericReturnType = method.getGenericReturnType();
             return RedisDeserializeHelper.call(genericReturnType, () -> {
                 CacheTTL annotation = method.getAnnotation(CacheTTL.class);
-                if (annotation != null) {
+                if (annotation != null && annotation.value() > 0) {
                     return CacheTTLHelper.call(annotation.value(),
-                            () -> SofastCacheInterceptor.this.execute(aopAllianceInvoker, target, method, invocation.getArguments()));
+                            () -> this.execute(aopAllianceInvoker, target, method, invocation.getArguments()));
                 }
-                return SofastCacheInterceptor.this.execute(aopAllianceInvoker, target, method, invocation.getArguments());
+                return this.execute(aopAllianceInvoker, target, method, invocation.getArguments());
             });
         } catch (CacheOperationInvoker.ThrowableWrapper th) {
             throw th.getOriginal();
