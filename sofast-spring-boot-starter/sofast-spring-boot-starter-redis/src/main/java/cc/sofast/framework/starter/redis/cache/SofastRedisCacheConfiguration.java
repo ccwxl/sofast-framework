@@ -1,8 +1,9 @@
 package cc.sofast.framework.starter.redis.cache;
 
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
-import cc.sofast.framework.starter.redis.codec.SofastGenericJackson2JsonRedisSerializer;
+import cc.sofast.framework.starter.redis.codec.SofastCacheGenericJackson2JsonRedisSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
@@ -15,7 +16,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.util.StringUtils;
 
@@ -24,6 +24,8 @@ import java.util.Objects;
 /**
  * @author wxl
  */
+@Slf4j
+@SofastEnableCaching
 @AutoConfiguration
 @EnableConfigurationProperties({CacheProperties.class, SofastCacheProperties.class})
 public class SofastRedisCacheConfiguration {
@@ -44,15 +46,13 @@ public class SofastRedisCacheConfiguration {
         });
         ObjectMapper objectMapper = wrappers.getIfAvailable(ObjectMapperWrapper::new).getObjectMapper();
         // 设置使用 JSON 序列化方式
-        SofastGenericJackson2JsonRedisSerializer redisSerializer = new SofastGenericJackson2JsonRedisSerializer(objectMapper);
+        SofastCacheGenericJackson2JsonRedisSerializer redisSerializer = new SofastCacheGenericJackson2JsonRedisSerializer(objectMapper);
         config = config.serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 
         // 设置 CacheProperties.Redis 的属性
         CacheProperties.Redis redisProperties = cacheProperties.getRedis();
-        if (redisProperties.getTimeToLive() != null) {
-            config = config.entryTtl(redisProperties.getTimeToLive());
-        }
+        config = config.entryTtl(new SofastTTLFunction(redisProperties.getTimeToLive()));
         if (!redisProperties.isCacheNullValues()) {
             config = config.disableCachingNullValues();
         }

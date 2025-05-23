@@ -71,7 +71,7 @@ public class ObjectMapperWrapper {
                 //但序列化出错时,定位到出错的哪个位置
                 .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
                 // 表示只包括具有非空值的属性参与序列化和反序列化。
-                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                .serializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .deactivateDefaultTyping()
                 // 设置属性可见性
                 .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)

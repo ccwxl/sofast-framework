@@ -17,7 +17,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -28,10 +27,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @author wxl
  */
-@EnableCaching
 @ConditionalOnClass(RedisConnectionFactory.class)
 @EnableConfigurationProperties({RedisProperties.class})
 @AutoConfiguration(before = {RedisAutoConfiguration.class, RedissonAutoConfigurationV2.class})
