@@ -1,9 +1,11 @@
 package cc.sofast.framework.starter.mybatis.mapper;
 
-import cc.sofast.framework.starter.common.dto.*;
+import cc.sofast.framework.starter.common.dto.PageParam;
+import cc.sofast.framework.starter.common.dto.PageResult;
+import cc.sofast.framework.starter.common.dto.SortableField;
+import cc.sofast.framework.starter.common.dto.SortablePageParam;
 import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
 import cc.sofast.framework.starter.mybatis.utils.PageUtil;
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -219,14 +221,33 @@ public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable
         return delete(new LambdaQueryWrapper<E>().eq(field, value));
     }
 
+    /**
+     * 批量更新
+     *
+     * @param update 更新对象
+     * @return int
+     */
     default int updateBatch(E update) {
         return update(update, new QueryWrapper<>());
     }
 
+    /**
+     * 批量更新
+     *
+     * @param entities 实体们
+     * @return int
+     */
     default Boolean updateBatch(Collection<E> entities) {
         return Db.updateBatchById(entities);
     }
 
+    /**
+     * 批量更新
+     *
+     * @param entities 实体们
+     * @param size     每批处理的数据量
+     * @return int
+     */
     default Boolean updateBatch(Collection<E> entities, int size) {
         return Db.updateBatchById(entities, size);
     }
