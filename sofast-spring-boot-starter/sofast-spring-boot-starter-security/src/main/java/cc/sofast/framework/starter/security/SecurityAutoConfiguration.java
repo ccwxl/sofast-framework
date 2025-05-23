@@ -1,6 +1,7 @@
 package cc.sofast.framework.starter.security;
 
-import cc.sofast.framework.starter.security.context.TransmittableThreadLocalSecurityContextHolderStrategy;
+import cc.sofast.framework.starter.security.config.SofastCorsConfiguration;
+import cc.sofast.framework.starter.security.context.SofastSecurityContextHolderStrategy;
 import cc.sofast.framework.starter.security.filter.TokenAuthenticationFilter;
 import cc.sofast.framework.starter.security.handler.AuthenticationFailedHandler;
 import cc.sofast.framework.starter.security.handler.AuthorizationFailedHandler;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @author wxl
  */
 @AutoConfiguration
-@EnableConfigurationProperties(SofastSecurityProperties.class)
+@EnableConfigurationProperties({SofastSecurityProperties.class, SofastCorsConfiguration.class})
 public class SecurityAutoConfiguration {
 
     @Bean
@@ -66,14 +67,14 @@ public class SecurityAutoConfiguration {
 
     /**
      * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法，
-     * 设置使用 {@link TransmittableThreadLocalSecurityContextHolderStrategy} 作为 Security 的上下文策略
+     * 设置使用 {@link SofastSecurityContextHolderStrategy} 作为 Security 的上下文策略
      */
     @Bean
     public MethodInvokingFactoryBean securityContextHolderMethodInvokingFactoryBean() {
         MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
         methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
         methodInvokingFactoryBean.setTargetMethod("setStrategyName");
-        methodInvokingFactoryBean.setArguments(TransmittableThreadLocalSecurityContextHolderStrategy.class.getName());
+        methodInvokingFactoryBean.setArguments(SofastSecurityContextHolderStrategy.class.getName());
         return methodInvokingFactoryBean;
     }
 

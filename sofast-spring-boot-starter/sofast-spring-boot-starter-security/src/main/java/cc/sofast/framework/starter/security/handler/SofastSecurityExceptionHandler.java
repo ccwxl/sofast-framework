@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SofastSecurityExceptionHandler {
 
     public void resolveException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-
+        //TODO 认证异常
+        
     }
 }

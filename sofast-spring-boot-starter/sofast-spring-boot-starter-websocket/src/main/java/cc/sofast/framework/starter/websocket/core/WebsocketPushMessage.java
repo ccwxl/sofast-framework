@@ -27,7 +27,7 @@ public class WebsocketPushMessage implements Serializable {
     /**
      * 需要发送的消息
      */
-    private String message;
+    private SocketMessage message;
 
     /**
      * 需要推送到的session key 列表
@@ -42,7 +42,7 @@ public class WebsocketPushMessage implements Serializable {
     /**
      * 批量消息,给所有符合前缀的key的session发送消息,使用: batchSessionMsg
      */
-    private Map<String, String> batchMessage;
+    private Map<String, SocketMessage> batchMessage;
 
     /**
      * 消息类型
@@ -74,7 +74,7 @@ public class WebsocketPushMessage implements Serializable {
         BATCH_TEXT
     }
 
-    public static WebsocketPushMessage batchMessage(Map<String, String> batchMessage) {
+    public static WebsocketPushMessage batchMessage(Map<String, SocketMessage> batchMessage) {
 
         return new WebsocketPushMessageBuilder()
                 .type(MessageType.BATCH_TEXT)
@@ -146,7 +146,7 @@ public class WebsocketPushMessage implements Serializable {
         }
 
         public WebsocketPushMessageBuilder message(String msg) {
-            message.setMessage(msg);
+            message.setMessage(new SocketMessage(msg));
             return this;
         }
 
@@ -160,7 +160,7 @@ public class WebsocketPushMessage implements Serializable {
             return this;
         }
 
-        public WebsocketPushMessageBuilder batchMessage(Map<String, String> batchMessage) {
+        public WebsocketPushMessageBuilder batchMessage(Map<String, SocketMessage> batchMessage) {
             message.setBatchMessage(batchMessage);
             return this;
         }

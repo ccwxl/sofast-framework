@@ -1,6 +1,6 @@
 package cc.sofast.framework.starter.websocket.core;
 
-import cc.sofast.framework.starter.redis.redisson.utils.RedisSubscribeUtils;
+import cc.sofast.framework.starter.redis.redisson.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +18,7 @@ public class SofastWebSocketMessageListener implements ApplicationRunner, Ordere
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        RedisSubscribeUtils.subscribe(WebSocketConstants.WEB_SOCKET_TOPIC, WebsocketPushMessage.class, new InnerMessageProcessor());
+        RedisUtils.subscribe(WebSocketConstants.WEB_SOCKET_TOPIC, WebsocketPushMessage.class, new InnerMessageProcessor());
         log.info("websocket message change subscribe successful: {}", WebSocketConstants.WEB_SOCKET_TOPIC);
     }
 
