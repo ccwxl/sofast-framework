@@ -1,6 +1,7 @@
 package cc.sofast.framework.starter.common.dto;
 
 import cc.sofast.framework.starter.common.exception.ErrorCode;
+import cc.sofast.framework.starter.common.exception.code.ErrorCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,6 +69,10 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> fail(ErrorCode errorCode, T data) {
+        return new Result<>(errorCode.getCode(), false, errorCode.getMessage(), data);
+    }
+
+    public static Result<?> error(ErrorCode errorCode, String data) {
         return new Result<>(errorCode.getCode(), false, errorCode.getMessage(), data);
     }
 }

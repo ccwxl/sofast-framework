@@ -1,12 +1,15 @@
 package cc.sofast.framework.starter.knife4j;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
+import com.github.xiaoymin.knife4j.spring.extension.Knife4jOpenApiCustomizer;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.configuration.SpringDocConfiguration;
+import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -19,7 +22,7 @@ import org.springframework.http.HttpHeaders;
 /**
  * @author wxl
  */
-@EnableKnife4j
+@Slf4j
 @Import(value = {BaseEnumCustomizer.class})
 @ConditionalOnExpression(value = "!${knife4j.production:false}")
 @AutoConfiguration(before = SpringDocConfiguration.class)
@@ -67,5 +70,12 @@ public class SofastKnife4jAutoConfiguration {
         info.setVersion(knife4j.getVersion());
         info.license(knife4jProperties.getKnife4j().getLicense());
         return info;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public Knife4jOpenApiCustomizer knife4jOpenApiCustomizer(SpringDocConfigProperties docProperties, Knife4jProperties properties) {
+        log.debug("Register Knife4jOpenApiCustomizer");
+        return new SofastKnife4jOpenApiCustomizer(properties, docProperties);
     }
 }

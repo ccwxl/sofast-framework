@@ -34,7 +34,7 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer, WebBindingInit
 
     @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-        resolvers.add(new SofastHandlerExceptionResolver());
+//        resolvers.add(new SofastHandlerExceptionResolver());
     }
 
     /**
