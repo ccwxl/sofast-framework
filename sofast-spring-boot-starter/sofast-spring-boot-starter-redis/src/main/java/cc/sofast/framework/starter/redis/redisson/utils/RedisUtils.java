@@ -50,14 +50,12 @@ public class RedisUtils {
     }
 
     public static <T> T getByKey(String key, Class<T> clazz) {
-        checkRedissonClient();
-        RBucket<T> bucket = redissonClient.getBucket(key, getCacheCodec(clazz));
+        RBucket<T> bucket = getRedissonClient().getBucket(key, getCacheCodec(clazz));
         return bucket.get();
     }
 
     public static <T> T getByKey(String key) {
-        checkRedissonClient();
-        RBucket<T> bucket = redissonClient.getBucket(key);
+        RBucket<T> bucket = getRedissonClient().getBucket(key);
         return bucket.get();
     }
 
@@ -68,8 +66,7 @@ public class RedisUtils {
      * @return 剩余存活时间
      */
     public static <T> long getTimeToLive(final String key) {
-        checkRedissonClient();
-        RBucket<T> rBucket = redissonClient.getBucket(key);
+        RBucket<T> rBucket = getRedissonClient().getBucket(key);
         return rBucket.remainTimeToLive();
     }
 
@@ -93,8 +90,7 @@ public class RedisUtils {
      * @since Redis 6.X 以上使用 setAndKeepTTL 兼容 5.X 方案
      */
     public static <T> void setKv(final String key, final T value, final boolean isSaveTtl) {
-        checkRedissonClient();
-        RBucket<T> bucket = redissonClient.getBucket(key);
+        RBucket<T> bucket = getRedissonClient().getBucket(key);
         if (isSaveTtl) {
             try {
                 bucket.setAndKeepTTL(value);
@@ -115,8 +111,7 @@ public class RedisUtils {
      * @param duration 时间
      */
     public static <T> void setKv(final String key, final T value, final Duration duration) {
-        checkRedissonClient();
-        RBatch batch = redissonClient.createBatch();
+        RBatch batch = getRedissonClient().createBatch();
         RBucketAsync<T> bucket = batch.getBucket(key);
         bucket.setAsync(value);
         bucket.expireAsync(duration);
@@ -131,8 +126,7 @@ public class RedisUtils {
      * @return map
      */
     public static <T> Map<String, T> getHash(String key) {
-        checkRedissonClient();
-        RMap<String, T> rMap = redissonClient.getMap(key);
+        RMap<String, T> rMap = getRedissonClient().getMap(key);
         return rMap.readAllMap();
     }
 
@@ -145,8 +139,7 @@ public class RedisUtils {
      * @return value
      */
     public static <T> T getHash(String key, String hashKey) {
-        checkRedissonClient();
-        RMap<Object, T> map = redissonClient.getMap(key);
+        RMap<Object, T> map = getRedissonClient().getMap(key);
         return map.get(hashKey);
     }
 
@@ -157,8 +150,7 @@ public class RedisUtils {
      * @param <T> value
      */
     public static <T> void setHash(String key, Map<String, T> map) {
-        checkRedissonClient();
-        RMap<String, T> rMap = redissonClient.getMap(key);
+        RMap<String, T> rMap = getRedissonClient().getMap(key);
         rMap.putAll(map);
     }
 
@@ -169,8 +161,7 @@ public class RedisUtils {
      * @param value value
      */
     public static void setHash(String key, Object value) {
-        checkRedissonClient();
-        RMap<String, Object> rMap = redissonClient.getMap(key);
+        RMap<String, Object> rMap = getRedissonClient().getMap(key);
         Map<String, Object> map = JsonUtils.toMap(value);
         rMap.putAll(map);
     }
@@ -183,8 +174,7 @@ public class RedisUtils {
      * @return value
      */
     public static <T> T getHash(String key, Class<T> clazz) {
-        checkRedissonClient();
-        RMap<Object, Object> map = redissonClient.getMap(key);
+        RMap<Object, Object> map = getRedissonClient().getMap(key);
         Map<Object, Object> data = map.readAllMap();
         return JsonUtils.convertValue(data, clazz);
     }
@@ -199,8 +189,7 @@ public class RedisUtils {
      * @return value
      */
     public static <T> T setHash(String key, String hashKey, T value) {
-        checkRedissonClient();
-        RMap<String, T> rMap = redissonClient.getMap(key);
+        RMap<String, T> rMap = getRedissonClient().getMap(key);
         return rMap.put(hashKey, value);
     }
 
