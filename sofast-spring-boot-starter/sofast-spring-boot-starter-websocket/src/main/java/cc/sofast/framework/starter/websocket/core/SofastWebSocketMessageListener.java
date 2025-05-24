@@ -18,8 +18,8 @@ public class SofastWebSocketMessageListener implements ApplicationRunner, Ordere
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        RedisUtils.subscribe(WebSocketConstants.WEB_SOCKET_TOPIC, WebsocketPushMessage.class, new InnerMessageProcessor());
-        log.info("websocket message change subscribe successful: {}", WebSocketConstants.WEB_SOCKET_TOPIC);
+        int subscribeId = RedisUtils.subscribe(WebSocketConstants.WEB_SOCKET_TOPIC, WebsocketPushMessage.class, new InnerMessageProcessor());
+        log.info("websocket message change subscribe successful: {} subscribeId: {}", WebSocketConstants.WEB_SOCKET_TOPIC, subscribeId);
     }
 
     @Override

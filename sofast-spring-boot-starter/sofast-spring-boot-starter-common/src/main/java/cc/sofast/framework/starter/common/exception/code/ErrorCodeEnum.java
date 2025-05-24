@@ -74,6 +74,8 @@ public enum ErrorCodeEnum implements ErrorCode, BaseEnum<String> {
     USER_REQUEST_PARAMETER_ERROR("A0400", "用户请求参数错误"),
     CONTAINS_ILLEGAL_MALICIOUS_REDIRECT_LINK("A0401", "包含非法恶意跳转链接"),
     INVALID_USER_INPUT("A0402", "无效的用户输入"),
+    REQUEST_METHOD_NOT_FOUND("A0403", "请求方式不正确"),
+    REQUEST_NOT_FOUND("A0404", "请求地址不存在"),
     REQUIRED_REQUEST_PARAMETER_EMPTY("A0410", "请求必填参数为空"),
     USER_ORDER_NUMBER_EMPTY("A0411", "用户订单号为空"),
     ORDER_QUANTITY_EMPTY("A0412", "订购数量为空"),

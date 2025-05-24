@@ -15,7 +15,7 @@ public class WebUtils {
         return getLoginUserId(request);
     }
 
-    private static Long getLoginUserId(HttpServletRequest request) {
+    public static Long getLoginUserId(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
