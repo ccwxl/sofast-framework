@@ -15,4 +15,8 @@ public class WebSocketSessionHolder {
     public static void put(String sessionKey, WebSocketSession webSocketSession) {
         USER_SESSION_MAP.put(sessionKey, webSocketSession);
     }
+
+    public static void addSession(String s, WebSocketSession session) {
+
+    }
 }

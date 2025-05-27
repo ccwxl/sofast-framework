@@ -52,4 +52,7 @@ public class LoginUser {
      */
     private Map<String, Object> info = new HashMap<>();
 
+    public String nickName() {
+        return (String) info.get(INFO_KEY_NICKNAME);
+    }
 }

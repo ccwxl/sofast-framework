@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 /**
  * @author wxl
  */
+@SuppressWarnings("all")
 public class StringToEnumConverterFactory implements ConverterFactory<String, Enum> {
 
     @Override
