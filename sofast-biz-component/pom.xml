@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>sofast-biz-api</module>
+        <module>sofast-biz-all</module>
         <module>sofast-biz-common</module>
         <module>sofast-biz-rbac</module>
         <module>sofast-biz-dict</module>
@@ -24,10 +24,7 @@
         <module>sofast-biz-log</module>
         <module>sofast-biz-job</module>
         <module>sofast-biz-auth</module>
-        <!--https://github.com/openfga/openfga-->
-        <module>sofast-biz-rebac</module>
         <module>sofast-biz-codegen</module>
-        <module>sofast-biz-all</module>
     </modules>
 
 </project>
