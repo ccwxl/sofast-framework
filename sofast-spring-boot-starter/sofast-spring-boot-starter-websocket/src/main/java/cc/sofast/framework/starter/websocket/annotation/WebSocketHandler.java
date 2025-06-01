@@ -34,4 +34,11 @@ public @interface WebSocketHandler {
      * @return the interceptors
      */
     Class<?>[] interceptors() default {};
+
+    /**
+     * The auth type of the WebSocket handler.
+     *
+     * @return the auth type
+     */
+    boolean ignoreAuth() default false;
 }

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Callable;
 
 /**
+ * 缓存TTL Helper,用于框架内部CacheTTL支持
+ *
  * @author wxl
  */
 @Slf4j

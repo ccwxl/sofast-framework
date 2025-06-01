@@ -22,6 +22,8 @@ import org.springframework.util.StringUtils;
 import java.util.Objects;
 
 /**
+ * redis 缓存配置
+ *
  * @author wxl
  */
 @Slf4j

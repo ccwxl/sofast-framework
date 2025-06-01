@@ -12,7 +12,6 @@ import org.apache.ibatis.mapping.SqlSource;
  */
 public class DeleteIgnoreLogic extends AbstractMethod {
     /**
-     * @param methodName 方法名
      * @since 3.5.0
      */
     public DeleteIgnoreLogic() {

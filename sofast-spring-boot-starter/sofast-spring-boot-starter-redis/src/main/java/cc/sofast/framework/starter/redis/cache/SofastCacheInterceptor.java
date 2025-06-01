@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 /**
+ * 重写缓存拦截器
+ *
  * @author wxl
  */
 public class SofastCacheInterceptor extends CacheInterceptor {

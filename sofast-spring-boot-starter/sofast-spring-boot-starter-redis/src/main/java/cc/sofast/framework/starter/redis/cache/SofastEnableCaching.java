@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.redis.cache;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
@@ -7,6 +8,11 @@ import org.springframework.core.Ordered;
 import java.lang.annotation.*;
 
 /**
+ * <pre>
+ * 重写{@link EnableCaching}缓存注解
+ * 1. 支持缓存注解进行缓存时间设置
+ * 2. 支持序列化时绑定其类型
+ * </pre>
  * @author wxl
  */
 @Target(ElementType.TYPE)

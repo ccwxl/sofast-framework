@@ -3,6 +3,8 @@ package cc.sofast.framework.starter.redis.cache;
 import java.lang.annotation.*;
 
 /**
+ * 缓存有效时长注解,搭配Cacheable 使用
+ *
  * @author wxl
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

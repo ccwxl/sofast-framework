@@ -5,6 +5,8 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import java.time.Duration;
 
 /**
+ * 支持Cache自定义过期时间
+ *
  * @author wxl
  */
 public class SofastTTLFunction implements RedisCacheWriter.TtlFunction {
