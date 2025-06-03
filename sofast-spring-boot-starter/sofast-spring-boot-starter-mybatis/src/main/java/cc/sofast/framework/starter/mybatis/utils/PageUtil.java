@@ -37,15 +37,20 @@ public class PageUtil {
         return pageResult;
     }
 
-
-    public static <T> PageResult<T> toPageResult(SearchResult<T> search,Long pageNum) {
+    /**
+     * 将mybatis-plus分页结果转换为通用分页结果
+     *
+     * @param search mybatis-plus分页结果
+     * @return PageResult<T>
+     */
+    public static <T> PageResult<T> toPageResult(SearchResult<T> search, int pageNum) {
         if (search == null) {
             return new PageResult<>();
         }
         PageResult<T> pageResult = new PageResult<>();
         List<T> dataList = search.getDataList();
         pageResult.setPageSize((long) dataList.size());
-        pageResult.setPageIndex(pageNum);
+        pageResult.setPageIndex((long) pageNum);
         pageResult.setTotalCount(search.getTotalCount().longValue());
         pageResult.setData(search.getDataList());
         return pageResult;

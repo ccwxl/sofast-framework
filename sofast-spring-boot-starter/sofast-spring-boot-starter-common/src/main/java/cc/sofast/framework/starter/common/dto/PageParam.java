@@ -1,5 +1,6 @@
 package cc.sofast.framework.starter.common.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class PageParam {
 
     private int pageIndex = PAGE_NO;
 
+    @Schema(hidden = true)
     private boolean needTotalCount = true;
 
 }
