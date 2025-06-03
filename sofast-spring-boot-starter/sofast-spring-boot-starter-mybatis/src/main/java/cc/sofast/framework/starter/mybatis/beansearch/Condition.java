@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.searchbean;
+package cc.sofast.framework.starter.mybatis.beansearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
