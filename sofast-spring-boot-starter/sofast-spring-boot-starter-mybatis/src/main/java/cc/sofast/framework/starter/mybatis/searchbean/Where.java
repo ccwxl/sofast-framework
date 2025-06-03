@@ -19,5 +19,5 @@ public @interface Where {
     /**
      * 数据库字段名称
      */
-    String column();
+    String column() default "";
 }
