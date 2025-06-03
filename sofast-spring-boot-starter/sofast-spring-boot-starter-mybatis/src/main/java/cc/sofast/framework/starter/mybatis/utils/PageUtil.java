@@ -3,7 +3,7 @@ package cc.sofast.framework.starter.mybatis.utils;
 import cc.sofast.framework.starter.common.dto.PageParam;
 import cc.sofast.framework.starter.common.dto.PageResult;
 import cc.sofast.framework.starter.common.dto.SortableField;
-import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
+import cn.zhxu.bs.SearchResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -37,6 +37,20 @@ public class PageUtil {
         return pageResult;
     }
 
+
+    public static <T> PageResult<T> toPageResult(SearchResult<T> search,Long pageNum) {
+        if (search == null) {
+            return new PageResult<>();
+        }
+        PageResult<T> pageResult = new PageResult<>();
+        List<T> dataList = search.getDataList();
+        pageResult.setPageSize((long) dataList.size());
+        pageResult.setPageIndex(pageNum);
+        pageResult.setTotalCount(search.getTotalCount().longValue());
+        pageResult.setData(search.getDataList());
+        return pageResult;
+    }
+
     /**
      * 构建分页参数
      *
@@ -66,4 +80,5 @@ public class PageUtil {
         }
         return page;
     }
+
 }
