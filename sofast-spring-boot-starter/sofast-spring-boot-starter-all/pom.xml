@@ -52,11 +52,6 @@
         </dependency>
         <dependency>
             <groupId>cc.sofast</groupId>
-            <artifactId>sofast-spring-boot-starter-sms</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cc.sofast</groupId>
             <artifactId>sofast-spring-boot-starter-websocket</artifactId>
             <version>${project.version}</version>
         </dependency>

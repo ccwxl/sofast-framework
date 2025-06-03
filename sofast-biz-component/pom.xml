@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>sofast-biz-all</module>
+<!--        <module>sofast-biz-all</module>-->
         <module>sofast-biz-common</module>
         <module>sofast-biz-rbac</module>
         <module>sofast-biz-dict</module>
