@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.searchbean;
+package cc.sofast.framework.starter.mybatis.beansearch;
 
 import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
 
