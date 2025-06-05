@@ -2,6 +2,7 @@ package cc.sofast.framework.starter.mybatis.utils;
 
 import cc.sofast.framework.starter.mybatis.beansearch.Condition;
 import cc.sofast.framework.starter.mybatis.beansearch.Where;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Compare;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -54,17 +55,17 @@ public class WhereBuilder {
         return queryWrapper;
     }
 
-    private static final Map<Condition, Con3<QueryWrapper<?>, String, Object>> WHERE_MAP = new HashMap<Condition, Con3<QueryWrapper<?>, String, Object>>() {{
-        put(Condition.eq, (queryWrapper, column, value) -> queryWrapper = queryWrapper.eq(column, value));
-        put(Condition.ne, (queryWrapper, column, value) -> queryWrapper = queryWrapper.ne(column, value));
-        put(Condition.lt, (queryWrapper, column, value) -> queryWrapper = queryWrapper.lt(column, value));
-        put(Condition.le, (queryWrapper, column, value) -> queryWrapper = queryWrapper.le(column, value));
-        put(Condition.gt, (queryWrapper, column, value) -> queryWrapper = queryWrapper.gt(column, value));
-        put(Condition.ge, (queryWrapper, column, value) -> queryWrapper = queryWrapper.ge(column, value));
-        put(Condition.like, (queryWrapper, column, value) -> queryWrapper = queryWrapper.like(column, value));
-        put(Condition.likeLeft, (queryWrapper, column, value) -> queryWrapper = queryWrapper.likeLeft(column, value));
-        put(Condition.likeRight, (queryWrapper, column, value) -> queryWrapper = queryWrapper.likeRight(column, value));
-        put(Condition.in, (queryWrapper, column, value) -> queryWrapper = queryWrapper.in(column, ((List<Object>) value).toArray()));
+    private static final Map<Condition, Con3<QueryWrapper<?>, String, Object>> WHERE_MAP = new HashMap<>() {{
+        put(Condition.eq, Compare::eq);
+        put(Condition.ne, Compare::ne);
+        put(Condition.lt, Compare::lt);
+        put(Condition.le, Compare::le);
+        put(Condition.gt, Compare::gt);
+        put(Condition.ge, Compare::ge);
+        put(Condition.like, Compare::like);
+        put(Condition.likeLeft, Compare::likeLeft);
+        put(Condition.likeRight, Compare::likeRight);
+        put(Condition.in, (queryWrapper, column, value) -> queryWrapper.in(column, ((List<Object>) value).toArray()));
     }};
 }
 

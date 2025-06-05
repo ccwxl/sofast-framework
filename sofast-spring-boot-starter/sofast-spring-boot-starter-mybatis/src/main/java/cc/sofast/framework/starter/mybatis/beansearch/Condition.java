@@ -50,7 +50,6 @@ public enum Condition {
      * ?role=lr:Manager,Engineer
      */
     likeRight("likeRight"),
-
     /**
      * ?role=bt:1,2
      */
