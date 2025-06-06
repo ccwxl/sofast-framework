@@ -24,8 +24,10 @@ public class PageParam {
     private static final Integer PAGE_NO = 1;
     private static final Integer PAGE_SIZE = 10;
 
+    @Schema(description = "一页多少条数据")
     private int pageSize = PAGE_SIZE;
 
+    @Schema(description = "页码")
     private int pageIndex = PAGE_NO;
 
     @Schema(hidden = true)

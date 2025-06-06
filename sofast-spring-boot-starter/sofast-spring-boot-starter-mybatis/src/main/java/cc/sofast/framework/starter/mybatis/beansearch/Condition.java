@@ -1,5 +1,7 @@
 package cc.sofast.framework.starter.mybatis.beansearch;
 
+import cn.zhxu.bs.FieldOp;
+import cn.zhxu.bs.operator.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,47 +15,48 @@ public enum Condition {
     /**
      * status=eq:ACTIVE
      */
-    eq("eq"),
+    eq("eq", Equal.class),
     /**
      * status=ne:ACTIVE
      */
-    ne("ne"),
+    ne("ne", NotEqual.class),
     /**
      * status=lt:ACTIVE
      */
-    lt("lt"),
+    lt("lt", LessThan.class),
     /**
      * status=le:ACTIVE
      */
-    le("le"),
+    le("le", LessEqual.class),
     /**
      * status=gt:ACTIVE
      */
-    gt("gt"),
+    gt("gt", GreaterThan.class),
     /**
      * status=ge:ACTIVE
      */
-    ge("ge"),
+    ge("ge", GreaterEqual.class),
     /**
      * status=like:ACTIVE
      */
-    like("like"),
+    like("like", Contain.class),
     /**
      * status=ll:ACTIVE
      */
-    likeLeft("likeLeft"),
+    likeLeft("likeLeft", StartWith.class),
     /**
      * ?role=in:Manager,Engineer
      */
-    in("in"),
+    in("in", InList.class),
     /**
      * ?role=lr:Manager,Engineer
      */
-    likeRight("likeRight"),
+    likeRight("likeRight", EndWith.class),
     /**
      * ?role=bt:1,2
      */
-    between("between");
+    between("between", Between.class);
 
     private final String expression;
+    private final Class<? extends FieldOp> clazz;
 }
