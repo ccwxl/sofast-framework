@@ -31,6 +31,16 @@ import java.util.List;
 public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable> extends MPJBaseMapper<E> {
 
     /**
+     * 根据id查询
+     *
+     * @param id id
+     * @return T
+     */
+    default E selectColumnsById(Serializable id, SFunction<E, ?>... columns) {
+        return selectOne(Wrappers.<E>lambdaQuery().select(columns).eq(E::getId, id));
+    }
+
+    /**
      * 分页查询
      *
      * @param pageParam    分页参数
