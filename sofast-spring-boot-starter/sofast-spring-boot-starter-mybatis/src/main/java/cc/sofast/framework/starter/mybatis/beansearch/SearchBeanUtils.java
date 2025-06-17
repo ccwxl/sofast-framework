@@ -21,6 +21,8 @@ import java.util.Map;
  */
 public class SearchBeanUtils {
 
+    private static final String DEFAULT_GROUP = "dg";
+
     public static Map<String, Object> queryParam(SortablePageParam page, Object query) {
         Class<?> queryConditionClass = query.getClass();
         List<BeanSearcherFiled> searcherFiledList = new ArrayList<>();
@@ -37,6 +39,7 @@ public class SearchBeanUtils {
             }
         });
         MapBuilder builder = MapUtils.builder();
+        builder.group(DEFAULT_GROUP);
         //组装分页
         builder.page(page.getPageIndex(), page.getPageSize());
         List<SortableField> sortingFields = page.getSortingFields();
@@ -51,7 +54,7 @@ public class SearchBeanUtils {
             builder.field(searcherFiled.filedName(), searcherFiled.getVal())
                     .op(searcherFiled.condition().getClazz());
         }
-        return builder.build();
+        return builder.groupExpr(DEFAULT_GROUP).build();
     }
 
 

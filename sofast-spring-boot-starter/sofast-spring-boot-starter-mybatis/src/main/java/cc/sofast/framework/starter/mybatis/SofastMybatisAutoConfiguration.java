@@ -1,18 +1,20 @@
 package cc.sofast.framework.starter.mybatis;
 
-import cc.sofast.framework.starter.mybatis.beansearch.MyDefaultParamResolver;
+import cc.sofast.framework.starter.mybatis.beansearch.MyBeanSearcher;
 import cc.sofast.framework.starter.mybatis.method.CustomSqlInjector;
 import cc.sofast.framework.starter.mybatis.objecthandler.MybatisPlusAutoFillColumnHandler;
 import cc.sofast.framework.starter.mybatis.beansearch.LogicDeleteParamFilter;
 import cn.zhxu.bs.*;
 import cn.zhxu.bs.boot.prop.BeanSearcherParams;
 import cn.zhxu.bs.group.GroupResolver;
-import cn.zhxu.bs.implement.DefaultParamResolver;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author wxl
@@ -38,30 +40,34 @@ public class SofastMybatisAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(ParamResolver.class)
-    public ParamResolver paramResolver(PageExtractor pageExtractor,
-                                       FieldOpPool fieldOpPool,
-                                       List<ParamFilter> paramFilters,
-                                       List<FieldConvertor.ParamConvertor> convertors,
-                                       GroupResolver groupResolver,
-                                       BeanSearcherParams config) {
-        MyDefaultParamResolver paramResolver = new MyDefaultParamResolver(convertors, paramFilters);
-        paramResolver.setPageExtractor(pageExtractor);
-        paramResolver.setFieldOpPool(fieldOpPool);
-        paramResolver.setGroupResolver(groupResolver);
-        BeanSearcherParams.Group group = config.getGroup();
-        paramResolver.getConfiguration()
-                .gexprMerge(group.isMergeable())
-                .groupSeparator(group.getSeparator())
-                .gexpr(group.getExprName())
-                .selectExclude(config.getSelectExclude())
-                .onlySelect(config.getOnlySelect())
-                .separator(config.getSeparator())
-                .op(config.getOperatorKey())
-                .ic(config.getIgnoreCaseKey())
-                .orderBy(config.getOrderBy())
-                .order(config.getOrder())
-                .sort(config.getSort());
-        return paramResolver;
+    @ConditionalOnMissingBean(BeanSearcher.class)
+    @ConditionalOnProperty(name = "bean-searcher.use-bean-searcher", havingValue = "true", matchIfMissing = true)
+    public BeanSearcher beanSearcher(MetaResolver metaResolver,
+                                     ParamResolver paramResolver,
+                                     SqlResolver sqlResolver,
+                                     SqlExecutor sqlExecutor,
+                                     BeanReflector beanReflector,
+                                     ObjectProvider<List<SqlInterceptor>> interceptors,
+                                     ObjectProvider<List<ResultFilter>> processors,
+                                     BeanSearcherParams config) {
+        MyBeanSearcher searcher = new MyBeanSearcher();
+        searcher.setMetaResolver(metaResolver);
+        searcher.setParamResolver(paramResolver);
+        searcher.setSqlResolver(sqlResolver);
+        searcher.setSqlExecutor(sqlExecutor);
+        searcher.setBeanReflector(beanReflector);
+        searcher.setFailOnParamError(config.isFailOnError());
+        ifAvailable(interceptors, searcher::setInterceptors);
+        ifAvailable(processors, searcher::setResultFilters);
+        return searcher;
+    }
+
+    static <T> void ifAvailable(ObjectProvider<T> provider, Consumer<T> consumer) {
+        // 为了兼容 1.x 的 SpringBoot，最低兼容到 v1.4
+        // 不直接使用 ObjectProvider.ifAvailable 方法
+        T dependency = provider.getIfAvailable();
+        if (dependency != null) {
+            consumer.accept(dependency);
+        }
     }
 }
