@@ -1,6 +1,5 @@
 package cc.sofast.framework.starter.mybatis.beansearch;
 
-import cn.hutool.core.util.StrUtil;
 import cn.zhxu.bs.*;
 import cn.zhxu.bs.bean.Cluster;
 import cn.zhxu.bs.bean.DbType;
@@ -8,6 +7,7 @@ import cn.zhxu.bs.implement.DefaultBeanSearcher;
 import cn.zhxu.bs.param.FetchType;
 import cn.zhxu.bs.param.FieldParam;
 import cn.zhxu.bs.param.OrderBy;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -26,7 +26,8 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
         BeanMeta<T> beanMeta = getMetaResolver().resolve(beanClass);
         // 逻辑删除字段条件过滤
         if (beanMeta.getFieldMeta("deleted") == null) {
-            FieldMeta fieldMeta = new FieldMeta(beanMeta, "deleted", null, new SqlSnippet(StrUtil.toUnderlineCase("deleted")), UUID.randomUUID().toString(),
+            String deleted = StringUtils.camelToUnderline("deleted");
+            FieldMeta fieldMeta = new FieldMeta(beanMeta, "deleted", null, new SqlSnippet(deleted), UUID.randomUUID().toString(),
                     true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
             beanMeta.addFieldMeta(fieldMeta);
         }
@@ -37,7 +38,7 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
             String key = searchParam.getKey();
             //where 条件
             if (value instanceof FieldParam fieldParam) {
-                FieldMeta fieldMeta = new FieldMeta(beanMeta, fieldParam.getName(), null, new SqlSnippet(StrUtil.toUnderlineCase(fieldParam.getName())), UUID.randomUUID().toString(),
+                FieldMeta fieldMeta = new FieldMeta(beanMeta, fieldParam.getName(), null, new SqlSnippet(StringUtils.camelToUnderline(fieldParam.getName())), UUID.randomUUID().toString(),
                         true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
                 if (beanMeta.getFieldMeta(fieldParam.getName()) == null) {
                     beanMeta.addFieldMeta(fieldMeta);
@@ -50,7 +51,7 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
                         if (o instanceof OrderBy orderBy) {
                             FieldMeta fieldMeta = beanMeta.getFieldMeta(orderBy.getSort());
                             if (fieldMeta == null) {
-                                fieldMeta = new FieldMeta(beanMeta, orderBy.getSort(), null, new SqlSnippet(StrUtil.toUnderlineCase(orderBy.getSort())), UUID.randomUUID().toString(),
+                                fieldMeta = new FieldMeta(beanMeta, orderBy.getSort(), null, new SqlSnippet(StringUtils.camelToUnderline(orderBy.getSort())), UUID.randomUUID().toString(),
                                         true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
                                 beanMeta.addFieldMeta(fieldMeta);
                             }
