@@ -29,7 +29,13 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
             String deleted = StringUtils.camelToUnderline("deleted");
             FieldMeta fieldMeta = new FieldMeta(beanMeta, "deleted", null, new SqlSnippet(deleted), UUID.randomUUID().toString(),
                     true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
-            beanMeta.addFieldMeta(fieldMeta);
+            synchronized (this) {
+                try {
+                    beanMeta.addFieldMeta(fieldMeta);
+                } catch (SearchException e) {
+                    log.warn("Repeatedly adding fields deleted");
+                }
+            }
         }
 
         // 字段条件过滤 添加到BeanMeta
@@ -41,7 +47,13 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
                 FieldMeta fieldMeta = new FieldMeta(beanMeta, fieldParam.getName(), null, new SqlSnippet(StringUtils.camelToUnderline(fieldParam.getName())), UUID.randomUUID().toString(),
                         true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
                 if (beanMeta.getFieldMeta(fieldParam.getName()) == null) {
-                    beanMeta.addFieldMeta(fieldMeta);
+                    synchronized (this) {
+                        try {
+                            beanMeta.addFieldMeta(fieldMeta);
+                        } catch (SearchException e) {
+                            log.warn("Repeatedly adding fields: {}" , fieldMeta.getName());
+                        }
+                    }
                 }
             }
             // 排序条件
@@ -53,7 +65,13 @@ public class MyBeanSearcher extends DefaultBeanSearcher {
                             if (fieldMeta == null) {
                                 fieldMeta = new FieldMeta(beanMeta, orderBy.getSort(), null, new SqlSnippet(StringUtils.camelToUnderline(orderBy.getSort())), UUID.randomUUID().toString(),
                                         true, new Class[]{}, DbType.UNKNOWN, Cluster.FALSE);
-                                beanMeta.addFieldMeta(fieldMeta);
+                                synchronized (this) {
+                                    try {
+                                        beanMeta.addFieldMeta(fieldMeta);
+                                    } catch (SearchException e) {
+                                        log.warn("Repeatedly adding fields: {}" , fieldMeta.getName());
+                                    }
+                                }
                             }
                         }
                     }
