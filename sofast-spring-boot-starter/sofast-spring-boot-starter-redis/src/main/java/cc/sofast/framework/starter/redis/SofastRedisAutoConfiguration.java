@@ -4,6 +4,7 @@ import cc.sofast.framework.starter.redis.codec.ObjectMapperCustomizer;
 import cc.sofast.framework.starter.redis.codec.ObjectMapperWrapper;
 import cc.sofast.framework.starter.redis.codec.SofastGenericJackson2JsonRedisSerializer;
 import cc.sofast.framework.starter.redis.redisson.SofastRedissonCustomizer;
+import cc.sofast.framework.starter.redis.redisson.idempotent.IdempotentAspect;
 import cc.sofast.framework.starter.redis.redisson.utils.RedisUtils;
 import cc.sofast.framework.starter.redis.tempalte.RedisTemplateCustomizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -97,6 +98,13 @@ public class SofastRedisAutoConfiguration {
             RedisUtils.setRedissonClient(redissonClient);
             return Map.of();
         }
+
+        @Bean
+        public IdempotentAspect idempotentAspect() {
+
+            return new IdempotentAspect();
+        }
+
     }
 
     @Configuration
