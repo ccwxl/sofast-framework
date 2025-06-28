@@ -105,7 +105,7 @@ public class FileController {
         ExtensionHandler.exec(FileExtensionPoint.class, ext -> ext.downloadBefore(fileInfo));
         response.setContentType(fileInfo.getContentType());
         response.setHeader("Content-Disposition",
-                "attachment;filename=" + URLEncoder.encode(fileInfo.getOriginalFilename(), StandardCharsets.UTF_8.name()));
+                "attachment;filename=" + URLEncoder.encode(fileInfo.getOriginalFilename(), StandardCharsets.UTF_8));
         fileStorageService.download(fileInfo).outputStream(response.getOutputStream());
     }
 
