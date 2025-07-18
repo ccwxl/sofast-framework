@@ -22,6 +22,7 @@ public class BeanPropertyRecordMapper<Record extends org.jooq.Record, T> impleme
         for (Field<?> field : fields) {
             log.info("field:{} val:{}", field.getName(), r.getValue(field.getName()));
         }
+        //todo 待实现
         return BeanUtils.instantiateClass(this.clazz);
     }
 }
