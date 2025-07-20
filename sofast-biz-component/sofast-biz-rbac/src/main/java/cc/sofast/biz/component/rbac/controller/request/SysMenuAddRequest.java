@@ -17,5 +17,6 @@ import java.util.Map;
 @FieldNameConstants
 public class SysMenuAddRequest extends SysMenu {
 
-    private Map<String, Object> ext;
+    private String test;
+
 }

@@ -10,10 +10,15 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.impl.DSL;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author wxl
  */
 public class Jooq {
+
+    public static final Map<Class<?>, List<java.lang.reflect.Field>> FIELDS_CACHE = Map.of();
 
     public static <T> Field<Object> field(SFunction<T> function) {
         String fieldName = FiledNameUtils.getFieldName(function);

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @FieldNameConstants
 public class BaseDO<E extends Model<?>, P extends Serializable> extends Model<E> implements Serializable {
     public static final String NORM_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private static final String MYSQL_TS_FUN = "LPAD(ROUND(UNIX_TIMESTAMP(NOW(6)) * 1000000000), 16, '0')";
+    private static final String MYSQL_TS_FUN = "NOW(6)";
     /**
      * 主键ID
      */
