@@ -18,8 +18,6 @@ import java.util.Map;
  */
 public class Jooq {
 
-    public static final Map<Class<?>, List<java.lang.reflect.Field>> FIELDS_CACHE = Map.of();
-
     public static <T> Field<Object> field(SFunction<T> function) {
         String fieldName = FiledNameUtils.getFieldName(function);
         String underlineName = StrUtil.toUnderlineCase(fieldName);
