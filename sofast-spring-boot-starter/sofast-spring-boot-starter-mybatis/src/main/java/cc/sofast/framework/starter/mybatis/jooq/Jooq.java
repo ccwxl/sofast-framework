@@ -2,15 +2,17 @@ package cc.sofast.framework.starter.mybatis.jooq;
 
 import cc.sofast.framework.starter.common.utils.FiledNameUtils;
 import cc.sofast.framework.starter.common.utils.SFunction;
+import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.impl.DSL;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +29,11 @@ public class Jooq {
     public static <T> Table<Record> table(Class<T> entity) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entity);
         return DSL.table(tableInfo.getTableName());
+    }
+
+    public static <T extends Model<?>> Map<String, Object> insert(BaseDO<T, Long> entityInstance) {
+
+        //todo 枚举
+        return BeanUtil.beanToMap(entityInstance, true, true);
     }
 }
