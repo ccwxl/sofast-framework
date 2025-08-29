@@ -6,19 +6,23 @@ import cc.sofast.framework.starter.common.dto.SortableField;
 import cc.sofast.framework.starter.common.dto.SortablePageParam;
 import cc.sofast.framework.starter.mybatis.dataobject.BaseDO;
 import cc.sofast.framework.starter.mybatis.utils.PageUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.github.yulichang.base.MPJBaseMapper;
 import com.github.yulichang.interfaces.MPJBaseJoin;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.reflection.property.PropertyNamer;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -269,5 +273,34 @@ public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable
      */
     default Boolean insertBatch(Collection<E> entities) {
         return Db.saveBatch(entities);
+    }
+
+    /**
+     * 判断字段值是否存在
+     *
+     * @param column 列
+     * @param value  值
+     * @param neId   主键
+     * @return 是否存在
+     */
+    default Boolean repeat(SFunction<E, ?> column, Object value, Serializable neId) {
+
+        return exists(Wrappers.<E>lambdaQuery().eq(column, value).ne(E::getId, neId));
+    }
+
+    /**
+     * 判断字段值是否存在,根据id剔除自己
+     *
+     * @param entity 实体
+     * @param column 列
+     * @return 是否存在
+     */
+    default Boolean repeat(E entity, SFunction<E, ?> column) {
+        LambdaMeta meta = LambdaUtils.extract(column);
+        String fieldName = PropertyNamer.methodToProperty(meta.getImplMethodName());
+        Object value = ReflectUtil.getFieldValue(entity, fieldName);
+        return exists(Wrappers.<E>lambdaQuery()
+                .eq(column, value)
+                .ne(E::getId, entity.getId()));
     }
 }
