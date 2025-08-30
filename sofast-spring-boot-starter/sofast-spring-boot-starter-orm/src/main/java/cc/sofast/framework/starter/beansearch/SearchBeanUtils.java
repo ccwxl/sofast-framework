@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.beansearch;
+package cc.sofast.framework.starter.beansearch;
 
 import cc.sofast.framework.starter.common.dto.PageResult;
 import cc.sofast.framework.starter.common.dto.SortableField;

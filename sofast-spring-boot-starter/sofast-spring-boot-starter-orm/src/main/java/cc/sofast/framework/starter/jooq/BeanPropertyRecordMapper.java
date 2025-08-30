@@ -1,6 +1,5 @@
-package cc.sofast.framework.starter.mybatis.jooq;
+package cc.sofast.framework.starter.jooq;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.Field;
 import org.jooq.RecordMapper;

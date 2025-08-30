@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.beansearch;
+package cc.sofast.framework.starter.beansearch;
 
 import cn.zhxu.bs.FieldOp;
 import cn.zhxu.bs.operator.*;

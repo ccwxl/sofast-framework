@@ -1,7 +1,7 @@
 package cc.sofast.framework.starter.mybatis.utils;
 
-import cc.sofast.framework.starter.mybatis.beansearch.Condition;
-import cc.sofast.framework.starter.mybatis.beansearch.Where;
+import cc.sofast.framework.starter.beansearch.Condition;
+import cc.sofast.framework.starter.beansearch.Where;
 import com.baomidou.mybatisplus.core.conditions.interfaces.Compare;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

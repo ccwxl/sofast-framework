@@ -1,12 +1,11 @@
 package cc.sofast.framework.starter.mybatis;
 
-import cc.sofast.framework.starter.mybatis.beansearch.MyBeanSearcher;
+import cc.sofast.framework.starter.beansearch.MyBeanSearcher;
 import cc.sofast.framework.starter.mybatis.method.CustomSqlInjector;
 import cc.sofast.framework.starter.mybatis.objecthandler.MybatisPlusAutoFillColumnHandler;
-import cc.sofast.framework.starter.mybatis.beansearch.LogicDeleteParamFilter;
+import cc.sofast.framework.starter.beansearch.LogicDeleteParamFilter;
 import cn.zhxu.bs.*;
 import cn.zhxu.bs.boot.prop.BeanSearcherParams;
-import cn.zhxu.bs.group.GroupResolver;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.beansearch;
+package cc.sofast.framework.starter.beansearch;
 
 import cn.zhxu.bs.*;
 import cn.zhxu.bs.bean.Cluster;

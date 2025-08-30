@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.jooq;
+package cc.sofast.framework.starter.jooq;
 
 import cc.sofast.framework.starter.common.utils.FiledNameUtils;
 import cc.sofast.framework.starter.common.utils.SFunction;

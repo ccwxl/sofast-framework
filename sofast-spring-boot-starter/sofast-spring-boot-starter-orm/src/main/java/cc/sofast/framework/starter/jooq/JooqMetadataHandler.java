@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.jooq;
+package cc.sofast.framework.starter.jooq;
 
 /**
  * crud 的 jooq 元数据处理

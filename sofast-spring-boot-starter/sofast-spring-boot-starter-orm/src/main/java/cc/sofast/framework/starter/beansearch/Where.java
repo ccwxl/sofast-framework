@@ -1,4 +1,4 @@
-package cc.sofast.framework.starter.mybatis.beansearch;
+package cc.sofast.framework.starter.beansearch;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
