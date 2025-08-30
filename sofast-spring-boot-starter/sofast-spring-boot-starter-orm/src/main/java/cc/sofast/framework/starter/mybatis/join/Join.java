@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * <a href="https://github.com/maiaimei/example/blob/main/mybatis/mybatis-spring-boot-starter-study/src/main/java/org/example/MybatisApplication.java">...</a>
  * @author wxl
  */
 @Target(ElementType.TYPE)
