@@ -33,7 +33,7 @@
 
             <dependency>
                 <groupId>cc.sofast</groupId>
-                <artifactId>sofast-spring-boot-starter-mybatis</artifactId>
+                <artifactId>sofast-spring-boot-starter-orm</artifactId>
                 <version>${revision}</version>
             </dependency>
 

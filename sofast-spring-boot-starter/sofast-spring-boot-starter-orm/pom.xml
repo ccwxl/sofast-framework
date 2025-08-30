@@ -10,7 +10,7 @@
         <relativePath>../../sofast-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>sofast-spring-boot-starter-mybatis</artifactId>
+    <artifactId>sofast-spring-boot-starter-orm</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -15,7 +15,7 @@
 
     <modules>
         <module>sofast-spring-boot-starter-common</module>
-        <module>sofast-spring-boot-starter-mybatis</module>
+        <module>sofast-spring-boot-starter-orm</module>
         <module>sofast-spring-boot-starter-tenant</module>
         <module>sofast-spring-boot-starter-security</module>
         <module>sofast-spring-boot-starter-redis</module>
