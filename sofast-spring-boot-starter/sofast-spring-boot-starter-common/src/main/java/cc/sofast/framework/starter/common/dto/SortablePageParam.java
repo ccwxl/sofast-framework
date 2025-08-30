@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SortablePageParam extends PageParam {
+public class SortablePageParam extends PageParam implements PageParamQuery {
 
     @Schema(type = "string", description = "排序字段 例如: name:desc,createdTime:asc")
     private List<SortableField> sortingFields;

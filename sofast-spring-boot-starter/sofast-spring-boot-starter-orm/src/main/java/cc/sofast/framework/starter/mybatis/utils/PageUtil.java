@@ -1,6 +1,6 @@
 package cc.sofast.framework.starter.mybatis.utils;
 
-import cc.sofast.framework.starter.common.dto.PageParam;
+import cc.sofast.framework.starter.common.dto.PageParamQuery;
 import cc.sofast.framework.starter.common.dto.PageResult;
 import cc.sofast.framework.starter.common.dto.SortableField;
 import cn.zhxu.bs.SearchResult;
@@ -62,7 +62,7 @@ public class PageUtil {
      * @param pageParam 分页参数
      * @return Page<T>
      */
-    public static <T> Page<T> buildPage(PageParam pageParam) {
+    public static <T> Page<T> buildPage(PageParamQuery pageParam) {
         return buildPage(pageParam, null);
     }
 
@@ -73,7 +73,7 @@ public class PageUtil {
      * @param sortingFields 排序字段
      * @return Page<T>
      */
-    public static <T> Page<T> buildPage(PageParam pageParam, Collection<SortableField> sortingFields) {
+    public static <T> Page<T> buildPage(PageParamQuery pageParam, Collection<SortableField> sortingFields) {
         // 页码 + 数量
         Page<T> page = new Page<>(pageParam.getPageIndex(), pageParam.getPageSize());
         // 排序字段

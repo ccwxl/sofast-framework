@@ -34,6 +34,20 @@ import java.util.List;
  */
 public interface SofastBaseMapper<E extends BaseDO<E, P>, P extends Serializable> extends MPJBaseMapper<E> {
 
+
+    /**
+     * 条件查询
+     *
+     * @param query 查询条件
+     * @return List<T>
+     */
+    default <DTO> PageResult<DTO> selectPage(ConditionQuery query, Class<DTO> dto) {
+        IPage<DTO> mpPage = PageUtil.buildPage(query.getPageParam());
+        selectJoinPage(mpPage, dto, query.getJoinQueryWrapper());
+        return PageUtil.toPageResult(mpPage);
+    }
+
+
     /**
      * 根据id查询
      *

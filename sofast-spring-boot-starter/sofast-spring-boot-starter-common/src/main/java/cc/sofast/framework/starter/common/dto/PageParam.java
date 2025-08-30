@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
+import java.util.List;
+
 /**
  * 分页请求参数封装
  *
@@ -15,7 +17,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageParam {
+public class PageParam implements PageParamQuery {
     /**
      * 每页条数 - 不分页
      * 例如说，导出接口，可以设置 {@link #pageSize} 为 -1 不分页，查询所有数据。
@@ -33,4 +35,9 @@ public class PageParam {
     @Schema(hidden = true)
     private boolean needTotalCount = true;
 
+    @Override
+    public List<SortableField> getSortingFields() {
+
+        return List.of();
+    }
 }
